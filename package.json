@@ -4,7 +4,9 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm install --prefix client && npm install --prefix server"
+    "postinstall": "npm install --prefix client && npm install --prefix server",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm start"
   },
   "repository": {
     "type": "git",
