@@ -12,7 +12,7 @@ const bindUserToViewLocals = require('./middleware/bind-user-to-view-locals.js')
 const passportConfigure = require('./passport-configuration.js');
 const indexRouter = require('./routes/index');
 const authenticationRouter = require('./routes/authentication');
-
+const cors = require('cors');
 const app = express();
 
 app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
@@ -40,7 +40,7 @@ app.use(passport.session());
 app.use(bindUserToViewLocals);
 
 app.use('/', indexRouter);
-app.use('/authentication', authenticationRouter);
+app.use('/auth', authenticationRouter);
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {
