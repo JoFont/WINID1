@@ -13,7 +13,7 @@ const authRouter = require('./routes/auth');
 const cors = require('cors');
 const app = express();
 
-app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
+// app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(cors());
