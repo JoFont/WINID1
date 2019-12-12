@@ -2,7 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GitHubStrategy = require('passport-github').Strategy;
 
-const User = require('./models/user');
+const Player = require('./models/player');
 const bcryptjs = require('bcryptjs');
 
 passport.serializeUser((user, callback) => {
@@ -10,7 +10,7 @@ passport.serializeUser((user, callback) => {
 });
 
 passport.deserializeUser((id, callback) => {
-  User.findById(id)
+  Player.findById(id)
   .then(user => {
     callback(null, user);
   })
@@ -29,7 +29,7 @@ passport.use(
     bcryptjs
       .hash(password, 10)
       .then(hash => {
-        return User.create({
+        return Player.create({
           name,
           email,
           passwordHash: hash
@@ -48,7 +48,7 @@ passport.use(
   'local-sign-in',
   new LocalStrategy({ usernameField: 'email' }, (email, password, callback) => {
     let user;
-    User.findOne({
+    Player.findOne({
       email
     })
       .then(document => {
@@ -84,12 +84,12 @@ passport.use(
         photos: [{ value: photo } = {}] = []
       } = profile;
       const primaryEmail = emails.find(email => email.primary).value;
-      User.findOne({ email: primaryEmail })
+      Player.findOne({ email: primaryEmail })
         .then(user => {
           if (user) {
             return Promise.resolve(user);
           } else {
-            return User.create({
+            return Player.create({
               email: primaryEmail,
               photo,
               name,
