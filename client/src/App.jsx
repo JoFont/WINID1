@@ -26,7 +26,7 @@ function App() {
       } else {
         // User is signed out.
         // ...
-        window.location.href = "/";
+        // window.location.href = "/";
       }
     });
   }, []);
