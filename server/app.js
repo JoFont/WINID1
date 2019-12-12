@@ -10,10 +10,11 @@ const serveFavicon = require('serve-favicon');
 const bindUserToViewLocals = require('./middleware/bind-user-to-view-locals.js');
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
+const apiRouter = require('./routes/api');
 const cors = require('cors');
 const app = express();
 
-app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
+// app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(cors());
@@ -45,9 +46,6 @@ app.use(cors());
 app.use('/api', apiRouter);
 app.use('/', indexRouter);
 // app.use('/auth', authRouter);
-
-
-
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {
