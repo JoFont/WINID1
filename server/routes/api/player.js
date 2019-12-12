@@ -7,8 +7,9 @@ const checkAuth = require("../../middleware/check-auth");
 
 router.post('/create', checkAuth, async (req, res, next) => {
   try {
+    // FIXME: Resolver granel na consola, não dá para fazer overwrite
     const player = await Player.create({
-      // FIXME: Resolver granel na consola, não dá para fazer overwrite
+      
     });
 
     res.status(200).json({teste: "OK"});
