@@ -58,12 +58,16 @@ const schema = new mongoose.Schema({
   location: {
     type: mongoose.Types.ObjectId,
   },
-  status: {
-    type: String,
-    enum: ["Organizing", "Scheduled", "Canceled", "Playing", "Played", "Draft"]
-  },
   schedule: {
     type: Date,
+  },
+  status: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Status"
+  },
+  statusLog: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Status"
   }
 },
 {

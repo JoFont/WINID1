@@ -6,10 +6,8 @@ const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const passport = require('passport');
 const serveFavicon = require('serve-favicon');
 const bindUserToViewLocals = require('./middleware/bind-user-to-view-locals.js');
-const passportConfigure = require('./config/passport-config.js/index.js.js');
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const cors = require('cors');
@@ -36,6 +34,9 @@ app.use(
       ttl: 60 * 60 * 24
     })
   }));
+
+require('./config/passport-config.js');
+const passport = require('passport');
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bindUserToViewLocals);
@@ -44,10 +45,6 @@ app.use(bindUserToViewLocals);
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/api', apiRouter);
-
-
-
-
 
 
 

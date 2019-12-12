@@ -20,19 +20,16 @@ const schema = new mongoose.Schema({
     ref: "Sport"
   },
   status: {
-    available: {
-      type: Boolean,
-      default: true,
-      required: true
-    },
-    range: {
-      type: Number,
-      default: 30
-    },
-    sports: {
-      type: [mongoose.Types.ObjectId],
-      ref: "Sport"
-    }
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Status"
+  },
+  statusLog: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Status"
+  },
+  range: {
+    type: Number,
+    default: 30
   },
   location: {
     type: {

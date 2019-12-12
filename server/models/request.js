@@ -24,24 +24,12 @@ const schema = new mongoose.Schema({
         required: true
       },
       status: {
-        type: String,
-        enum: ["Pending", "Accepted", "Rejected"]
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Status"
       },
       statusLog: {
-        type: [{
-          status: {
-            type: String,
-            required: true
-          },
-          pastStatus: {
-            type: String,
-            required: true
-          },
-          date: {
-            type: Date,
-            default: Date.now()
-          }
-        }]
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "Status"
       }
     }]
   },
