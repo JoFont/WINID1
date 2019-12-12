@@ -12,7 +12,7 @@ const Register = props => {
       if (!err) {
         // console.log('Received values of form: ', values);
         try {
-          const user = await fire.auth().createUserWithEmailAndPassword(values.email, values.password);
+          await fire.auth().createUserWithEmailAndPassword(values.email, values.password);
         } catch(error) {
           throw error;
         }

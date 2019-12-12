@@ -24,7 +24,8 @@ firebase.initializeApp(firebaseConfig);
 
 setGlobal({
   fire: firebase,
-  player: null
+  player: null,
+  user: null,
 });
 
 
