@@ -1,5 +1,3 @@
-'use strict';
-
 const admin = require("../services/firebase-admin");
 
 const getAuthToken = (req, res, next) => {
