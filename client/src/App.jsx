@@ -13,7 +13,6 @@ function App() {
     fire.auth().onAuthStateChanged(function(user) {
       if (user) {
         setPlayer(user);
-        console.log(user);
         // User is signed in.
         // var displayName = user.displayName;
         // var email = user.email;

@@ -1,10 +1,11 @@
-import React, { useGlobal } from "reactn";
+import React, { useGlobal, useEffect } from "reactn";
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 
 
 const LogIn = props => {
   const { getFieldDecorator } = props.form;
   const [fire] = useGlobal("fire");
+  const [player] = useGlobal("player");
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -19,6 +20,10 @@ const LogIn = props => {
       }
     });
   }
+
+  // useEffect(() => {
+
+  // })
 
   return (
     <Form onSubmit={handleSubmit} className="login-form">
