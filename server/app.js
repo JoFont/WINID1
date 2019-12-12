@@ -9,7 +9,6 @@ const mongoose = require('mongoose');
 const serveFavicon = require('serve-favicon');
 const bindUserToViewLocals = require('./middleware/bind-user-to-view-locals.js');
 const indexRouter = require('./routes/index');
-const authRouter = require('./routes/auth');
 const apiRouter = require('./routes/api');
 const cors = require('cors');
 const app = express();
