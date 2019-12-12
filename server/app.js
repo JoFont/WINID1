@@ -9,9 +9,9 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const serveFavicon = require('serve-favicon');
 const bindUserToViewLocals = require('./middleware/bind-user-to-view-locals.js');
-const passportConfigure = require('./passport-configuration.js');
+const passportConfigure = require('./config/passport-config.js/index.js.js');
 const indexRouter = require('./routes/index');
-const authenticationRouter = require('./routes/authentication');
+const authRouter = require('./routes/auth');
 const cors = require('cors');
 const app = express();
 
@@ -42,7 +42,8 @@ app.use(bindUserToViewLocals);
 
 //! Routes
 app.use('/', indexRouter);
-app.use('/auth', authenticationRouter);
+app.use('/auth', authRouter);
+app.use('/api', apiRouter);
 
 
 

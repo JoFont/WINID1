@@ -2,7 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GitHubStrategy = require('passport-github').Strategy;
 
-const Player = require('./models/player');
+const Player = require('../models/player');
 const bcryptjs = require('bcryptjs');
 
 passport.serializeUser((user, callback) => {
