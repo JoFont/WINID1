@@ -24,8 +24,9 @@ firebase.initializeApp(firebaseConfig);
 
 setGlobal({
   fire: firebase,
-  user: null
+  player: null
 });
+
 
 
 ReactDOM.render(<App />, document.getElementById('root'));
