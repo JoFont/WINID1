@@ -1,11 +1,10 @@
 import React, { useEffect, useGlobal } from 'reactn';
 import WrappedNormalLoginForm from './components/LogIn';
 import WrappedRegisterForm from './components/Register';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { findOrCreate as findOrCreatePlayer } from './services/api/player';
 import MainViews from './views/views.switch';
 import Navbar from './components/Navbar';
-// firebase.initializeApp(firebaseConfig);
 
 function App() {
   const [fire] = useGlobal('fire');
