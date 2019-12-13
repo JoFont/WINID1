@@ -3,8 +3,7 @@ import WrappedNormalLoginForm from './components/LogIn';
 import WrappedRegisterForm from './components/Register';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { findOrCreate as findOrCreatePlayer } from './services/api/player';
-import * as ROUTES from "./constants/routes";
-import playerView from "./views/playerView";
+import MainViews from "./views/views.switch";
 // firebase.initializeApp(firebaseConfig);
 
 function App() {
@@ -50,7 +49,7 @@ function App() {
 
         <button onClick={handleSignOut}>Sign Out</button>
       </div>
-      
+      <MainViews />
     </Router>
   );
 }

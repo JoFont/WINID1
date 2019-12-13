@@ -8,7 +8,7 @@ import teamView from "./teamView";
 import leagueView from "./leagueView";
 import requestView from "./requestView";
 
-const mainViews = () => {
+const MainViews = () => {
   return (
     <Switch>
       <Route to={ROUTES.HOME} component={homeView}/>
@@ -21,6 +21,6 @@ const mainViews = () => {
   )
 }
 
-export default mainViews;
+export default MainViews;
 
 
