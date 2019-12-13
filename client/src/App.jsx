@@ -1,18 +1,18 @@
 import React, { useEffect, useGlobal } from 'reactn';
 import axios from 'axios';
 import WrappedNormalLoginForm from './components/LogIn';
+import WrappedRegisterForm from './components/Register';
 
 // firebase.initializeApp(firebaseConfig);
 
 function App() {
   const [fire] = useGlobal('fire');
-  const [user, setUser] = useGlobal('user');
+  const [token, setToken] = useGlobal('token');
 
   useEffect(() => {
     fire.auth().onAuthStateChanged(async function(firebaseUser) {
       if (firebaseUser) {
-        setUser(firebaseUser);
-        console.log(firebaseUser);
+        setToken(firebaseUser._lat);
         // User is signed in.
         // var displayName = user.displayName;
         // var email = user.email;
@@ -23,6 +23,7 @@ function App() {
         // var providerData = user.providerData;
         // ...
       } else {
+        if (token) setToken(null);
         // User is signed out.
         // ...
         // window.location.href = "/";
@@ -37,7 +38,9 @@ function App() {
 
   return (
     <div className="mt-24">
-      <WrappedNormalLoginForm />
+      {/* <WrappedNormalLoginForm /> */}
+      <WrappedRegisterForm />
+
       <button onClick={handleSignOut}>Sign Out</button>
     </div>
   );
