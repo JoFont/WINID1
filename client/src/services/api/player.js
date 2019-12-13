@@ -8,15 +8,15 @@ const api = axios.create({
 });
 
 
-export const createPlayer = async (token, user, method) => {
+export const findOrCreate = async (token, user) => {
   try {
-    const res = await api.post('/create', {
+    const res = await api.post('/findOrCreate', {
         headers: {
           authorization: `Bearer ${token}`
         },
+
         data: {
-          user,
-          method
+          user
         }
       }
     );

@@ -1,6 +1,5 @@
 import React, { useGlobal } from 'reactn';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
-import axios from 'axios';
 
 const Register = props => {
   const { getFieldDecorator } = props.form;
@@ -12,11 +11,7 @@ const Register = props => {
       if (!err) {
         // console.log('Received values of form: ', values);
         try {
-          const user = await fire
-            .auth()
-            .createUserWithEmailAndPassword(values.email, values.password);
-          const token = await fire.auth().currentUser.getIdToken();
-          
+          await fire.auth().createUserWithEmailAndPassword(values.email, values.password);
         } catch (error) {
           throw error;
         }
