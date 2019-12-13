@@ -16,17 +16,7 @@ const Register = props => {
             .auth()
             .createUserWithEmailAndPassword(values.email, values.password);
           const token = await fire.auth().currentUser.getIdToken();
-          const res = await axios.post(
-            'http://localhost:3030/api/player/create',
-            {
-              headers: {
-                authorization: `Bearer ${token}`
-              },
-              data: {
-                user
-              }
-            }
-          );
+          
         } catch (error) {
           throw error;
         }
