@@ -6,7 +6,7 @@ const pushStatus = require("../../services/pushStatus");
 
 router.get('/:id', checkAuth, async (req, res, next) => {
   try {
-    const game = await Game.findById(req.params.id);
+    const game = await Game.findById(req.params.id).exec();
     res.status(200).json(game);
   } catch (error) {
     next(error);
@@ -26,7 +26,7 @@ router.post('/create', checkAuth, async (req, res, next) => {
 router.patch('/:id/edit', checkAuth, async (req, res, next) => {
   try {
     const body = req.body;
-    const game = await Game.findByIdAndUpdate(req.params.id, {...body});
+    const game = await Game.findByIdAndUpdate(req.params.id, {...body}).exec();
     res.status(200).json(game);
   } catch (error) {
     next(error);
@@ -35,7 +35,7 @@ router.patch('/:id/edit', checkAuth, async (req, res, next) => {
 
 router.delete('/:id', checkAuth, async (req, res, next) => {
   try {
-    await Game.deleteOne(req.params.id);
+    await Game.findByIdAndDelete(req.params.id).exec();
     res.status(200).json({message: `Game with id: ${req.params.id} has been deleted!`});
   } catch (error) {
     next(error);

@@ -5,7 +5,7 @@ const Team = require("../../models/team");
 
 router.get('/:id', checkAuth, async (req, res, next) => {
   try {
-    const team = await Team.findById(req.params.id);
+    const team = await Team.findById(req.params.id).exec();
     res.status(200).json(team);
   } catch (error) {
     next(error);
@@ -25,7 +25,7 @@ router.post('/create', checkAuth, async (req, res, next) => {
 router.patch('/:id/edit', checkAuth, async (req, res, next) => {
   try {
     const body = req.body;
-    const team = await Team.findByIdAndUpdate(req.params.id, {...body});
+    const team = await Team.findByIdAndUpdate(req.params.id, {...body}).exec();
     res.status(200).json(team);
   } catch (error) {
     next(error);
@@ -34,7 +34,7 @@ router.patch('/:id/edit', checkAuth, async (req, res, next) => {
 
 router.delete('/:id', checkAuth, async (req, res, next) => {
   try {
-    await team.deleteOne(req.params.id);
+    await team.findByIdAndDelete(req.params.id).exec();
     res.status(200).json({message: `Team with id: ${req.params.id} has been deleted!`});
   } catch (error) {
     next(error);
