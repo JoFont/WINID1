@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "npm install --prefix client && npm install --prefix server",
+    "prepare": "npm run build --prefix client",
+    "start": "npm start --prefix server",
     "server": "cd server && npm run dev",
-    "client": "cd client && npm start",
-    "start": "npm start --prefix server"
+    "client": "cd client && npm start"
   },
   "repository": {
     "type": "git",
