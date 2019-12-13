@@ -50,14 +50,7 @@ function App() {
 
         <button onClick={handleSignOut}>Sign Out</button>
       </div>
-      <Switch>
-        <Route to={ROUTES.HOME} component={}/>
-        <Route to={ROUTES.PLAYER} component={playerView}/>
-        <Route to={ROUTES.GAME} component={}/>
-        <Route to={ROUTES.TEAM} component={}/>
-        <Route to={ROUTES.LEAGUE} component={}/>
-        <Route to={ROUTES.REQUEST} component={}/>
-      </Switch>
+      
     </Router>
   );
 }
