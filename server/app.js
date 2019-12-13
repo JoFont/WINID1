@@ -3,7 +3,6 @@ const express = require('express');
 const createError = require('http-errors');
 const logger = require('morgan');
 const serveFavicon = require('serve-favicon');
-const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/api');
 const cors = require('cors');
 const app = express();
@@ -20,7 +19,7 @@ app.use(cors());
 //! Routes
 app.use('/api', apiRouter);
 app.get("/", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "../client/public/build/index.html"));
+  res.sendFile(join(__dirname, "../client/public/build/index.html"));
 })
 
 // Catch missing routes and forward to error handler
