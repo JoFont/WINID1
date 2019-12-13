@@ -69,7 +69,7 @@ export const deleteOne = async (token, id) => {
 export const createAndUpdateStatus = async (token, id, data) => {
   try {
     api.defaults.headers.common['authorization'] = `Bearer ${token}`;
-    const res = await api.post(`${id}/status`, {
+    const res = await api.post(`/${id}/status`, {
       data
     });
 

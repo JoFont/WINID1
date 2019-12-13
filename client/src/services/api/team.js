@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as ROUTES from './api.routes';
 
 const api = axios.create({
-  baseURL: ROUTES.PLAYER
+  baseURL: ROUTES.TEAM
 });
 
 
@@ -60,19 +60,6 @@ export const deleteOne = async (token, id) => {
         }
       }
     );
-    return res;
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const createAndUpdateStatus = async (token, id, data) => {
-  try {
-    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
-    const res = await api.post(`/${id}/status`, {
-      data
-    });
-
     return res;
   } catch (error) {
     throw error;
