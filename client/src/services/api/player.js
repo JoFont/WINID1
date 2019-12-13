@@ -8,14 +8,9 @@ const api = axios.create({
 
 export const findOrCreate = async (token, user) => {
   try {
+    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
     const res = await api.post('/findOrCreate', {
-        headers: {
-          authorization: `Bearer ${token}`
-        },
-
-        data: {
-          user
-        }
+        user
       }
     );
     return res;

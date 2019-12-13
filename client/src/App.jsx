@@ -1,5 +1,4 @@
 import React, { useEffect, useGlobal } from 'reactn';
-import axios from 'axios';
 import WrappedNormalLoginForm from './components/LogIn';
 import WrappedRegisterForm from './components/Register';
 import { findOrCreate as findOrCreatePlayer } from "./services/api/player";
