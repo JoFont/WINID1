@@ -26,15 +26,11 @@ export const getById = async (token, id) => {
 
 export const createOne = async (token, data) => {
   try {
+    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
     const res = await api.post('/create', {
-        headers: {
-          authorization: `Bearer ${token}`
-        },
-        data: {
-          data
-        }
-      }
-    );
+      data
+    });
+
     return res;
   } catch (error) {
     throw error;
@@ -43,15 +39,10 @@ export const createOne = async (token, data) => {
 
 export const editOne = async (token, id, data) => {
   try {
+    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
     const res = await api.patch(`/${id}/edit`, {
-        headers: {
-          authorization: `Bearer ${token}`
-        },
-        data: {
-          data
-        }
-      }
-    );
+      data
+    });
     return res;
   } catch (error) {
     throw error;
