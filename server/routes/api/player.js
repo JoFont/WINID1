@@ -1,22 +1,28 @@
 const { Router } = require('express');
 const router = new Router();
-const Player = require( "../../models/player");
+const Player = require('../../models/player');
 
-const checkAuth = require("../../middleware/check-auth");
-
+const checkAuth = require('../../middleware/check-auth');
 
 router.post('/create', checkAuth, async (req, res, next) => {
   try {
-    // FIXME: Resolver granel na consola, não dá para fazer overwrite
-    const player = await Player.create({
-      
-    });
+    console.log('REQ', req);
+    // const player = await Player.create({});
 
-    res.status(200).json({teste: "OK"});
-    // console.log(admin.auth());
+    res.status(200).json({ teste: 'OK' });
   } catch (error) {
     next(error);
   }
 });
 
 module.exports = router;
+
+/*
+- [ ]  GET /:username
+- [ ]  POST /create
+- [ ]  PATCH /:id/edit
+- [ ]  DELETE /:id
+- [ ]  POST /:id/status
+- [ ]  POST /:id/review
+- [ ]  PATCH /:id/review/:review_id
+*/

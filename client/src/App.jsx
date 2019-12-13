@@ -38,8 +38,8 @@ function App() {
 
   return (
     <div className="mt-24">
-      {/* <WrappedNormalLoginForm /> */}
-      <WrappedRegisterForm />
+      <WrappedNormalLoginForm />
+      {/* <WrappedRegisterForm /> */}
 
       <button onClick={handleSignOut}>Sign Out</button>
     </div>

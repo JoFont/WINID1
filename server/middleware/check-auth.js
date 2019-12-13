@@ -1,4 +1,4 @@
-const admin = require("../services/firebase-admin");
+const admin = require('../services/firebase-admin');
 
 const getAuthToken = (req, res, next) => {
   if (
@@ -12,15 +12,13 @@ const getAuthToken = (req, res, next) => {
   next();
 };
 
-
 const checkIfAuthenticated = (req, res, next) => {
- getAuthToken(req, res, async () => {
+  getAuthToken(req, res, async () => {
     try {
       const { authToken } = req;
-      const userInfo = await admin
-        .auth()
-        .verifyIdToken(authToken);
+      const userInfo = await admin.auth().verifyIdToken(authToken);
       req.authId = userInfo.uid;
+      // console.log('CHECAUTH', req);
       return next();
     } catch (e) {
       return res
@@ -29,6 +27,5 @@ const checkIfAuthenticated = (req, res, next) => {
     }
   });
 };
-
 
 module.exports = checkIfAuthenticated;
