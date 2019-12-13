@@ -3,7 +3,7 @@ import React from 'react';
 const playerView = () => {
   return (
     <div>
-      <h1>Player</h1>
+      <h1 className="text-lg">Player</h1>
     </div>
   );
 };
