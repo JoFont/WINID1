@@ -18,9 +18,9 @@ const schema = new mongoose.Schema(
       required: true,
       // Instead of a hardcoded model name in `ref`, `refPath` means Mongoose
       // will look at the `onModel` property to find the right model.
-      refPath: 'modelName'
+      refPath: 'modelRef'
     },
-    modelName: {
+    modelRef: {
       type: String,
       required: true,
       enum: ['Player', 'Location']

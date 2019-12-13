@@ -100,6 +100,19 @@ const schema = new mongoose.Schema(
   }
 );
 
+schema.statics.getModelName = async function() {
+  const Player = this;
+  try {
+    return (
+      Player.collection.name.charAt(0).toUpperCase() +
+      Player.collection.name.slice(1, Player.collection.name.length - 1)
+    );
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 schema.statics.findOrCreate = async function(id, firebaseUser) {
   const Player = this;
   try {
