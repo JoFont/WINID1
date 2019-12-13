@@ -1,9 +1,10 @@
 import React, { useEffect, useGlobal } from 'reactn';
 import WrappedNormalLoginForm from './components/LogIn';
 import WrappedRegisterForm from './components/Register';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { findOrCreate as findOrCreatePlayer } from './services/api/player';
-
+import * as ROUTES from "./constants/routes";
+import playerView from "./views/playerView";
 // firebase.initializeApp(firebaseConfig);
 
 function App() {
@@ -50,7 +51,12 @@ function App() {
         <button onClick={handleSignOut}>Sign Out</button>
       </div>
       <Switch>
-        <Route to="/>
+        <Route to={ROUTES.HOME} component={}/>
+        <Route to={ROUTES.PLAYER} component={playerView}/>
+        <Route to={ROUTES.GAME} component={}/>
+        <Route to={ROUTES.TEAM} component={}/>
+        <Route to={ROUTES.LEAGUE} component={}/>
+        <Route to={ROUTES.REQUEST} component={}/>
       </Switch>
     </Router>
   );
