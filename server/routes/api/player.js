@@ -28,7 +28,23 @@ router.get('/:username', async (req, res, next) => {
 
 router.delete('/:id', checkAuth, async (req, res, next) => {
   try {
-    await Player.findByIdAndDelete(req.params.id);
+    await Player.findByIdAndDelete(req.params.id).exec();
+    res.status(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch('/:id/edit', checkAuth, async (req, res, next) => {
+  try {
+    await Player.findByIdAndUpdate(req.params.id, {
+      ...username && username,
+      ...displayName && displayName,
+      ...email && email,
+      ...photoUrl && photoUrl,
+      ...sports && sports,
+      ...range && range
+    }).exec();
     res.status(200);
   } catch (error) {
     next(error);
@@ -66,7 +82,7 @@ module.exports = router;
 
 // - [X]  GET /:username
 // - [X]  POST /create
-// - [ ]  PATCH /:id/edit
+// - [X]  PATCH /:id/edit
 // - [X]  DELETE /:id
 // - [X]  POST /:id/status
 // - [X]  POST /:id/review
