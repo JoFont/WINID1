@@ -1,7 +1,7 @@
 import React, { useState, useGlobal } from 'reactn';
 import { Link } from 'react-router-dom';
 import { Affix, Button } from 'antd';
-import * as ROUTES from '../constants/routes';
+import * as ROUTES from '../constants/trimmed.routes';
 
 const Navbar = () => {
   const [top, setTop] = useState(10);
@@ -10,7 +10,10 @@ const Navbar = () => {
   return (
     <div className="bg-gray-600 p-3 border-b text-white">
       <Affix offsetTop={10}>
-        <Link to="/" className="text-black">
+        <Link
+          to={ROUTES.PLAYER + '/' + (player && player.username)}
+          className="text-black"
+        >
           Profile
         </Link>
       </Affix>

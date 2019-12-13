@@ -3,7 +3,8 @@ import WrappedNormalLoginForm from './components/LogIn';
 import WrappedRegisterForm from './components/Register';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { findOrCreate as findOrCreatePlayer } from './services/api/player';
-import MainViews from "./views/views.switch";
+import MainViews from './views/views.switch';
+import Navbar from './components/Navbar';
 // firebase.initializeApp(firebaseConfig);
 
 function App() {
@@ -15,13 +16,13 @@ function App() {
   useEffect(() => {
     fire.auth().onAuthStateChanged(async function(firebaseUser) {
       if (firebaseUser) {
-        //console.log(firebaseUser);
+        console.log(firebaseUser);
         setToken(firebaseUser._lat);
         const playerFetch = await findOrCreatePlayer(
           firebaseUser._lat,
           firebaseUser
         );
-        //console.log('PLAYERFETCH', playerFetch);
+        console.log('PLAYERFETCH', playerFetch);
         if (playerFetch && player === null) {
           setPlayer(playerFetch.data);
         }
