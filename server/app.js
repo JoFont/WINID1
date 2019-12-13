@@ -10,14 +10,19 @@ const app = express();
 // Initialize Firebase admin
 require("./services/firebase-admin");
 
-// app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(cors());
 
 
 //! Routes
+// <== API ==>
 app.use('/api', apiRouter);
+
+// <== Index ==>
+app.use(express.static(join(__dirname, '../client/build')));
+app.use(serveFavicon(join(__dirname, '../client/public', 'favicon.ico')));
+
 app.get('*', (req, res, next) => {
   res.sendFile(join(__dirname, '../client/build/index.html'));
 });
