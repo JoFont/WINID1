@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "npm install --prefix client && npm install --prefix server",
     "server": "cd server && npm run dev",
-    "client": "cd client && npm start"
+    "client": "cd client && npm start",
+    "start": "npm start --prefix server"
   },
   "repository": {
     "type": "git",
