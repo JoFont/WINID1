@@ -17,8 +17,7 @@ export const findOrCreate = async (token, user) => {
           user
         }
       }
-    });
-
+    );
     return res;
   } catch (error) {
     throw error;
