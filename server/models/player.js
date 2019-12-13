@@ -5,10 +5,10 @@ const schema = new mongoose.Schema(
     _id: {
       type: String,
       required: true,
-      trim: true,
-      unique: true
+      trim: true
+      // unique: true
     },
-    userName: {
+    displayName: {
       type: String,
       trim: true,
       unique: true
@@ -17,6 +17,11 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
       lowercase: true,
+      trim: true
+    },
+    photoUrl: {
+      type: String,
+      require: true,
       trim: true
     },
     auth: {
@@ -92,5 +97,21 @@ const schema = new mongoose.Schema(
     timestamps: true
   }
 );
+
+schema.statics.findOrCreate = async function(id, firebaseUser) {
+  try {
+    const player = await this.findById(id).exec();
+    if (player) return user;
+    const newPlayer = await this.create({
+      _id: id,
+      email: firebaseUser.email,
+      displayName: firebaseUser.displayName || 'Random User',
+      photoUrl: `https://api.adorable.io/avatars/256/${firebaseUser.email}.png`
+    });
+    return newPlayer;
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = mongoose.model('Player', schema);

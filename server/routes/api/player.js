@@ -6,9 +6,8 @@ const checkAuth = require('../../middleware/check-auth');
 
 router.post('/findOrCreate', checkAuth, async (req, res, next) => {
   try {
-    console.log('REQ', req);
-    // const player = await Player.create({});
-
+    console.log('FIND OR CREATE');
+    await Player.findOrCreate(req.authId, req.body.user);
     res.status(200).json({ teste: 'OK' });
   } catch (error) {
     next(error);
