@@ -1,6 +1,6 @@
 import React, { useGlobal } from "reactn";
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
-
+import axios from "axios";
 
 const Register = props => {
   const { getFieldDecorator } = props.form;
@@ -12,7 +12,16 @@ const Register = props => {
       if (!err) {
         // console.log('Received values of form: ', values);
         try {
-          await fire.auth().createUserWithEmailAndPassword(values.email, values.password);
+          const user = await fire.auth().createUserWithEmailAndPassword(values.email, values.password);
+          const token = await fire.auth().currentUser.getIdToken();
+          const res = await axios.post("http://localhost:3030/api/player/create", { 
+            headers: { 
+              authorization: `Bearer ${token}` 
+            },
+            data: {
+              user
+            }
+          });
         } catch(error) {
           throw error;
         }
