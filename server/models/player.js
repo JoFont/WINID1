@@ -8,10 +8,14 @@ const schema = new mongoose.Schema(
       trim: true
       // unique: true
     },
-    displayName: {
+    username: {
       type: String,
       trim: true,
       unique: true
+    },
+    displayName: {
+      type: String,
+      trim: true
     },
     email: {
       type: String,
@@ -106,10 +110,25 @@ schema.statics.findOrCreate = async function(id, firebaseUser) {
       const newPlayer = await Player.create({
         _id: id,
         email: firebaseUser.email,
-        displayName: firebaseUser.displayName || 'Random User',
+        displayName: firebaseUser.displayName || 'Your Name',
         photoUrl: `https://api.adorable.io/avatars/256/${firebaseUser.email}.png`
       });
       return newPlayer;
+    }
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+schema.statics.findByUsername = async function(username) {
+  const Player = this;
+  try {
+    const player = await Player.findOne({ username: username }).exec();
+    if (player) {
+      return player;
+    } else {
+      throw error("There's no player with that username");
     }
   } catch (error) {
     console.log(error);

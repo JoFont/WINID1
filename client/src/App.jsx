@@ -13,14 +13,15 @@ function App() {
   useEffect(() => {
     fire.auth().onAuthStateChanged(async function(firebaseUser) {
       if (firebaseUser) {
-        console.log(firebaseUser);
+        //console.log(firebaseUser);
         setToken(firebaseUser._lat);
         const playerFetch = await findOrCreatePlayer(
           firebaseUser._lat,
           firebaseUser
         );
+        //console.log('PLAYERFETCH', playerFetch);
         if (playerFetch && player === null) {
-          setPlayer(playerFetch);
+          setPlayer(playerFetch.data);
         }
       } else {
         if (token) setToken(null);
@@ -33,8 +34,13 @@ function App() {
     fire.auth().signOut();
   };
 
+  const checkUser = () => {
+    if (player) return <h1>{player.displayName}</h1>;
+  };
+
   return (
     <div className="mt-24">
+      {checkUser()}
       <WrappedNormalLoginForm />
       {/* <WrappedRegisterForm /> */}
 

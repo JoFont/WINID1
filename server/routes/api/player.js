@@ -6,8 +6,17 @@ const checkAuth = require('../../middleware/check-auth');
 
 router.post('/findOrCreate', checkAuth, async (req, res, next) => {
   try {
-    await Player.findOrCreate(req.authId, req.body.user);
-    res.status(200).json({ teste: 'OK' });
+    const player = await Player.findOrCreate(req.authId, req.body.user);
+    res.status(200).json(player);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/:username', async (req, res, next) => {
+  try {
+    const player = await Player.findByUsername(req.params.username);
+    res.status(200).json(player);
   } catch (error) {
     next(error);
   }
@@ -17,7 +26,7 @@ module.exports = router;
 
 /*
 - [ ]  GET /:username
-- [ ]  POST /create
+- [X]  POST /create
 - [ ]  PATCH /:id/edit
 - [ ]  DELETE /:id
 - [ ]  POST /:id/status
