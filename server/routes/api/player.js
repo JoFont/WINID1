@@ -4,7 +4,7 @@ const Player = require('../../models/player');
 
 const checkAuth = require('../../middleware/check-auth');
 
-router.post('/create', checkAuth, async (req, res, next) => {
+router.post('/findOrCreate', checkAuth, async (req, res, next) => {
   try {
     console.log('REQ', req);
     // const player = await Player.create({});

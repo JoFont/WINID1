@@ -12,6 +12,7 @@ function App() {
   useEffect(() => {
     fire.auth().onAuthStateChanged(async function(firebaseUser) {
       if (firebaseUser) {
+        console.log(firebaseUser);
         setToken(firebaseUser._lat);
         // User is signed in.
         // var displayName = user.displayName;
