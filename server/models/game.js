@@ -43,7 +43,8 @@ const schema = new mongoose.Schema({
     ref: "Player"
   },
   score: {
-    type: [Number]
+    type: [Number],
+    default: [0, 0]
   },
   price: {
     value: {

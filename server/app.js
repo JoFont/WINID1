@@ -1,13 +1,8 @@
 const { join } = require('path');
 const express = require('express');
 const createError = require('http-errors');
-const connectMongo = require('connect-mongo');
-const cookieParser = require('cookie-parser');
-const expressSession = require('express-session');
 const logger = require('morgan');
-const mongoose = require('mongoose');
 const serveFavicon = require('serve-favicon');
-const bindUserToViewLocals = require('./middleware/bind-user-to-view-locals.js');
 const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/api');
 const cors = require('cors');
