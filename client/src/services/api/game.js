@@ -65,3 +65,16 @@ export const deleteOne = async (token, id) => {
     throw error;
   }
 };
+
+export const createAndUpdateStatus = async (token, id, data) => {
+  try {
+    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
+    const res = await api.post(`${id}/status`, {
+      data
+    });
+
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
