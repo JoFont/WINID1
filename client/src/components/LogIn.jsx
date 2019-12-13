@@ -11,7 +11,9 @@ const LogIn = props => {
     await props.form.validateFields(async (err, values) => {
       if (!err) {
         try {
-          await fire.auth().signInWithEmailAndPassword(values.email, values.password);
+          await fire
+            .auth()
+            .signInWithEmailAndPassword(values.email, values.password);
         } catch (error) {
           throw error;
         }
@@ -50,7 +52,11 @@ const LogIn = props => {
         <a className="login-form-forgot" href="">
           Forgot password
         </a>
-        <Button type="primary" htmlType="submit" className="login-form-button">
+        <Button
+          type="primary"
+          htmlType="submit"
+          className="login-form-button bg-blue-200"
+        >
           Log in
         </Button>
         Or <a href="">register now!</a>
