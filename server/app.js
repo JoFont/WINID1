@@ -19,7 +19,9 @@ app.use(cors());
 
 //! Routes
 app.use('/api', apiRouter);
-app.use('/', indexRouter);
+app.get("/", (req, res, next) => {
+  res.sendFile(path.join(__dirname, "../client/public/build/index.html"));
+})
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {
