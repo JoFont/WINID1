@@ -2,7 +2,6 @@ const { Router } = require('express');
 const router = new Router();
 const checkAuth = require("../../middleware/check-auth");
 const Sport = require("../../models/game");
-const pushStatus = require("../../services/pushStatus");
 
 router.get('/:id', checkAuth, async (req, res, next) => {
   try {
@@ -44,11 +43,4 @@ router.delete('/:id', checkAuth, async (req, res, next) => {
 
 
 module.exports = router;
-
-/*
-- [ ]  GET /:id
-- [ ]  POST /create
-- [ ]  PATCH /:id/edit
-- [ ]  DELETE /:id
-*/
 
