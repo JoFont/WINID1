@@ -8,10 +8,10 @@ module.exports = pushReview = async (id, model, reviewer, data) => {
     const newReview = await Review.create({
       modelId: id,
       modelRef: modelName,
-      stars: { ...(data.stars && stars) },
-      upvote: { ...(data.upvote && upvote) },
-      downvote: { ...(data.downvote && downvote) },
-      comment: { ...(data.comment && comment) },
+      ...stars && { stars },
+      ...upvote && { upvote },
+      ...downvote && { downvote },
+      ...comment && { comment },
       reviewer: reviewer
     });
 
