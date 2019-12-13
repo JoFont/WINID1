@@ -5,7 +5,7 @@ const Sport = require("../../models/sport");
 
 router.get('/:id', checkAuth, async (req, res, next) => {
   try {
-    const sport = await Sport.findById(req.params.id);
+    const sport = await Sport.findById(req.params.id).exec();
     res.status(200).json(sport);
   } catch (error) {
     next(error);
@@ -25,7 +25,7 @@ router.post('/create', checkAuth, async (req, res, next) => {
 router.patch('/:id/edit', checkAuth, async (req, res, next) => {
   try {
     const body = req.body;
-    const sport = await Sport.findByIdAndUpdate(req.params.id, {...body});
+    const sport = await Sport.findByIdAndUpdate(req.params.id, {...body}).exec();
     res.status(200).json(sport);
   } catch (error) {
     next(error);
@@ -34,7 +34,7 @@ router.patch('/:id/edit', checkAuth, async (req, res, next) => {
 
 router.delete('/:id', checkAuth, async (req, res, next) => {
   try {
-    await Sport.deleteOne(req.params.id);
+    await Sport.findByIdAndDelete(req.params.id).exec();
     res.status(200).json({message: `Sport with id: ${req.params.id} has been deleted!`});
   } catch (error) {
     next(error);
