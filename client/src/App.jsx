@@ -1,13 +1,12 @@
 import React, { useEffect, useGlobal } from 'reactn';
-import axios from "axios";
+import axios from 'axios';
 import WrappedNormalLoginForm from './components/LogIn';
-
 
 // firebase.initializeApp(firebaseConfig);
 
 function App() {
-  const [fire] = useGlobal("fire");
-  const [user, setUser] = useGlobal("user");
+  const [fire] = useGlobal('fire');
+  const [user, setUser] = useGlobal('user');
 
   useEffect(() => {
     fire.auth().onAuthStateChanged(async function(firebaseUser) {
@@ -26,7 +25,7 @@ function App() {
       } else {
         // User is signed out.
         // ...
-        window.location.href = "/";
+        // window.location.href = "/";
       }
     });
   }, []);
@@ -34,11 +33,11 @@ function App() {
   const handleSignOut = e => {
     e.preventDefault();
     fire.auth().signOut();
-  }
+  };
 
   return (
     <div className="mt-24">
-      <WrappedNormalLoginForm/>
+      <WrappedNormalLoginForm />
       <button onClick={handleSignOut}>Sign Out</button>
     </div>
   );
