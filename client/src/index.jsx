@@ -11,14 +11,14 @@ import 'antd/dist/antd.css';
 import './styles/tailwind.css';
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_firebase_apiKey,
-  authDomain: process.env.REACT_APP_firebase_authDomain,
-  databaseURL: process.env.REACT_APP_firebase_databaseURL,
-  projectId: process.env.REACT_APP_firebase_projectId,
-  storageBucket: process.env.REACT_APP_firebase_storageBucket,
-  messagingSenderId: process.env.REACT_APP_firebase_messagingSenderId,
-  appId: process.env.REACT_APP_firebase_appId,
-  measurementId: process.env.REACT_APP_firebase_measurementId
+  apiKey: "AIzaSyCMxulxTYaRCv8folZDthFk9pmbj_aPWZw",
+  authDomain: "winid1.firebaseapp.com",
+  databaseURL: "https://winid1.firebaseio.com",
+  projectId: "winid1",
+  storageBucket: "winid1.appspot.com",
+  messagingSenderId: "984064815412",
+  appId: "1:984064815412:web:05a71f8a008113a32f3561",
+  measurementId: "G-S2T00DWY13"
 };
 
 firebase.initializeApp(firebaseConfig);
