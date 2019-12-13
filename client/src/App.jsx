@@ -2,32 +2,26 @@ import React, { useEffect, useGlobal } from 'reactn';
 import axios from 'axios';
 import WrappedNormalLoginForm from './components/LogIn';
 import WrappedRegisterForm from './components/Register';
-
+import { findOrCreate as findOrCreatePlayer } from "./services/api/player";
+ 
 // firebase.initializeApp(firebaseConfig);
 
 function App() {
   const [fire] = useGlobal('fire');
   const [token, setToken] = useGlobal('token');
+  const [player, setPlayer] = useGlobal('player');
 
   useEffect(() => {
     fire.auth().onAuthStateChanged(async function(firebaseUser) {
       if (firebaseUser) {
         console.log(firebaseUser);
         setToken(firebaseUser._lat);
-        // User is signed in.
-        // var displayName = user.displayName;
-        // var email = user.email;
-        // var emailVerified = user.emailVerified;
-        // var photoURL = user.photoURL;
-        // var isAnonymous = user.isAnonymous;
-        // var uid = user.uid;
-        // var providerData = user.providerData;
-        // ...
+        const playerFetch = await findOrCreatePlayer(token, firebaseUser);
+        if(playerFetch && player === null) {
+          setPlayer(playerFetch);
+        }
       } else {
         if (token) setToken(null);
-        // User is signed out.
-        // ...
-        // window.location.href = "/";
       }
     });
   }, []);

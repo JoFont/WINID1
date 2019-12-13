@@ -1,6 +1,5 @@
 import React, { useGlobal, useEffect } from 'reactn';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
-import axios from 'axios';
 
 const LogIn = props => {
   const { getFieldDecorator } = props.form;
@@ -11,36 +10,14 @@ const LogIn = props => {
     e.preventDefault();
     await props.form.validateFields(async (err, values) => {
       if (!err) {
-        // console.log('Received values of form: ', values);
         try {
-          const user = await fire
-            .auth()
-            .signInWithEmailAndPassword(values.email, values.password);
-          // TODO: Testar fazer queries sem auth para ver se bomba
-          const token = await fire.auth().currentUser.getIdToken();
-          const res = await axios.post(
-            'http://localhost:3030/api/player/create',
-            {
-              headers: {
-                authorization: `Bearer ${token}`
-              },
-              data: {
-                user
-              }
-            }
-          );
-
-          console.log(res.data);
+          await fire.auth().signInWithEmailAndPassword(values.email, values.password);
         } catch (error) {
           throw error;
         }
       }
     });
   };
-
-  // useEffect(() => {
-
-  // })
 
   return (
     <Form onSubmit={handleSubmit} className="login-form">

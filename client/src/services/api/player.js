@@ -5,15 +5,17 @@ const api = axios.create({
   baseURL: ROUTES.PLAYER
 });
 
-export const createPlayer = async (token, user, method) => {
+
+export const findOrCreate = async (token, user) => {
   try {
-    const res = await api.post('/create', {
-      headers: {
-        authorization: `Bearer ${token}`
-      },
-      data: {
-        user,
-        method
+    const res = await api.post('/findOrCreate', {
+        headers: {
+          authorization: `Bearer ${token}`
+        },
+
+        data: {
+          user
+        }
       }
     });
 
