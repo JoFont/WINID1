@@ -6,7 +6,7 @@ import WrappedNormalLoginForm from './components/LogIn';
 
 function App() {
   const [fire] = useGlobal('fire');
-  const [user, setUser] = useGlobal('user');
+  const [token, setToken] = useGlobal('userToken');
 
   useEffect(() => {
     fire.auth().onAuthStateChanged(async function(firebaseUser) {
