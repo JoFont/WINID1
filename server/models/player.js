@@ -100,6 +100,7 @@ const schema = new mongoose.Schema(
 
 schema.statics.findOrCreate = async function(id, firebaseUser) {
   try {
+    console.log('STATIC', firebaseUser);
     const player = await this.findById(id).exec();
     if (player) return user;
     const newPlayer = await this.create({
