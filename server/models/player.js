@@ -46,12 +46,10 @@ const schema = new mongoose.Schema(
     location: {
       type: {
         type: String, // Don't do `{ location: { type: String } }`
-        enum: ['Point'], // 'location.type' must be 'Point'
-        required: true
+        enum: ['Point'] // 'location.type' must be 'Point'
       },
       coordinates: {
-        type: [Number],
-        required: true
+        type: [Number]
       }
     },
     personalRatings: {
@@ -99,18 +97,22 @@ const schema = new mongoose.Schema(
 );
 
 schema.statics.findOrCreate = async function(id, firebaseUser) {
+  const Player = this;
   try {
-    console.log('STATIC', firebaseUser);
-    const player = await this.findById(id).exec();
-    if (player) return user;
-    const newPlayer = await this.create({
-      _id: id,
-      email: firebaseUser.email,
-      displayName: firebaseUser.displayName || 'Random User',
-      photoUrl: `https://api.adorable.io/avatars/256/${firebaseUser.email}.png`
-    });
-    return newPlayer;
+    const player = await Player.findById(id).exec();
+    if (player) {
+      return player;
+    } else {
+      const newPlayer = await Player.create({
+        _id: id,
+        email: firebaseUser.email,
+        displayName: firebaseUser.displayName || 'Random User',
+        photoUrl: `https://api.adorable.io/avatars/256/${firebaseUser.email}.png`
+      });
+      return newPlayer;
+    }
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
