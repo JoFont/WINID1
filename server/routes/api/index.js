@@ -13,5 +13,4 @@ router.use('/player', playerRouter);
 router.use('/sport', sportRouter);
 router.use('/team', teamRouter);
 
-
 module.exports = router;
