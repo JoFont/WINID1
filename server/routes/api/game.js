@@ -16,8 +16,8 @@ router.get('/:id', checkAuth, async (req, res, next) => {
 router.post('/create', checkAuth, async (req, res, next) => {
   try {
     const body = req.body;
-    const game = await Game.create({...body});
-    res.status(200).json(game);
+    const newGame = await Game.create({...body});
+    res.status(200).json(newGame);
   } catch (error) {
     next(error);
   }
@@ -35,7 +35,7 @@ router.patch('/:id/edit', checkAuth, async (req, res, next) => {
 
 router.delete('/:id', checkAuth, async (req, res, next) => {
   try {
-    const game = await Game.deleteOne(req.params.id);
+    await Game.deleteOne(req.params.id);
     res.status(200).json({message: `Game with id: ${req.params.id} has been deleted!`});
   } catch (error) {
     next(error);
