@@ -13,6 +13,10 @@ const schema = new mongoose.Schema(
       type: String,
       trim: true
     },
+    reviewer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Player'
+    },
     modelId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

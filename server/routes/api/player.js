@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const router = new Router();
 const Player = require('../../models/player');
-const Status = require('../../models/status');
 const Review = require('../../models/review');
 
 const pushStatus = require('../../services/pushStatus');
+const pushReview = require('../../services/pushReview');
 
 const checkAuth = require('../../middleware/check-auth');
 
@@ -26,7 +26,7 @@ router.get('/:username', async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', checkAuth, async (req, res, next) => {
   try {
     await Player.findByIdAndDelete(req.params.id);
     res.status(200);
@@ -35,34 +35,39 @@ router.delete('/:id', async (req, res, next) => {
   }
 });
 
-router.get('/:id/status', async (req, res, next) => {
+router.post('/:id/status', checkAuth, async (req, res, next) => {
   const id = req.params.id;
-  pushStatus(id, Player, req.body.past, req.body.current);
-  // try {
-  //   const newStatus = await Status.create({
-  //     current: req.body.current,
-  //     past: ,
-  //     on: id,
-  //     onModel: 'Player'
-  //   });
-  //   const player = await Player.findById(id);
-  //   player.statusLog.push(newStatus);
-  //   player.status = newStatus;
-  //   player.save();
-  //   res.status(200);
-  // } catch (error) {
-  //   next(error);
-  // }
+  try {
+    const statusLog = await pushStatus(
+      id,
+      Player,
+      req.body.past,
+      req.body.current
+    );
+    res.status(200).json(statusLog);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+router.post('/:id/review', checkAuth, async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const review = await pushReview(id, Player, req.authId, req.body);
+    res.status(200).json(review);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 });
 
 module.exports = router;
 
-/*
-- [X]  GET /:username
-- [X]  POST /create
-- [ ]  PATCH /:id/edit
-- [X]  DELETE /:id
-- [ ]  POST /:id/status
-- [ ]  POST /:id/review
-- [ ]  PATCH /:id/review/:review_id
-*/
+// - [X]  GET /:username
+// - [X]  POST /create
+// - [ ]  PATCH /:id/edit
+// - [X]  DELETE /:id
+// - [X]  POST /:id/status
+// - [X]  POST /:id/review
+// - [ ]  PATCH /:id/review/:review_id
