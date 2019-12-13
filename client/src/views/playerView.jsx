@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export class playerView extends Component {
-  render() {
-    return (
-      <div>
-        <h1>Player</h1>
-      </div>
-    );
-  }
-}
+const playerView = () => {
+  return (
+    <div>
+      <h1>Player</h1>
+    </div>
+  );
+};
 
 export default playerView;
