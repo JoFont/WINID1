@@ -1,32 +1,34 @@
 const mongoose = require('mongoose');
 
-const schema = new mongoose.Schema({
-  stars: {
-    type: Number,
-    min: 0,
-    max: 5
+const schema = new mongoose.Schema(
+  {
+    stars: {
+      type: Number,
+      min: 0,
+      max: 5
+    },
+    upvote: Boolean,
+    downvote: Boolean,
+    comment: {
+      type: String,
+      trim: true
+    },
+    modelId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      // Instead of a hardcoded model name in `ref`, `refPath` means Mongoose
+      // will look at the `onModel` property to find the right model.
+      refPath: 'modelName'
+    },
+    modelName: {
+      type: String,
+      required: true,
+      enum: ['Player', 'Location']
+    }
   },
-  upvote: Boolean,
-  downvote: Boolean,
-  comment: {
-    type: String,
-    trim: true
-  },
-  on: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    // Instead of a hardcoded model name in `ref`, `refPath` means Mongoose
-    // will look at the `onModel` property to find the right model.
-    refPath: 'onModel'
-  },
-  onModel: {
-    type: String,
-    required: true,
-    enum: ['Player', 'Location']
+  {
+    timestamps: true
   }
-},
-{
-  timestamps: true
-});
+);
 
 module.exports = mongoose.model('Review', schema);

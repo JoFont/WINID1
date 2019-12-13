@@ -110,6 +110,8 @@ schema.statics.findOrCreate = async function(id, firebaseUser) {
       const newPlayer = await Player.create({
         _id: id,
         email: firebaseUser.email,
+        username:
+          firebaseUser.email.split('@')[0] + Math.floor(Math.random() * 1000),
         displayName: firebaseUser.displayName || 'Your Name',
         photoUrl: `https://api.adorable.io/avatars/256/${firebaseUser.email}.png`
       });

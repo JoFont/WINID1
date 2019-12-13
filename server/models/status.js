@@ -1,27 +1,25 @@
 const mongoose = require('mongoose');
 
-const schema = new mongoose.Schema({
-  current: mongoose.Schema.Types.Mixed,
-  past: mongoose.Schema.Types.Mixed,
-  on: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    // Instead of a hardcoded model name in `ref`, `refPath` means Mongoose
-    // will look at the `onModel` property to find the right model.
-    refPath: 'onModel'
+const schema = new mongoose.Schema(
+  {
+    current: mongoose.Schema.Types.Mixed,
+    past: mongoose.Schema.Types.Mixed,
+    modelId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      // Instead of a hardcoded model name in `ref`, `refPath` means Mongoose
+      // will look at the `onModel` property to find the right model.
+      refPath: 'modelName'
+    },
+    modelName: {
+      type: String,
+      required: true,
+      enum: ['Request', 'Game', 'Player']
+    }
   },
-  onModel: {
-    type: String,
-    required: true,
-    enum: ['Request', 'Game', "Player"]
+  {
+    timestamps: true
   }
-},
-{
-  timestamps: true
-});
+);
 
 module.exports = mongoose.model('Status', schema);
-
-
-
-
