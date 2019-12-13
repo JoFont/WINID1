@@ -44,8 +44,8 @@ router.delete('/:id', checkAuth, async (req, res, next) => {
 
 router.post('/:id/status', checkAuth, async (req, res, next) => {
   try {
-    const newStatus = await pushStatus(req.params.id, Game, req.body.past, req.body.current);
-    res.status(200).json(newStatus);
+    const statusLog = await pushStatus(req.params.id, Game, req.body.past, req.body.current);
+    res.status(200).json(statusLog);
   } catch (error) {
     next(error);
   }
