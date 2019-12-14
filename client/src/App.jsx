@@ -20,6 +20,13 @@ function App() {
     //TODO: This can be done in any component, it's here for demonstration purposes
     requestNotificationPerm(fire).then(retrievedToken => {
       setMessageToken(retrievedToken);
+      console.log(retrievedToken);
+    });
+
+    // Recieve message when user is in the website
+    fire.messaging().onMessage((payload) => {
+      console.log('Message received. ', payload);
+      // ...
     });
 
     // Authentication Event Listener

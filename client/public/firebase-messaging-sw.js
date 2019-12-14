@@ -31,7 +31,12 @@ messaging.setBackgroundMessageHandler(function(payload) {
       }
     })
     .then(() => {
-      return registration.showNotification("my notification title");
+      const title = payload.data.title;
+      const options = {
+        body: payload.data.message,
+        icon: payload.data.icon
+      };
+      return registration.showNotification(title, options);
     });
   return promiseChain;
 });
