@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/messaging";
 
 import 'antd/dist/antd.css';
 import './styles/tailwind.css';
@@ -22,11 +23,14 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+// messaging.usePublicVapidKey("BBA0r1n8DaNsQxgJ2_CGETg037Er7TbUtFajsXVUBGw6RBNWU_PJ0i2GkFIQrIPwq0GCWaQkqDw-cMhlExsn_BU");
+
 
 setGlobal({
   fire: firebase,
   player: null,
   userToken: null,
+  playerMessagingToken: null
 });
 
 
