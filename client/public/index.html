@@ -32,28 +32,21 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 
-    <h1 id="iphone-test"></h1>
     <!-- Service Worker registry -->
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', async () => {
-          const iphoneH1 = document.querySelector("#iphone-test");
           try {
             const registration = await navigator.serviceWorker.register('worker.js');
             if(registration) {
               console.log('Worker registration successful', registration.scope);
-              iphoneH1.textContent = "Worker registration successful";
             }
           } catch(err) {
             console.log(err);
-            iphoneH1.textContent = "Service Worker is not supported by browser.";
-            
           }
         });
       } else {
         console.log('Service Worker is not supported by browser.');
-        iphoneH1.textContent = "Service Worker is not supported by browser.";
-
       }
     </script>
   </body>
