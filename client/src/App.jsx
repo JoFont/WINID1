@@ -7,7 +7,6 @@ import MainViews from './views/views.switch';
 import Navbar from './components/Navbar';
 import GameCard from './components/GameCard';
 import TestMap from './components/Maps/TestMap';
-// firebase.initializeApp(firebaseConfig);
 
 function App() {
   const [fire] = useGlobal('fire');
