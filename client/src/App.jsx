@@ -17,6 +17,7 @@ function App() {
   // Use effect for Firebase Magic
   useEffect(() => {
     // Initialization for cloud messaging
+    //TODO: This can be done in any component, it's here for demonstration purposes
     requestNotificationPerm(fire).then(retrievedToken => {
       setMessageToken(retrievedToken);
     });
@@ -25,12 +26,15 @@ function App() {
     fire.auth().onAuthStateChanged(async firebaseUser => {
       if (firebaseUser) {
         setToken(firebaseUser._lat);
-        const playerFetch = await findOrCreatePlayer(firebaseUser._lat, firebaseUser);
-        if (playerFetch && player === null) {
-          setPlayer(playerFetch.data);
+        try {
+          const playerFetch = await findOrCreatePlayer(firebaseUser._lat, firebaseUser);
+          if (playerFetch && player === null) setPlayer(playerFetch.data);
+        } catch (error) {
+          throw error;
         }
       } else {
-        if (token) setToken(null);
+        // resets the token to null when the user is not signed in
+        if (token) setToken(null); 
       }
     });
   }, []);
