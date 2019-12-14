@@ -10,13 +10,9 @@ const Navbar = () => {
   return (
     <div className="bg-gray-600 p-3 border-b text-white">
       <Affix offsetTop={0}>
-        <Link
-          to={ROUTES.PLAYER + '/' + (player && player.username)}
-          className="text-black"
-        >
+        <Link to={ROUTES.PLAYER + '/' + (player && player.username)} className="text-black">
           Profile
         </Link>
-        <Link></Link>
       </Affix>
     </div>
   );
