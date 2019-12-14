@@ -7,7 +7,8 @@ import GameCard from './components/GameCard';
 import TestMap from './components/Maps/TestMap';
 
 import { requestNotificationPerm } from "./services/notifications";
-
+import { notification } from "antd";
+ 
 function App() {
   const [fire] = useGlobal('fire');
   const [token, setToken] = useGlobal('token');
@@ -26,7 +27,13 @@ function App() {
     // Recieve message when user is in the website
     fire.messaging().onMessage((payload) => {
       console.log('Message received. ', payload);
-      // ...
+      notification.open({
+        message: payload.data.title,
+        description: payload.data.message,
+        onClick: () => {
+          console.log('Notification Clicked!');
+        },
+      });
     });
 
     // Authentication Event Listener

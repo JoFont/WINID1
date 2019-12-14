@@ -1,5 +1,7 @@
-//! PLEASE UPDATE VERSIONS AS FIREBASE UPDATES THEIR SERVICES.
 
+//FIXME: The website breakes on iPhone because this service is not avaliable
+
+//! PLEASE UPDATE VERSIONS AS FIREBASE UPDATES THEIR SERVICES.
 importScripts("https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js");
 importScripts("https://www.gstatic.com/firebasejs/7.6.0/firebase-messaging.js");
 
