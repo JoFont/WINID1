@@ -6,6 +6,7 @@ import { findOrCreate as findOrCreatePlayer } from './services/api/player';
 import MainViews from './views/views.switch';
 import Navbar from './components/Navbar';
 import GameCard from './components/GameCard';
+import TestMap from './components/Maps/TestMap';
 // firebase.initializeApp(firebaseConfig);
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
       <div className="bg-gray-200">
         <Navbar></Navbar>
         <GameCard></GameCard>
+        <TestMap></TestMap>
         <button onClick={handleSignOut}>Sign Out</button>
       </div>
       <MainViews />
