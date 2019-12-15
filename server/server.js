@@ -43,7 +43,7 @@ const onError = error => {
 const onListening = server => {
   const { port } = server.address();
   debug(`Node server listening on ${ port }`);
-  if (process.env.NODE_ENV === 'development') debug(`Visit http://localhost:3000 while developing`);
+  if (process.env.NODE_ENV === 'development') debug(`Visit http://localhost:${process.env.PORT} while developing`);
 };
 
 const initiate = () => {
