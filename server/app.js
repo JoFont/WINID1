@@ -5,6 +5,7 @@ const logger = require('morgan');
 const serveFavicon = require('serve-favicon');
 const apiRouter = require('./routes/api');
 const cors = require('cors');
+
 const app = express();
 
 // Initialize Firebase admin
@@ -26,9 +27,11 @@ app.use(express.json());
 //   }
 // }
 
-app.use(cors());
+
 
 //! Routes
+app.use(cors());
+
 // <== API ==>
 app.use('/api', apiRouter);
 
@@ -39,6 +42,9 @@ app.use(serveFavicon(join(__dirname, '../client/public', 'favicon.ico')));
 app.get('*', (req, res, next) => {
   res.sendFile(join(__dirname, '../client/build/index.html'));
 });
+
+
+
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {
