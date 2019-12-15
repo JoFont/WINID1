@@ -11,7 +11,7 @@ import { notification } from "antd";
  
 function App() {
   const [fire] = useGlobal('fire');
-  const [token, setToken] = useGlobal('token');
+  const [userToken, setUserToken] = useGlobal('userToken');
   const [player, setPlayer] = useGlobal('player');
   const [, setMessageToken] = useGlobal('playerMessagingToken');
 
@@ -39,7 +39,7 @@ function App() {
     // Authentication Event Listener
     fire.auth().onAuthStateChanged(async firebaseUser => {
       if (firebaseUser) {
-        setToken(firebaseUser._lat);
+        setUserToken(firebaseUser._lat);
         try {
           const playerFetch = await findOrCreatePlayer(firebaseUser._lat, firebaseUser);
           if (playerFetch && player === null) setPlayer(playerFetch.data);
@@ -48,7 +48,7 @@ function App() {
         }
       } else {
         // resets the token to null when the user is not signed in
-        if (token) setToken(null); 
+        if (userToken) setUserToken(null); 
       }
     });
   }, []);

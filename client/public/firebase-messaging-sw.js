@@ -38,7 +38,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
         body: payload.data.message,
         icon: payload.data.icon
       };
-      return registration.showNotification(title, options);
+      return self.registration.showNotification(title, options);
     });
   return promiseChain;
 });
