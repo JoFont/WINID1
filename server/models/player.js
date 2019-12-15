@@ -123,15 +123,13 @@ schema.statics.findOrCreate = async function(id, firebaseUser) {
       const newPlayer = await Player.create({
         _id: id,
         email: firebaseUser.email,
-        username:
-          firebaseUser.email.split('@')[0] + Math.floor(Math.random() * 1000),
+        username: firebaseUser.email.split('@')[0] + Math.floor(Math.random() * 1000),
         displayName: firebaseUser.displayName || 'Your Name',
         photoUrl: `https://api.adorable.io/avatars/256/${firebaseUser.email}.png`
       });
       return newPlayer;
     }
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -146,7 +144,6 @@ schema.statics.findByUsername = async function(username) {
       throw error("There's no player with that username");
     }
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

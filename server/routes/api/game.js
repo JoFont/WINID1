@@ -2,7 +2,7 @@ const { Router } = require('express');
 const router = new Router();
 const checkAuth = require("../../middleware/check-auth");
 const Game = require("../../models/game");
-const pushStatus = require("../../services/pushStatus");
+const addStatus = require("../../services/addStatus");
 
 router.get('/:id', checkAuth, async (req, res, next) => {
   try {
@@ -44,7 +44,7 @@ router.delete('/:id', checkAuth, async (req, res, next) => {
 
 router.post('/:id/status', checkAuth, async (req, res, next) => {
   try {
-    const statusLog = await pushStatus(req.params.id, Game, req.body.past, req.body.current);
+    const statusLog = await addStatus(req.params.id, Game, req.body.past, req.body.current);
     res.status(200).json(statusLog);
   } catch (error) {
     next(error);

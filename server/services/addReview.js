@@ -1,9 +1,8 @@
 const Review = require('../models/status');
 
-module.exports = pushReview = async (id, model, reviewer, data) => {
+module.exports = addReview = async (id, model, reviewer, data) => {
   try {
     const modelName = await model.getModelName();
-    // const modelDocument = await model.findById(id).exec();
     const { stars, upvote, downvote, comment } = data;
     const newReview = await Review.create({
       modelId: id,
