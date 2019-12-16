@@ -2,12 +2,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        winid: {
-          1: "#f7fafc",
-          2: "#edf2f7",
-          3: "#e2e8f0",
-          4: "#3e64ff"
-        }
+        "winid-1": "#f7fafc",
+        "winid-2": "#edf2f7",
+        "winid-3": "#e2e8f0",
+        "winid-4": "#3e64ff"
       }
     }
   },
