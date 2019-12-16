@@ -37,6 +37,11 @@ const Map = props => {
         geoTracker._geolocateButton.click();
       });
     }
+
+    if(props.controls) {
+      map.addControl(new mapbox.NavigationControl());
+    }
+
   }, [mapContainer]);
 
   return <div ref={el => (mapContainer = el)} className="mapContainer w-100 h-screen m-0"></div>;
