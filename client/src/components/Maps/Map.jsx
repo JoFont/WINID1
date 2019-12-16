@@ -13,7 +13,6 @@ const Map = props => {
   let mapContainer;
   let map;
 
-  
 
   useEffect(() => {
     map = new mapbox.Map({
@@ -34,6 +33,7 @@ const Map = props => {
       map.addControl(geoTracker);
 
       map.on("load", () => {
+        console.log("laded")
         geoTracker._geolocateButton.click();
       });
     }
@@ -42,7 +42,12 @@ const Map = props => {
       map.addControl(new mapbox.NavigationControl());
     }
 
+    //? Effect cleanup => é igual a componentWilUnmount
+    return () => {
+      map.remove();
+    }
   }, [mapContainer]);
+
 
   return <div ref={el => (mapContainer = el)} className="mapContainer w-100 h-screen m-0"></div>;
 };
