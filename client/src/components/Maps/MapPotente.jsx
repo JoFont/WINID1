@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ReactMapGL, { Marker } from "react-map-gl";
+import ReactMapGL, { Marker, GeolocateControl } from "react-map-gl";
 import { Icon } from "antd";
 import useLocation from "../../hooks/useLocation";
 
@@ -34,6 +34,8 @@ const Map = () => {
         ...location,
         zoom: 8
       }));
+
+
     }
   }, [location, setViewport]);
 
@@ -45,16 +47,11 @@ const Map = () => {
       onViewportChange={vp => setViewport(vp)}
     >
     {location ? (
-        <Marker
-          latitude={location.latitude}
-          longitude={location.longitude}
-          offsetLeft={-20}
-          offsetTop={-10}
-        >
-          <span style={{ fontSize: `${viewport.zoom * 0.2}rem` }}>
-            <Icon type="smile" />
-          </span>
-        </Marker>
+      <GeolocateControl 
+          positionOptions={{enableHighAccuracy: true}}
+          trackUserLocation={true}
+          onLoad={() => console.log("Loaded Cenas")}
+        />
       ) : null}
     </ReactMapGL>
   );

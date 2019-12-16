@@ -2,10 +2,10 @@
 export const flyToLocation = map => {
   let control;
   map._controls.forEach(ctrl => {
-    console.log(ctrl);
-    if(ctrl._container.childNodes[0].className.includes("mapboxgl-ctrl-geolocate")) { 
-      console.log("HELOOOOOOO");
-      control = ctrl;
+    console.dir(ctrl._container);
+    if(ctrl._container.className.includes("mapboxgl-ctrl-group")) { 
+      console.log(ctrl._container.innerHTML);
+      control = ctrl._container.firstElementChild;
       // return;
     }
   });
