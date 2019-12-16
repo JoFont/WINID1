@@ -4,9 +4,9 @@ import TOKEN from "../../constants/mapbox.token"
 
 const TestMap = () => {
   const [mapProps, setMapProps] = useState({
-    lng: 5,
-    lat: 34,
-    zoom: 5
+    lat: 38.736946,
+    lng: -9.142685,
+    zoom: 12
   })
 
   let mapContainer
