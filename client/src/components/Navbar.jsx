@@ -1,21 +1,21 @@
-import React, { useState, useGlobal } from 'reactn';
-import { Link } from 'react-router-dom';
-import { Affix, Button } from 'antd';
-import * as ROUTES from '../constants/trimmed.routes';
+import React, { useState, useGlobal } from "reactn"
+import { Link } from "react-router-dom"
+import { Affix, Button } from "antd"
+import * as ROUTES from "../constants/trimmed.routes"
 
 const Navbar = () => {
-  const [top, setTop] = useState(10);
-  const [player] = useGlobal('player');
+  const [top, setTop] = useState(10)
+  const [player] = useGlobal("player")
 
   return (
-    <div className="bg-gray-600 p-3 border-b text-white">
+    <div className="bg-indigo-400 p-3 border-b text-white">
       <Affix offsetTop={0}>
-        <Link to={ROUTES.PLAYER + '/' + (player && player.username)} className="text-black">
+        <Link to={ROUTES.PLAYER + "/" + (player && player.username)} className="text-black">
           Profile
         </Link>
       </Affix>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

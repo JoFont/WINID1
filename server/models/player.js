@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema(
   {
@@ -33,15 +33,15 @@ const schema = new mongoose.Schema(
     },
     sports: {
       type: [mongoose.Types.ObjectId],
-      ref: 'Sport'
+      ref: "Sport"
     },
     status: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Status'
+      ref: "Status"
     },
     statusLog: {
       type: [mongoose.Schema.Types.ObjectId],
-      ref: 'Status'
+      ref: "Status"
     },
     range: {
       type: Number,
@@ -50,7 +50,7 @@ const schema = new mongoose.Schema(
     location: {
       type: {
         type: String, // Don't do `{ location: { type: String } }`
-        enum: ['Point'] // 'location.type' must be 'Point'
+        enum: ["Point"] // 'location.type' must be 'Point'
       },
       coordinates: {
         type: [Number]
@@ -73,7 +73,7 @@ const schema = new mongoose.Schema(
         {
           sport: {
             type: mongoose.Types.ObjectId,
-            ref: 'Sport'
+            ref: "Sport"
           },
           starCount: {
             type: Number,
@@ -98,49 +98,48 @@ const schema = new mongoose.Schema(
   {
     timestamps: true
   }
-);
+)
 
-schema.statics.getModelName = async () => {
-  const Player = this;
+schema.statics.getModelName = async function() {
+  const Player = this
   try {
     return (
       Player.collection.name.charAt(0).toUpperCase() +
       Player.collection.name.slice(1, Player.collection.name.length - 1)
-    );
+    )
   } catch (error) {
-    next(error);
+    next(error)
   }
-};
+}
 
-schema.statics.findOrCreate = async (id, firebaseUser) => {
-  const Player = this;
+schema.statics.findOrCreate = async function(id, firebaseUser) {
+  const Player = this
   try {
-    const player = await Player.findById(id).exec();
-    if (player) return player;
-  
+    const player = await Player.findById(id).exec()
+    if (player) return player
+
     const newPlayer = await Player.create({
       _id: id,
       email: firebaseUser.email,
-      username: firebaseUser.email.split('@')[0] + Math.floor(Math.random() * 1000),
-      displayName: firebaseUser.displayName || 'Your Name',
+      username: firebaseUser.email.split("@")[0] + Math.floor(Math.random() * 1000),
+      displayName: firebaseUser.displayName || "Your Name",
       photoUrl: firebaseUser.photoURL || `https://api.adorable.io/avatars/256/${firebaseUser.email}.png`
-    });
-    return newPlayer;
-
+    })
+    return newPlayer
   } catch (error) {
-    next(error);
+    console.log(error)
   }
-};
+}
 
-schema.statics.findByUsername = async username => {
-  const Player = this;
+schema.statics.findByUsername = async function(username) {
+  const Player = this
   try {
-    const player = await Player.findOne({ username: username }).exec();
-    if (player) return player;
-    throw error("There's no player with that username");
+    const player = await Player.findOne({ username: username }).exec()
+    if (player) return player
+    throw error("There's no player with that username")
   } catch (error) {
-    next(error);
+    next(error)
   }
-};
+}
 
-module.exports = mongoose.model('Player', schema);
+module.exports = mongoose.model("Player", schema)
