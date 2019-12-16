@@ -1,7 +1,7 @@
 import React from "react";
 
 const RequestView = () => {
-  return <div>REQUEST</div>;
+  return <div></div>;
 };
 
 export default RequestView;

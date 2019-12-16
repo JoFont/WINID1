@@ -4,7 +4,7 @@ import Map from "../components/Maps/Map";
 const HomeView = () => {
   return (
     <div>
-      <Map zoom={12}></Map>
+      <Map zoom={8}></Map>
     </div>
   );
 };
