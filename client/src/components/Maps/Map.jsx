@@ -1,56 +1,34 @@
-import React, { useState, useEffect } from "react";
-import ReactMapGL, { Marker } from "react-map-gl";
-import TOKEN from "../../constants/mapbox.token";
-import useLocation from "../../hooks/useLocation";
+import React, { useState, useEffect } from "reactn";
+import mapbox from "mapbox-gl/dist/mapbox-gl.js";
 
 const Map = props => {
-  const location = useLocation();
-  const [viewport, setViewport] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-    latitude: 31.9742044,
-    longitude: -49.25875,
+  const [mapState, setMapState] = useState({
+    lat: 38.736946,
+    lng: -9.142685,
     zoom: props.zoom
   });
 
-  useEffect(() => {
-    const handleResize = () => {
-      setViewport({
-        ...viewport,
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  });
+  let mapContainer;
 
   useEffect(() => {
-    if (location) {
-      setViewport(vp => ({
-        ...vp,
-        ...location,
-        zoom: props.zoom
-      }));
-    }
-  }, [location, setViewport]);
+    mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
+    const map = new mapbox.Map({
+      container: mapContainer,
+      style: "mapbox://styles/jofont/ck48k2a7l0hci1co0xskrj9xl",
+      center: [mapState.lng, mapState.lat],
+      zoom: mapState.zoom
+    });
+    map.addControl(
+      new mapbox.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        trackUserLocation: true
+      })
+    );
+  }, [mapContainer]);
 
-  return (
-    <ReactMapGL
-      mapStyle="mapbox://styles/jofont/ck48k2a7l0hci1co0xskrj9xl"
-      mapboxApiAccessToken={process.env.REACT_APP_MapboxAccessToken}
-      {...viewport}
-      onViewportChange={vp => setViewport(vp)}
-    >
-      {location ? (
-        <Marker latitude={location.latitude} longitude={location.longitude} offsetLeft={-20} offsetTop={-10}>
-          <span style={{ fontSize: `${viewport.zoom * 0.5}rem` }}>💩</span>
-        </Marker>
-      ) : null}
-    </ReactMapGL>
-  );
+  return <div ref={el => (mapContainer = el)} className="mapContainer w-screen h-screen m-0"></div>;
 };
 
 export default Map;
