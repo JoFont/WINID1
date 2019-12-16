@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
-import { flyToLocation } from "../../services/mapbox/flyToLocation";
 
 const Map = props => {
+  mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
+
   const [mapState, setMapState] = useState({
     lat: 38.736946,
     lng: -9.142685,
@@ -12,15 +13,7 @@ const Map = props => {
   let mapContainer;
   let map;
 
-  mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
   
-
-  const geoTracker = new mapbox.GeolocateControl({
-    positionOptions: {
-      enableHighAccuracy: true
-    },
-    trackUserLocation: true
-  });
 
   useEffect(() => {
     map = new mapbox.Map({
@@ -30,13 +23,20 @@ const Map = props => {
       zoom: mapState.zoom
     });
 
-    map.addControl(geoTracker);
+    if(props.type === "locateUser") {
+      const geoTracker = new mapbox.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        trackUserLocation: true
+      });
 
-    map.on("load", () => {
-      geoTracker._geolocateButton.click();
-    });
+      map.addControl(geoTracker);
 
-    // flyToLocation(mapContainer);
+      map.on("load", () => {
+        geoTracker._geolocateButton.click();
+      });
+    }
   }, [mapContainer]);
 
   return <div ref={el => (mapContainer = el)} className="mapContainer w-100 h-screen m-0"></div>;
