@@ -13,7 +13,6 @@
 # production
 /build
 
-/src/styles/tailwind.css
 
 # misc
 .DS_Store
