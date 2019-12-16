@@ -100,7 +100,7 @@ const schema = new mongoose.Schema(
   }
 );
 
-schema.statics.getModelName = async function() {
+schema.statics.getModelName = async () => {
   const Player = this;
   try {
     return (
@@ -108,45 +108,37 @@ schema.statics.getModelName = async function() {
       Player.collection.name.slice(1, Player.collection.name.length - 1)
     );
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
 
-schema.statics.findOrCreate = async function(id, firebaseUser) {
+schema.statics.findOrCreate = async (id, firebaseUser) => {
   const Player = this;
   try {
     const player = await Player.findById(id).exec();
-    if (player) {
-      return player;
-    } else {
-      const newPlayer = await Player.create({
-        _id: id,
-        email: firebaseUser.email,
-        username:
-          firebaseUser.email.split('@')[0] + Math.floor(Math.random() * 1000),
-        displayName: firebaseUser.displayName || 'Your Name',
-        photoUrl: `https://api.adorable.io/avatars/256/${firebaseUser.email}.png`
-      });
-      return newPlayer;
-    }
+    if (player) return player;
+  
+    const newPlayer = await Player.create({
+      _id: id,
+      email: firebaseUser.email,
+      username: firebaseUser.email.split('@')[0] + Math.floor(Math.random() * 1000),
+      displayName: firebaseUser.displayName || 'Your Name',
+      photoUrl: firebaseUser.photoURL || `https://api.adorable.io/avatars/256/${firebaseUser.email}.png`
+    });
+    return newPlayer;
+
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
 
-schema.statics.findByUsername = async function(username) {
+schema.statics.findByUsername = async username => {
   const Player = this;
   try {
     const player = await Player.findOne({ username: username }).exec();
-    if (player) {
-      return player;
-    } else {
-      throw error("There's no player with that username");
-    }
+    if (player) return player;
+    throw error("There's no player with that username");
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

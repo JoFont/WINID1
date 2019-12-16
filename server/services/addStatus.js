@@ -1,6 +1,6 @@
 const Status = require('../models/status');
 
-module.exports = pushStatus = async (id, model, past, current) => {
+module.exports = addStatus = async (id, model, past, current) => {
   try {
     const modelName = await model.getModelName();
     const modelDocument = await model.findById(id).exec();

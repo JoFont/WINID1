@@ -3,8 +3,8 @@ const router = new Router();
 const Player = require('../../models/player');
 const Review = require('../../models/review');
 
-const pushStatus = require('../../services/pushStatus');
-const pushReview = require('../../services/pushReview');
+const addStatus = require('../../services/addStatus');
+const addReview = require('../../services/addReview');
 
 const checkAuth = require('../../middleware/check-auth');
 
@@ -54,7 +54,7 @@ router.patch('/:id/edit', checkAuth, async (req, res, next) => {
 router.post('/:id/status', checkAuth, async (req, res, next) => {
   const id = req.params.id;
   try {
-    const statusLog = await pushStatus(
+    const statusLog = await addStatus(
       id,
       Player,
       req.body.past,
@@ -62,7 +62,6 @@ router.post('/:id/status', checkAuth, async (req, res, next) => {
     );
     res.status(200).json(statusLog);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
@@ -70,10 +69,9 @@ router.post('/:id/status', checkAuth, async (req, res, next) => {
 router.post('/:id/review', checkAuth, async (req, res, next) => {
   const id = req.params.id;
   try {
-    const review = await pushReview(id, Player, req.authId, req.body);
+    const review = await addReview(id, Player, req.authId, req.body);
     res.status(200).json(review);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });

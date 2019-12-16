@@ -1,5 +1,6 @@
 import axios from 'axios';
-import * as ROUTES from './api.routes';
+import * as ROUTES from '../../constants/api.routes';
+
 
 const api = axios.create({
   baseURL: ROUTES.SPORT
