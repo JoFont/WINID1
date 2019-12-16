@@ -23,11 +23,16 @@ const GameCard = () => {
         <Icon type="ellipsis" key="ellipsis" />
       ]}
     >
-      <Meta
+      <Card.Meta
+        className="mb-0 text-lg"
         avatar={
           <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
         }
-        title="Game Title"
+        title={[
+          <h1 className="my-0 text-bold text-blue-300 text-4xl leading-none">
+            21:30
+          </h1>
+        ]}
         description="This is the description"
       />
     </Card>

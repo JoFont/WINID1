@@ -6,7 +6,6 @@ import { findOrCreate as findOrCreatePlayer } from './services/api/player';
 import MainViews from './views/views.switch';
 import Navbar from './components/Navbar';
 import GameCard from './components/GameCard';
-// firebase.initializeApp(firebaseConfig);
 
 function App() {
   const [fire] = useGlobal('fire');
