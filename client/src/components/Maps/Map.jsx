@@ -10,7 +10,7 @@ const Map = () => {
     height: window.innerHeight,
     latitude: 31.9742044,
     longitude: -49.25875,
-    zoom: 2,
+    zoom: 2
   });
 
   useEffect(() => {
