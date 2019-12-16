@@ -1,17 +1,16 @@
-
 module.exports = {
   important: true,
   theme: {
     extend: {
       fontFamily: {
-        winid1: ['Lilita One', "cursive"],
-        normal: ['Open Sans', "sans-serif"]
+        winid1: ["Lilita One", "cursive"],
+        normal: ["Open Sans", "sans-serif"]
       },
       colors: {
-        "winid-1": "#3D3CF3",
-        "winid-2": "#edf2f7",
-        "winid-3": "#e2e8f0",
-        "winid-4": "#3e64ff"
+        "winid-1": "#4160F7",
+        "winid-2": "#3E43F3",
+        "winid-3": "#3E43F4",
+        "winid-4": "#3E3CF4"
       }
     }
   },

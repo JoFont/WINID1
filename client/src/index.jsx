@@ -1,17 +1,18 @@
-import React, { setGlobal } from 'reactn';
-import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { setGlobal } from "reactn";
+import ReactDOM from "react-dom";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/messaging";
 
+import "antd/dist/antd.css";
+import "./styles/tailwind.css";
+
 require("typeface-lilita-one");
 require("typeface-open-sans");
-import 'antd/dist/antd.css';
-import './styles/tailwind.css';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCMxulxTYaRCv8folZDthFk9pmbj_aPWZw",
@@ -27,7 +28,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 // messaging.usePublicVapidKey("BBA0r1n8DaNsQxgJ2_CGETg037Er7TbUtFajsXVUBGw6RBNWU_PJ0i2GkFIQrIPwq0GCWaQkqDw-cMhlExsn_BU");
 
-
 setGlobal({
   fire: firebase,
   player: null,
@@ -35,8 +35,7 @@ setGlobal({
   playerMessagingToken: null
 });
 
-
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

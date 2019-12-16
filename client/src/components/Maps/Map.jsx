@@ -3,14 +3,14 @@ import ReactMapGL, { Marker } from "react-map-gl";
 import TOKEN from "../../constants/mapbox.token";
 import useLocation from "../../hooks/useLocation";
 
-const Map = () => {
+const Map = props => {
   const location = useLocation();
   const [viewport, setViewport] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
     latitude: 31.9742044,
     longitude: -49.25875,
-    zoom: 2
+    zoom: props.zoom
   });
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const Map = () => {
       setViewport(vp => ({
         ...vp,
         ...location,
-        zoom: 8
+        zoom: props.zoom
       }));
     }
   }, [location, setViewport]);
@@ -44,13 +44,8 @@ const Map = () => {
       {...viewport}
       onViewportChange={vp => setViewport(vp)}
     >
-    {location ? (
-        <Marker
-          latitude={location.latitude}
-          longitude={location.longitude}
-          offsetLeft={-20}
-          offsetTop={-10}
-        >
+      {location ? (
+        <Marker latitude={location.latitude} longitude={location.longitude} offsetLeft={-20} offsetTop={-10}>
           <span style={{ fontSize: `${viewport.zoom * 0.5}rem` }}>💩</span>
         </Marker>
       ) : null}

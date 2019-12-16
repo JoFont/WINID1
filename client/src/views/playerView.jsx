@@ -5,7 +5,7 @@ const PlayerView = () => {
   const [player] = useGlobal("player");
   return (
     <div className="h-screen">
-      <Row className="bg-winid-1 p-6">
+      <Row className="bg-winid-4 p-6">
         <Col span={6}>
           <div className="rounded-lg p-6">
             <img
@@ -13,8 +13,8 @@ const PlayerView = () => {
               alt=""
               className="rounded-full"
             />
-            <h1 className="text-lg text-center">{player && player.username}</h1>
-            <h2 className="text-center">Filipe Catarino</h2>
+            <h1 className="text-lg text-center uppercase text-white font-winid1">@{player && player.username}</h1>
+            <h2 className="text-2xl text-center uppercase text-white font-winid1">{player && player.displayName}</h2>
           </div>
         </Col>
         <Col span={18}>col-12</Col>
