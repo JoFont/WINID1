@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
+import { flyToLocation } from "../../services/mapbox/flyToLocation";
 
 const Map = props => {
   const [mapState, setMapState] = useState({
@@ -26,6 +27,8 @@ const Map = props => {
         trackUserLocation: true
       })
     );
+    flyToLocation(map);
+    console.log(map._controls);
   }, [mapContainer]);
 
   return <div ref={el => (mapContainer = el)} className="mapContainer w-100 h-screen m-0"></div>;
