@@ -3,6 +3,7 @@ require("typeface-open-sans");
 
 
 module.exports = {
+  important: true,
   theme: {
     extend: {
       fontFamily: {

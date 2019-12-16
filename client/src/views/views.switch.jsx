@@ -1,26 +1,26 @@
-import React from 'react';
+import React from "react";
 import { Switch, Route } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
-import homeView from "./homeView";
-import playerView from "./playerView";
-import gameView from "./gameView";
-import teamView from "./teamView";
-import leagueView from "./leagueView";
-import requestView from "./requestView";
+import HomeView from "./HomeView";
+import PlayerView from "./PlayerView";
+import GameView from "./GameView";
+import TeamView from "./TeamView";
+import LeagueView from "./LeagueView";
+import RequestView from "./RequestView";
+import LoginView from "./LoginView";
 
 const MainViews = () => {
   return (
     <Switch>
-      <Route path={ROUTES.HOME} component={homeView}/>
-      <Route to={ROUTES.PLAYER} component={playerView}/>
-      <Route to={ROUTES.GAME} component={gameView}/>
-      <Route to={ROUTES.TEAM} component={teamView}/>
-      <Route to={ROUTES.LEAGUE} component={leagueView}/>
-      <Route to={ROUTES.REQUEST} component={requestView}/>
+      <Route path={ROUTES.LOGIN} exact component={LoginView} />
+      <Route path={ROUTES.PLAYER} component={PlayerView} />
+      <Route path={ROUTES.GAME} component={GameView} />
+      <Route path={ROUTES.TEAM} component={TeamView} />
+      <Route path={ROUTES.LEAGUE} component={LeagueView} />
+      <Route path={ROUTES.REQUEST} component={RequestView} />
+      <Route path={ROUTES.HOME} exact component={HomeView} />
     </Switch>
-  )
-}
+  );
+};
 
 export default MainViews;
-
-

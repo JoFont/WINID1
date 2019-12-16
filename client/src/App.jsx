@@ -1,17 +1,16 @@
 import React, { useEffect, useGlobal, useState } from "reactn";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { findOrCreate as findOrCreatePlayer } from "./services/api/player";
 import MainViews from "./views/views.switch";
-import Navbar from "./components/Navbar";
-import GameCard from "./components/GameCard";
-import Map from "./components/Maps/Map";
+
+import * as ROUTES from "./constants/trimmed.routes";
 
 import { requestNotificationPerm } from "./services/notifications";
 import { notification, Layout, Menu, Icon } from "antd";
 import WrappedLoginForm from "./components/LogIn";
 import WrappedRegisterForm from "./components/Register";
 import BottomBar from "./components/BottomBar";
-import playerView from "./views/playerView";
+import playerView from "./views/PlayerView";
 
 const { Header, Sider, Content } = Layout;
 
@@ -67,12 +66,45 @@ function App() {
   return (
     <Router>
       <Layout>
-        <Sider trigger={null} collapsible collapsed={toggle} className="bg-winid-1">
+        <Sider trigger={null} collapsible collapsed={toggle} className="bg-winid-1 h-screen">
           <div className="logo text-center py-3">
             <Icon type="slack" className="text-4xl text-white" />
           </div>
-          <Menu mode="inline" defaultSelectedKeys={["1"]} className="bg-winid-1 text-white border-none ">
-            <Menu.Item key="1">
+          <ul>
+            {userToken && (
+              <li className="px-3 py-6 flex justify-center items-center">
+                <Link to={ROUTES.PLAYER + "/" + (player && player.username)}>
+                  <Icon type="user" className="text-lg text-white" />
+                </Link>
+              </li>
+            )}
+            {!userToken && (
+              <li className="px-3 py-6 flex justify-center items-center">
+                <Link to={ROUTES.LOGIN}>
+                  <Icon type="login" className="text-lg text-white" />
+                </Link>
+              </li>
+            )}
+            <li className="px-3 py-6 flex justify-center items-center">
+              <Icon type="team" className="text-lg text-white" />
+            </li>
+            <li className="px-3 py-6 flex justify-center items-center">
+              <Icon type="environment" className="text-lg text-white" />
+            </li>
+            <li className="px-3 py-6 flex justify-center items-center">
+              <Icon type="message" className="text-lg text-white" />
+            </li>
+            <li className="px-3 py-6 flex justify-center items-center">
+              <Icon
+                className="trigger text-lg text-white"
+                type={toggle ? "menu-unfold" : "menu-fold"}
+                onClick={() => setToggle(!toggle)}
+              />
+            </li>
+          </ul>
+
+          {/* <Menu mode="inline" defaultSelectedKeys={["1"]} className="bg-winid-1 text-white border-none ">
+            <Menu.Item key="1" className="my-0 py-3">
               <Icon type="user" />
               <span>nav 1</span>
             </Menu.Item>
@@ -90,29 +122,16 @@ function App() {
                 <span>Sign Out</span>
               </Menu.Item>
             )}
-          </Menu>
+          </Menu> */}
         </Sider>
         <Layout>
           {/* <Header>
             <Icon className="trigger" type={toggle ? "menu-unfold" : "menu-fold"} onClick={() => setToggle(!toggle)} />
           </Header> */}
           <Content>
-            {/* <Navbar></Navbar> */}
-            <Map zoom={8}></Map>
-            {/* <BottomBar></BottomBar> */}
-
             <Switch>
-              {/* <Route path="/" exact component={homeView}></Route> */}
-              <Route path="/login" component={WrappedLoginForm}></Route>
-              <Route path="/register" component={WrappedRegisterForm}></Route>
-              <Route path="/player/:username" component={playerView}></Route>
-              {/* <Route path="/team/:id" component={playerView}></Route>
-          <Route path="/game/:id" component={gameView}></Route>
-          <Route path="/league/:id" component={leagueView}></Route>
-          <Route path="/request/:id" component={requestView}></Route> */}
+              <MainViews />
             </Switch>
-            {/* <WrappedRegisterForm></WrappedRegisterForm> */}
-            <MainViews />
           </Content>
         </Layout>
       </Layout>

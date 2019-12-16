@@ -1,12 +1,7 @@
-import React from "react"
-import TestMap from "../components/Maps/Map"
+import React from "react";
 
-const gameView = () => {
-  return (
-    <div>
-      <TestMap></TestMap>
-    </div>
-  );
+const GameView = () => {
+  return <div></div>;
 };
 
-export default gameView;
+export default GameView;

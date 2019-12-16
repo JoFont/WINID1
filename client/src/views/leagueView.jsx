@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const leagueView = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const LeagueView = () => {
+  return <div></div>;
+};
 
-export default leagueView
+export default LeagueView;

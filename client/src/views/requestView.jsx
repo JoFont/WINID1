@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const requestView = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const RequestView = () => {
+  return <div></div>;
+};
 
-export default requestView
+export default RequestView;

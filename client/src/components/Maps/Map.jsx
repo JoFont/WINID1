@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react"
-import ReactMapGL, { Marker } from 'react-map-gl';
+import React, { useState, useEffect } from "react";
+import ReactMapGL, { Marker } from "react-map-gl";
 import TOKEN from "../../constants/mapbox.token";
-import useLocation from '../../hooks/useLocation';
+import useLocation from "../../hooks/useLocation";
 
 const Map = () => {
   const location = useLocation();
@@ -18,12 +18,12 @@ const Map = () => {
       setViewport({
         ...viewport,
         width: window.innerWidth,
-        height: window.innerHeight,
+        height: window.innerHeight
       });
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   });
 
@@ -32,7 +32,7 @@ const Map = () => {
       setViewport(vp => ({
         ...vp,
         ...location,
-        zoom: 8,
+        zoom: 8
       }));
     }
   }, [location, setViewport]);
@@ -42,7 +42,7 @@ const Map = () => {
       mapStyle="mapbox://styles/jofont/ck48k2a7l0hci1co0xskrj9xl"
       mapboxApiAccessToken={process.env.REACT_APP_MapboxAccessToken}
       {...viewport}
-      onViewportChange={(vp) => setViewport(vp)}
+      onViewportChange={vp => setViewport(vp)}
     >
     {location ? (
         <Marker
@@ -55,9 +55,7 @@ const Map = () => {
         </Marker>
       ) : null}
     </ReactMapGL>
-  )
-}
+  );
+};
 
 export default Map;
-
-
