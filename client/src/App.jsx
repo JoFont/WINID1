@@ -68,7 +68,9 @@ function App() {
       <Layout>
         <Sider trigger={null} collapsible collapsed={toggle} className="bg-winid-1 h-screen">
           <div className="logo text-center py-3">
-            <Icon type="slack" className="text-4xl text-white" />
+            <Link to={ROUTES.HOME}>
+              <Icon type="slack" className="text-4xl text-white" />
+            </Link>
           </div>
           <ul>
             {userToken && (

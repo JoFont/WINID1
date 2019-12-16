@@ -1,78 +1,81 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const schema = new mongoose.Schema({
-  starters: {
-    type: {
-      players: {
-        type: [mongoose.Types.ObjectId],
-        ref: "Player"
-      },
-      number: {
-        type: Number,
-        default: 0,
-        min: 0
+const schema = new mongoose.Schema(
+  {
+    starters: {
+      type: {
+        players: {
+          type: [mongoose.Types.ObjectId],
+          ref: "Player"
+        },
+        number: {
+          type: Number,
+          default: 0,
+          min: 0
+        }
       }
-    } 
-  },
-  subs: {
-    type: {
-      players: {
-        type: [mongoose.Types.ObjectId],
-        ref: "Player"
-      },
-      number: {
-        type: Number,
-        default: 0,
-        min: 0
-      }
-    } 
-  },
-  sport: {
-    type: mongoose.Types.ObjectId,
-  },
-  teams: {
-    type: [mongoose.Types.ObjectId],
-    ref: "Team"
-  },
-  players: {
-    type: [mongoose.Types.ObjectId],
-    ref: "Player" 
-  },
-  admins: {
-    type: [mongoose.Types.ObjectId],
-    ref: "Player"
-  },
-  score: {
-    type: [Number],
-    default: [0, 0]
-  },
-  price: {
-    value: {
-      type: Number,
-      min: 0
     },
-    currency: {
-      type: String,
-      default: "EUR"
+    subs: {
+      type: {
+        players: {
+          type: [mongoose.Types.ObjectId],
+          ref: "Player"
+        },
+        number: {
+          type: Number,
+          default: 0,
+          min: 0
+        }
+      }
+    },
+    sport: {
+      type: mongoose.Types.ObjectId
+    },
+    teams: {
+      type: [mongoose.Types.ObjectId],
+      ref: "Team"
+    },
+    players: {
+      type: [mongoose.Types.ObjectId],
+      ref: "Player"
+    },
+    admins: {
+      type: [mongoose.Types.ObjectId],
+      ref: "Player"
+    },
+    score: {
+      type: [Number],
+      default: [0, 0]
+    },
+    price: {
+      value: {
+        type: Number,
+        min: 0
+      },
+      currency: {
+        type: String,
+        default: "EUR"
+      }
+    },
+    location: {
+      type: mongoose.Types.ObjectId,
+      ref: "Location"
+    },
+    schedule: {
+      type: Date
+    },
+    status: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Status"
+    },
+    statusLog: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Status"
     }
   },
-  location: {
-    type: mongoose.Types.ObjectId,
-  },
-  schedule: {
-    type: Date,
-  },
-  status: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Status"
-  },
-  statusLog: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "Status"
+  {
+    timestamps: true
   }
-},
-{
-  timestamps: true
-});
+);
 
-module.exports = mongoose.model('Game', schema);
+module.exports = mongoose.model("Game", schema);

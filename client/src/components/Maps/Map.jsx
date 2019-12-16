@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'reactn';
+import React, { useState, useEffect } from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
 import { flyToLocation } from "../../services/mapbox/flyToLocation";
 
@@ -6,7 +6,7 @@ const Map = props => {
   const [mapState, setMapState] = useState({
     lat: 38.736946,
     lng: -9.142685,
-    zoom: props.zoom,
+    zoom: props.zoom
   });
 
   let mapContainer;
@@ -31,11 +31,7 @@ const Map = props => {
     console.log(map._controls);
   }, [mapContainer]);
 
-
-
-  return (
-    <div ref={el => (mapContainer = el)} className="container w-screen h-screen m-0"></div>
-  )
-}
+  return <div ref={el => (mapContainer = el)} className="mapContainer w-100 h-screen m-0"></div>;
+};
 
 export default Map;

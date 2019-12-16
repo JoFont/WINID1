@@ -4,6 +4,7 @@ import * as ROUTES from "../constants/routes";
 import HomeView from "./HomeView";
 import PlayerView from "./PlayerView";
 import GameView from "./GameView";
+import GamesView from "./GamesView";
 import TeamView from "./TeamView";
 import LeagueView from "./LeagueView";
 import RequestView from "./RequestView";
@@ -15,6 +16,7 @@ const MainViews = () => {
       <Route path={ROUTES.LOGIN} exact component={LoginView} />
       <Route path={ROUTES.PLAYER} component={PlayerView} />
       <Route path={ROUTES.GAME} component={GameView} />
+      <Route path={ROUTES.GAMES} component={GamesView} />
       <Route path={ROUTES.TEAM} component={TeamView} />
       <Route path={ROUTES.LEAGUE} component={LeagueView} />
       <Route path={ROUTES.REQUEST} component={RequestView} />
