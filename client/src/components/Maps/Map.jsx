@@ -44,9 +44,14 @@ const Map = () => {
       {...viewport}
       onViewportChange={vp => setViewport(vp)}
     >
-      {location ? (
-        <Marker latitude={location.latitude} longitude={location.longitude} offsetLeft={-20} offsetTop={-10}>
-          <span style={{ fontSize: `${viewport.zoom * 0.5}rem` }}>📸</span>
+    {location ? (
+        <Marker
+          latitude={location.latitude}
+          longitude={location.longitude}
+          offsetLeft={-20}
+          offsetTop={-10}
+        >
+          <span style={{ fontSize: `${viewport.zoom * 0.5}rem` }}>💩</span>
         </Marker>
       ) : null}
     </ReactMapGL>
