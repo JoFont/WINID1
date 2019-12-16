@@ -1,11 +1,11 @@
 import React, { useEffect, useGlobal } from "reactn";
 import { Row, Col } from "antd";
 
-const playerView = () => {
-  // const [player] = useGlobal("player")
+const PlayerView = () => {
+  const [player] = useGlobal("player");
   return (
     <div className="h-screen">
-      <Row className="bg-blue-500 p-6">
+      <Row className="bg-winid-1 p-6">
         <Col span={6}>
           <div className="rounded-lg p-6">
             <img
@@ -13,7 +13,7 @@ const playerView = () => {
               alt=""
               className="rounded-full"
             />
-            <h1 className="text-lg text-center">@Alntjan</h1>
+            <h1 className="text-lg text-center">{player && player.username}</h1>
             <h2 className="text-center">Filipe Catarino</h2>
           </div>
         </Col>
@@ -23,4 +23,4 @@ const playerView = () => {
   );
 };
 
-export default playerView;
+export default PlayerView;

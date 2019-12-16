@@ -6,7 +6,7 @@ const gameView = () => {
     <div>
       <TestMap></TestMap>
     </div>
-  )
-}
+  );
+};
 
-export default gameView
+export default gameView;
