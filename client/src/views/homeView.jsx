@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
+import Map from "../components/Maps/Map";
 
-const homeView = () => {
+const HomeView = () => {
   return (
     <div>
-      
+      <Map zoom={8}></Map>
     </div>
-  )
-}
+  );
+};
 
-export default homeView
+export default HomeView;

@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const teamView = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const TeamView = () => {
+  return <div></div>;
+};
 
-export default teamView
+export default TeamView;
