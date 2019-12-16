@@ -10,25 +10,33 @@ const Map = props => {
   });
 
   let mapContainer;
+  let map;
+
+  mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
+  
+
+  const geoTracker = new mapbox.GeolocateControl({
+    positionOptions: {
+      enableHighAccuracy: true
+    },
+    trackUserLocation: true
+  });
 
   useEffect(() => {
-    mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
-    const map = new mapbox.Map({
+    map = new mapbox.Map({
       container: mapContainer,
       style: "mapbox://styles/jofont/ck48k2a7l0hci1co0xskrj9xl",
       center: [mapState.lng, mapState.lat],
       zoom: mapState.zoom
     });
-    map.addControl(
-      new mapbox.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true
-        },
-        trackUserLocation: true
-      })
-    );
-    flyToLocation(map);
-    console.log(map._controls);
+
+    map.addControl(geoTracker);
+
+    map.on("load", () => {
+      geoTracker._geolocateButton.click();
+    });
+
+    // flyToLocation(mapContainer);
   }, [mapContainer]);
 
   return <div ref={el => (mapContainer = el)} className="mapContainer w-100 h-screen m-0"></div>;
