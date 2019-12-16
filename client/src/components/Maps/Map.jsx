@@ -51,7 +51,7 @@ const Map = () => {
           offsetLeft={-20}
           offsetTop={-10}
         >
-          <span style={{ fontSize: `${viewport.zoom * 0.5}rem` }}>📸</span>
+          <span style={{ fontSize: `${viewport.zoom * 0.5}rem` }}>💩</span>
         </Marker>
       ) : null}
     </ReactMapGL>
