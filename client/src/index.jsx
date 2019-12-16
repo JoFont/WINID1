@@ -8,6 +8,8 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/messaging";
 
+require("typeface-lilita-one");
+require("typeface-open-sans");
 import 'antd/dist/antd.css';
 import './styles/tailwind.css';
 

@@ -1,6 +1,3 @@
-require("typeface-lilita-one");
-require("typeface-open-sans");
-
 
 module.exports = {
   important: true,
