@@ -1,9 +1,9 @@
 import React, { useEffect, useGlobal, useState } from "reactn";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { findOrCreate as findOrCreatePlayer } from "./services/api/player";
 import MainViews from "./views/views.switch";
-import Navbar from "./components/Navbar";
-import GameCard from "./components/GameCard";
+
+import * as ROUTES from "./constants/trimmed.routes";
 
 import { requestNotificationPerm } from "./services/notifications";
 import { notification, Layout, Menu, Icon } from "antd";
@@ -66,19 +66,33 @@ function App() {
   return (
     <Router>
       <Layout>
-        <Sider trigger={null} collapsible collapsed={toggle} className="bg-winid-1">
+        <Sider trigger={null} collapsible collapsed={toggle} className="bg-winid-1 h-screen">
           <div className="logo text-center py-3">
             <Icon type="slack" className="text-4xl text-white" />
           </div>
           <ul>
+            {userToken && (
+              <li className="px-3 py-6 flex justify-center items-center">
+                <Link to={ROUTES.PLAYER + "/" + (player && player.username)}>
+                  <Icon type="user" className="text-lg text-white" />
+                </Link>
+              </li>
+            )}
+            {!userToken && (
+              <li className="px-3 py-6 flex justify-center items-center">
+                <Link to={ROUTES.LOGIN}>
+                  <Icon type="login" className="text-lg text-white" />
+                </Link>
+              </li>
+            )}
             <li className="px-3 py-6 flex justify-center items-center">
-              <Icon type="user" className="text-lg text-white" />
+              <Icon type="team" className="text-lg text-white" />
             </li>
             <li className="px-3 py-6 flex justify-center items-center">
-              <Icon type="video-camera" className="text-lg text-white" />
+              <Icon type="environment" className="text-lg text-white" />
             </li>
             <li className="px-3 py-6 flex justify-center items-center">
-              <Icon type="logout" className="text-lg text-white" />
+              <Icon type="message" className="text-lg text-white" />
             </li>
             <li className="px-3 py-6 flex justify-center items-center">
               <Icon
@@ -115,7 +129,9 @@ function App() {
             <Icon className="trigger" type={toggle ? "menu-unfold" : "menu-fold"} onClick={() => setToggle(!toggle)} />
           </Header> */}
           <Content>
-            <MainViews />
+            <Switch>
+              <MainViews />
+            </Switch>
           </Content>
         </Layout>
       </Layout>
