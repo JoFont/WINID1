@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
+var MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
+
 
 const Map = props => {
   mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
@@ -33,13 +35,21 @@ const Map = props => {
       map.addControl(geoTracker);
 
       map.on("load", () => {
-        console.log("laded")
         geoTracker._geolocateButton.click();
       });
     }
 
     if(props.controls) {
       map.addControl(new mapbox.NavigationControl());
+      // const geoCenas = 
+
+      // console.log(navigator.geolocation);
+
+      map.addControl(new MapboxGeocoder({
+        accessToken: mapbox.accessToken,
+        mapboxgl: mapbox,
+        countries: "pt"
+      }));
     }
 
     //? Effect cleanup => é igual a componentWilUnmount
