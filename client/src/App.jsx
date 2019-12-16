@@ -4,7 +4,7 @@ import { findOrCreate as findOrCreatePlayer } from "./services/api/player"
 import MainViews from "./views/views.switch"
 import Navbar from "./components/Navbar"
 import GameCard from "./components/GameCard"
-import TestMap from "./components/Maps/TestMap"
+import Map from "./components/Maps/Map"
 
 import { requestNotificationPerm } from "./services/notifications"
 import { notification } from "antd"
@@ -79,6 +79,7 @@ function App() {
         {/* <WrappedRegisterForm></WrappedRegisterForm> */}
         <button onClick={handleSignOut}>Sign Out</button>
       </div>
+      <Map zoom={8}></Map>
       <BottomBar></BottomBar>
       <MainViews />
     </Router>
