@@ -1,5 +1,5 @@
-import React from "react";
-import TestMap from "../components/Maps/TestMap";
+import React from "react"
+import TestMap from "../components/Maps/Map"
 
 const gameView = () => {
   return (

@@ -4,7 +4,7 @@ import { findOrCreate as findOrCreatePlayer } from "./services/api/player";
 import MainViews from "./views/views.switch";
 import Navbar from "./components/Navbar";
 import GameCard from "./components/GameCard";
-import TestMap from "./components/Maps/TestMap";
+import Map from "./components/Maps/Map";
 
 import { requestNotificationPerm } from "./services/notifications";
 import { notification, Layout, Menu, Icon } from "antd";
@@ -98,7 +98,7 @@ function App() {
           </Header> */}
           <Content>
             {/* <Navbar></Navbar> */}
-            <TestMap></TestMap>
+            <Map zoom={8}></Map>
             {/* <BottomBar></BottomBar> */}
 
             <Switch>
