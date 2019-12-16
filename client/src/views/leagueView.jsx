@@ -1,7 +1,7 @@
 import React from "react";
 
 const LeagueView = () => {
-  return <div></div>;
+  return <div>LEAGUE</div>;
 };
 
 export default LeagueView;
