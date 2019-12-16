@@ -48,7 +48,8 @@ const Map = props => {
       map.addControl(new MapboxGeocoder({
         accessToken: mapbox.accessToken,
         mapboxgl: mapbox,
-        countries: "pt"
+        countries: "pt",
+        types: "region, district, place, locality, neighborhood, address, poi"
       }));
     }
 
