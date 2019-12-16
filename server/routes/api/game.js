@@ -17,7 +17,8 @@ router.post('/create', checkAuth, async (req, res, next) => {
   try {
     const body = req.body;
     const newGame = await Game.create({...body});
-    res.status(200).json(newGame);
+    const statusLog = await addStatus(newGame._id, Game, {}, body.status.current);
+    res.status(200).json({ newGame, statusLog });
   } catch (error) {
     next(error);
   }

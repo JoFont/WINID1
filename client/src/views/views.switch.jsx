@@ -11,7 +11,7 @@ import requestView from "./requestView";
 const MainViews = () => {
   return (
     <Switch>
-      <Route to={ROUTES.HOME} component={homeView}/>
+      <Route path={ROUTES.HOME} component={homeView}/>
       <Route to={ROUTES.PLAYER} component={playerView}/>
       <Route to={ROUTES.GAME} component={gameView}/>
       <Route to={ROUTES.TEAM} component={teamView}/>
