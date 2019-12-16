@@ -76,6 +76,16 @@ router.post('/:id/review', checkAuth, async (req, res, next) => {
   }
 });
 
+router.patch('/:id/review', checkAuth, async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const review = await addReview(id, Player, req.authId, req.body);
+    res.status(200).json(review);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
 
 // - [X]  GET /:username
