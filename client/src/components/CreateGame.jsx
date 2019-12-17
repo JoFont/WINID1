@@ -45,7 +45,12 @@ const CreateGameForm = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.form.validateFields((err, values) => {
+    props.form.validateFields((err, fieldsValue) => {
+      const values = {
+        ...fieldsValue,
+        "date-picker": fieldsValue["date-picker"].format("YYYY-MM-DD"),
+        "time-picker": fieldsValue["time-picker"].format("HH:mm")
+      };
       if (!err) {
         console.log("Received values of form: ", values);
         console.log(JSON.parse(values.location));
@@ -77,6 +82,12 @@ const CreateGameForm = props => {
             initialValue: 0
           })(<InputNumber min={0} />)}
         </Form.Item>
+        <Form.Item {...formItemLayout}>
+          {getFieldDecorator("price", {
+            rules: [{ required: true, message: "Subs is required!" }],
+            initialValue: 0
+          })(<InputNumber min={0} />)}
+        </Form.Item>
         <Form.Item label="Location">
           {getFieldDecorator("location", {
             rules: [{ required: true, message: "Please input location!" }]
@@ -93,6 +104,8 @@ const CreateGameForm = props => {
             </Select>
           )}
         </Form.Item>
+        <Form.Item label="DatePicker">{getFieldDecorator("date-picker")(<DatePicker />)}</Form.Item>
+        <Form.Item label="TimePicker">{getFieldDecorator("time-picker")(<TimePicker format={"HH:mm"} />)}</Form.Item>
         <Form.Item {...formItemLayout}>
           <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
             Create!
