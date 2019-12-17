@@ -4,6 +4,7 @@ import CreateGame from "../components/CreateGame";
 import CreateModal from "../components/CreateModal";
 import { getAll as getAllGames } from "../services/api/game";
 
+
 const GamesView = () => {
   const [userToken] = useGlobal("userToken");
   const [gameList, setGameList] = useState([]);
