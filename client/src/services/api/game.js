@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as ROUTES from '../../constants/api.routes';
+import { createOne as createOneLocation } from "./location";
 
 const api = axios.create({
   baseURL: ROUTES.PLAYER
@@ -26,10 +27,12 @@ export const getById = async (token, id) => {
 
 export const createOne = async (token, data) => {
   try {
-    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
-    const res = await api.post('/create', {
-      data
-    });
+    const location = JSON.parse(data.location)
+    const newLocation = await createOneLocation({"location.coordinates": [location.geometry.lng,location.geometry.lat]});
+    // api.defaults.headers.common['authorization'] = `Bearer ${token}`;
+    // const res = await api.post('/create', {
+    //   data
+    // });
 
     return res;
   } catch (error) {
