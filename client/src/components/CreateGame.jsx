@@ -3,23 +3,12 @@ import Geocode from "react-geocode";
 import { createOne as createOneGame } from "../services/api/game";
 
 import {
-  Input,
   Form,
   Select,
   InputNumber,
   DatePicker,
   TimePicker,
-  Switch,
-  Radio,
-  Slider,
   Button,
-  Upload,
-  Icon,
-  Rate,
-  Checkbox,
-  Row,
-  Col,
-  AutoComplete
 } from "antd";
 
 Geocode.setApiKey(process.env.REACT_APP_GEOCODE_API);
@@ -57,7 +46,7 @@ const CreateGameForm = props => {
       if (!err) {
         console.log("Received values of form: ", values);
         console.log(props);
-        const createdGame = await createOneGame(userToken, player, values);
+        await createOneGame(userToken, player, values);
         props.listUpdate();
       }
     });

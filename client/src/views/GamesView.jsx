@@ -1,5 +1,4 @@
 import React, { useState, useGlobal, useEffect } from "reactn";
-import { Row, Col } from "antd";
 import CreateGame from "../components/CreateGame";
 import CreateModal from "../components/CreateModal";
 import { getAll as getAllGames } from "../services/api/game";
