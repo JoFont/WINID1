@@ -2,14 +2,7 @@ import React, { useState, useGlobal } from "reactn";
 import Geocode from "react-geocode";
 import { createOne as createOneGame } from "../services/api/game";
 
-import {
-  Form,
-  Select,
-  InputNumber,
-  DatePicker,
-  TimePicker,
-  Button,
-} from "antd";
+import { Select, InputNumber, DatePicker, TimePicker, Button } from "antd";
 
 Geocode.setApiKey(process.env.REACT_APP_GEOCODE_API);
 
@@ -19,6 +12,7 @@ const CreateGameForm = props => {
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const [userToken] = useGlobal("userToken");
   const [player] = useGlobal("player");
+  const [gameForm, setGameForm] = useState({});
 
   const handleLocationChange = async input => {
     if (!input) {
@@ -31,108 +25,66 @@ const CreateGameForm = props => {
     }
   };
 
-  const hasErrors = fieldsError => {
-    return Object.keys(fieldsError).some(field => fieldsError[field]);
+  const handleInputsChange = async value => {
+    setGameForm({
+      ...gameForm,
+      ...value
+    });
+    console.log(gameForm);
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
-    props.form.validateFields(async (err, fieldsValue) => {
-      const values = {
-        ...fieldsValue,
-        datePicker: fieldsValue["date-picker"].format("YYYY-MM-DD"),
-        timePicker: fieldsValue["time-picker"].format("HH:mm")
-      };
-      if (!err) {
-        console.log("Received values of form: ", values);
-        console.log(props);
-        await createOneGame(userToken, player, values);
-        props.listUpdate();
-      }
-    });
-  };
-
-  const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = props.form;
-
-  const formItemLayout = {
-    // labelCol: {
-    //   xs: { span: 24 },
-    //   sm: { span: 8 }
-    // },
-    // wrapperCol: {
-    //   xs: { span: 24 },
-    //   sm: { span: 16 }
-    // }
+    const values = {
+      ...gameForm,
+      date: gameForm.date.format("YYYY-MM-DD"),
+      time: gameForm.time.format("HH:mm")
+    };
+    await createOneGame(userToken, player, values);
+    props.listUpdate();
   };
 
   const locationOptions = autoCompleteResult.map(location => (
-    <Option key={JSON.stringify(location)} className="w-full">
+    <Option key={location.place_id} className="w-full" value={JSON.stringify(location)}>
       {location.formatted_address}
     </Option>
   ));
 
   return (
-    <Form onSubmit={handleSubmit} className="" layout="vertical">
+    <div>
       <div className="flex items-center justify-between border rounded-lg mb-2 p-2">
-        <Form.Item label="Starters" className="flex-1 flex flex-col items-center mb-0 pb-0">
-          {getFieldDecorator("starters", {
-            rules: [{ required: true, message: "Starters is required!" }],
-            initialValue: 5
-          })(<InputNumber min={2} className="w-10" />)}
-        </Form.Item>
-        <Form.Item label="Subs" className="flex-1 flex flex-col items-center mb-0 pb-0">
-          {getFieldDecorator("subs", {
-            rules: [{ required: true, message: "Subs is required!" }],
-            initialValue: 0
-          })(<InputNumber min={0} className="w-10" />)}
-        </Form.Item>
-        <Form.Item label="Price" className="flex-1 flex flex-col items-center mb-0 pb-0">
-          {getFieldDecorator("price", {
-            rules: [{ required: true, message: "Subs is required!" }],
-            initialValue: 0
-          })(<InputNumber min={0} className="w-10" />)}
-        </Form.Item>
+        <div>
+          <span className="text-xs text-gray-600">Starters</span>
+          <InputNumber min={2} className="w-full" onChange={val => handleInputsChange({ starters_number: val })} />
+        </div>
+        <InputNumber
+          min={0}
+          className="w-full"
+          name="subs"
+          onChange={val => handleInputsChange({ subs_number: val })}
+        />
+        <InputNumber min={0} className="w-full" onChange={val => handleInputsChange({ price: val })} />
       </div>
-
-      <Form.Item className="mb-0">
-        {getFieldDecorator("location", {
-          rules: [{ required: true, message: "Please input location!" }]
-        })(
-          <Select
-            showSearch
-            defaultActiveFirstOption={false}
-            showArrow={false}
-            filterOption={false}
-            onSearch={handleLocationChange}
-            notFoundContent={"Search for address..."}
-            className="w-full"
-            placeholder="Insert location..."
-          >
-            {locationOptions}
-          </Select>
-        )}
-      </Form.Item>
-
-      <Form.Item className="mb-0">{getFieldDecorator("date-picker")(<DatePicker className="w-full" />)}</Form.Item>
-      <Form.Item className="mb-0">
-        {getFieldDecorator("time-picker")(<TimePicker format={"HH:mm"} className="w-full" />)}
-      </Form.Item>
-      <Form.Item className="m-0 w-full pb-0">
-        <Button
-          htmlType="submit"
-          type="primary"
-          className="font-winid1 uppercase w-full"
-          disabled={hasErrors(getFieldsError())}
-          size="large"
-        >
-          Create!
-        </Button>
-      </Form.Item>
-    </Form>
+      <Select
+        showSearch
+        defaultActiveFirstOption={false}
+        showArrow={false}
+        filterOption={false}
+        onSearch={handleLocationChange}
+        notFoundContent={"Search for address..."}
+        className="w-full"
+        placeholder="Insert location..."
+        onChange={val => handleInputsChange({ location: val })}
+      >
+        {locationOptions}
+      </Select>
+      <DatePicker className="w-full" onChange={val => handleInputsChange({ date: val })} />
+      <TimePicker format={"HH:mm"} className="w-full" onChange={val => handleInputsChange({ time: val })} />
+      <Button type="primary" className="font-winid1 uppercase w-full" size="large" onClick={handleSubmit}>
+        Create!
+      </Button>
+    </div>
   );
 };
 
-const WrappedCreateGameForm = Form.create({
-  name: "CreateGameForm"
-})(CreateGameForm);
-export default WrappedCreateGameForm;
+export default CreateGameForm;
