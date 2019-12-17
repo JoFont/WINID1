@@ -65,7 +65,16 @@ const CreateGameForm = props => {
 
   const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = props.form;
 
-  const formItemLayout = {};
+  const formItemLayout = {
+    // labelCol: {
+    //   xs: { span: 24 },
+    //   sm: { span: 8 }
+    // },
+    // wrapperCol: {
+    //   xs: { span: 24 },
+    //   sm: { span: 16 }
+    // }
+  };
 
   const locationOptions = autoCompleteResult.map(location => (
     <Option key={JSON.stringify(location)} className="w-full">
@@ -74,26 +83,29 @@ const CreateGameForm = props => {
   ));
 
   return (
-    <Form onSubmit={handleSubmit} className="flex justify-between align-center">
-      <Form.Item label="Starters">
-        {getFieldDecorator("starters", {
-          rules: [{ required: true, message: "Starters is required!" }],
-          initialValue: 5
-        })(<InputNumber min={2} className="w-10" />)}
-      </Form.Item>
-      <Form.Item {...formItemLayout}>
-        {getFieldDecorator("subs", {
-          rules: [{ required: true, message: "Subs is required!" }],
-          initialValue: 0
-        })(<InputNumber min={0} className="w-10" />)}
-      </Form.Item>
-      <Form.Item {...formItemLayout}>
-        {getFieldDecorator("price", {
-          rules: [{ required: true, message: "Subs is required!" }],
-          initialValue: 0
-        })(<InputNumber min={0} className="w-10" />)}
-      </Form.Item>
-      <Form.Item label="Location" className="w-1/4">
+    <Form onSubmit={handleSubmit} className="" layout="vertical">
+      <div className="flex items-center justify-between border rounded-lg mb-2 p-2">
+        <Form.Item label="Starters" className="flex-1 flex flex-col items-center mb-0 pb-0">
+          {getFieldDecorator("starters", {
+            rules: [{ required: true, message: "Starters is required!" }],
+            initialValue: 5
+          })(<InputNumber min={2} className="w-10" />)}
+        </Form.Item>
+        <Form.Item label="Subs" className="flex-1 flex flex-col items-center mb-0 pb-0">
+          {getFieldDecorator("subs", {
+            rules: [{ required: true, message: "Subs is required!" }],
+            initialValue: 0
+          })(<InputNumber min={0} className="w-10" />)}
+        </Form.Item>
+        <Form.Item label="Price" className="flex-1 flex flex-col items-center mb-0 pb-0">
+          {getFieldDecorator("price", {
+            rules: [{ required: true, message: "Subs is required!" }],
+            initialValue: 0
+          })(<InputNumber min={0} className="w-10" />)}
+        </Form.Item>
+      </div>
+
+      <Form.Item className="mb-0">
         {getFieldDecorator("location", {
           rules: [{ required: true, message: "Please input location!" }]
         })(
@@ -104,22 +116,23 @@ const CreateGameForm = props => {
             filterOption={false}
             onSearch={handleLocationChange}
             notFoundContent={"Search for address..."}
-            className="w-1/2"
+            className="w-full"
+            placeholder="Insert location..."
           >
             {locationOptions}
           </Select>
         )}
       </Form.Item>
 
-      <Form.Item label="DatePicker">{getFieldDecorator("date-picker")(<DatePicker className="w-full" />)}</Form.Item>
-      <Form.Item label="TimePicker">
+      <Form.Item className="mb-0">{getFieldDecorator("date-picker")(<DatePicker className="w-full" />)}</Form.Item>
+      <Form.Item className="mb-0">
         {getFieldDecorator("time-picker")(<TimePicker format={"HH:mm"} className="w-full" />)}
       </Form.Item>
-      <Form.Item {...formItemLayout} className="mr-0">
+      <Form.Item className="m-0 w-full pb-0">
         <Button
           htmlType="submit"
           type="primary"
-          className="font-winid1 uppercase"
+          className="font-winid1 uppercase w-full"
           disabled={hasErrors(getFieldsError())}
           size="large"
         >

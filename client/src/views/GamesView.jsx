@@ -27,7 +27,7 @@ const GamesView = () => {
           </div>
         </div>
 
-        <div className="w-full bg-gray-white px-4 mb-4">
+        <div className="w-1/4 bg-gray-white px-4 mb-4">
           <div className="bg-white rounded shadow p-4">
             <CreateGame listUpdate={() => buildList()}></CreateGame>
           </div>
