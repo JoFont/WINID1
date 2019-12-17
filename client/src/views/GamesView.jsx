@@ -9,6 +9,7 @@ const GamesView = () => {
 
   const buildList = async () => {
     const games = await getAllGames(userToken);
+    console.log(games.data);
     setGameList(games.data);
   };
 

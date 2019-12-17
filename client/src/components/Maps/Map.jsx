@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "reactn";
+import React, { useState, useEffect, useGlobal} from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
+import { getAll as getAllGames } from "../../services/api/game";
 var MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
-
 
 const Map = props => {
   mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
 
+  const [userToken] = useGlobal("userToken");
   const [mapState, setMapState] = useState({
     lat: 38.736946,
     lng: -9.142685,
@@ -41,10 +42,6 @@ const Map = props => {
 
     if(props.controls) {
       map.addControl(new mapbox.NavigationControl());
-      // const geoCenas = 
-
-      // console.log(navigator.geolocation);
-
       map.addControl(new MapboxGeocoder({
         accessToken: mapbox.accessToken,
         mapboxgl: mapbox,
@@ -52,12 +49,29 @@ const Map = props => {
         types: "region, district, place, locality, neighborhood, address, poi"
       }));
     }
+    
+    if(userToken) {
+      map.on("load", function () {
+        map.loadImage("https://i.imgur.com/MK4NUzI.png", async function(error, image) {
+          if (error) throw error;
+          map.addImage("custom-marker", image);
+          const games = await getAllGames(userToken);
+          if(games.data.length > 0) {
+            games.data.forEach(game => {
+              const popup = new mapbox.Popup({ offset: 25 }).setText(game.location.name || "Adiciona Mais locations, boi");
+              new mapbox.Marker().setLngLat(game.location.location.coordinates).setPopup(popup).addTo(map);
+            });
+          }
+          
+        });
+      });
+    }
 
     //? Effect cleanup => é igual a componentWilUnmount
     return () => {
       map.remove();
     }
-  }, [mapContainer]);
+  }, [mapContainer, userToken]);
 
 
   return <div ref={el => (mapContainer = el)} className="mapContainer w-100 h-screen m-0"></div>;
