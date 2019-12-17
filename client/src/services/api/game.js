@@ -34,7 +34,7 @@ export const createOne = async (token, data) => {
     //   data
     // });
 
-    return res;
+    // return res;
   } catch (error) {
     throw error;
   }
