@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
-  sports: {
-    type: [mongoose.Types.ObjectId],
-  },
-  admins: {
-    type: [mongoose.Types.ObjectId],
+  sports: [{
+    type: mongoose.Types.ObjectId,
+    ref: "Sport"
+  }],
+  admins: [{
+    type: mongoose.Types.ObjectId,
     ref: "Player"
-  },
+  }],
   amenities: {
     lockerRoom: Boolean,
     showers: Boolean,

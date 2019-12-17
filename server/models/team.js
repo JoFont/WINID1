@@ -13,18 +13,18 @@ const schema = new mongoose.Schema({
     },
     description: String,
   },
-  sports: {
-    type: [mongoose.Schema.Types.ObjectId],
+  sports: [{
+    type: mongoose.Types.ObjectId,
     ref: "Sport"
-  },
-  players: {
-    type: [mongoose.Schema.Types.ObjectId],
+  }],
+  players: [{
+    type: mongoose.Types.ObjectId,
     ref: "Player"
-  },
-  admins: {
-    type: [mongoose.Schema.Types.ObjectId],
+  }],
+  admins: [{
+    type: mongoose.Types.ObjectId,
     ref: "Player"
-  }
+  }]
 },
 {
   timestamps: true

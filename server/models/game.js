@@ -4,10 +4,10 @@ const schema = new mongoose.Schema(
   {
     starters: {
       type: {
-        players: {
-          type: [mongoose.Types.ObjectId],
+        players: [{
+          type: mongoose.Types.ObjectId,
           ref: "Player"
-        },
+        }],
         number: {
           type: Number,
           default: 0,
@@ -17,10 +17,10 @@ const schema = new mongoose.Schema(
     },
     subs: {
       type: {
-        players: {
-          type: [mongoose.Types.ObjectId],
+        players: [{
+          type: mongoose.Types.ObjectId,
           ref: "Player"
-        },
+        }],
         number: {
           type: Number,
           default: 0,
@@ -31,18 +31,18 @@ const schema = new mongoose.Schema(
     sport: {
       type: mongoose.Types.ObjectId
     },
-    teams: {
-      type: [mongoose.Types.ObjectId],
+    teams: [{
+      type: mongoose.Types.ObjectId,
       ref: "Team"
-    },
-    players: {
-      type: [mongoose.Types.ObjectId],
+    }],
+    players: [{
+      type: mongoose.Types.ObjectId,
       ref: "Player"
-    },
-    admins: {
-      type: [mongoose.Types.ObjectId],
+    }],
+    admins: [{
+      type: mongoose.Types.ObjectId,
       ref: "Player"
-    },
+    }],
     score: {
       type: [Number],
       default: [0, 0]
@@ -68,10 +68,10 @@ const schema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Status"
     },
-    statusLog: {
-      type: [mongoose.Types.ObjectId],
+    statusLog: [{
+      type: mongoose.Types.ObjectId,
       ref: "Status"
-    }
+    }]
   },
   {
     timestamps: true

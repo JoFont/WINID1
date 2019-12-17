@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
-  admins: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "Player",
-    required: true,
-  },
-  game: {
-    type: mongoose.Schema.Types.ObjectId,
+  admins: [{
+    type: mongoose.Types.ObjectId,
+    ref: "Player"
+  }],
+  game: [{
+    type: mongoose.Types.ObjectId,
     ref: "Game",
     required: true
-  },
+  }],
   need: {
     type: Number,
     required: true,
@@ -18,19 +17,18 @@ const schema = new mongoose.Schema({
   },
   plusOnes: {
     type: [{
-      player: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Player",
-        required: true
-      },
+      player: [{
+        type: mongoose.Types.ObjectId,
+        ref: "Player"
+      }],
       status: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Status"
       },
-      statusLog: {
-        type: [mongoose.Schema.Types.ObjectId],
+      statusLog: [{
+        type: mongoose.Types.ObjectId,
         ref: "Status"
-      }
+      }]
     }]
   },
 },

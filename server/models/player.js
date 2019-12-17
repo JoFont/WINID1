@@ -31,18 +31,18 @@ const schema = new mongoose.Schema(
     auth: {
       type: mongoose.Schema.Types.Mixed
     },
-    sports: {
-      type: [mongoose.Types.ObjectId],
+    sports: [{
+      type: mongoose.Types.ObjectId,
       ref: "Sport"
-    },
+    }],
     status: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Status"
     },
-    statusLog: {
-      type: [mongoose.Schema.Types.ObjectId],
+    statusLog: [{
+      type: mongoose.Types.ObjectId,
       ref: "Status"
-    },
+    }],
     range: {
       type: Number,
       default: 30
