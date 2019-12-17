@@ -31,7 +31,6 @@ export const createOne = async (token, data) => {
     const res = await api.post('/create', {
       data
     });
-
     return res;
   } catch (error) {
     throw error;

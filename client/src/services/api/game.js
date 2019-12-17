@@ -27,8 +27,7 @@ export const createOne = async (token, data) => {
   try {
     const location = JSON.parse(data.location);
     const gameLocation = {
-      type: "Point",
-      coordinates: [location.geometry.lng, location.geometry.lat]
+      coordinates: [location.geometry.location.lng, location.geometry.location.lat]
     }
     const newLocation = await createOneLocation(token, { location: gameLocation });
     // api.defaults.headers.common['authorization'] = `Bearer ${token}`;
