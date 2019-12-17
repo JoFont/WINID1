@@ -19,6 +19,8 @@ const CreateGame = props => {
     wrapperCol: { span: 12 }
   };
 
+  console.log(props.form);
+
   return (
     <div>
       <h1>CREATE GAME</h1>
