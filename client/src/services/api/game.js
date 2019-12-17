@@ -8,15 +8,14 @@ const api = axios.create({
 
 export const getById = async (token, id) => {
   try {
-    const res = await api.get('/', {
+    const res = await api.get("/", {
       headers: {
         authorization: `Bearer ${token}`
       },
       params: {
         id
       }
-    }
-    );
+    });
     return res;
   } catch (error) {
     throw error;
@@ -28,7 +27,7 @@ export const createOne = async (token, data) => {
     const location = JSON.parse(data.location);
     const gameLocation = {
       coordinates: [location.geometry.location.lng, location.geometry.location.lat]
-    }
+    };
     const newLocation = await createOneLocation(token, { location: gameLocation });
     // api.defaults.headers.common['authorization'] = `Bearer ${token}`;
     // const res = await api.post('/create', {
@@ -62,8 +61,7 @@ export const deleteOne = async (token, id) => {
       params: {
         id
       }
-    }
-    );
+    });
     return res;
   } catch (error) {
     throw error;

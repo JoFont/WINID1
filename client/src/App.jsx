@@ -89,7 +89,9 @@ function App() {
               </li>
             )}
             <li className="px-3 py-6 flex justify-center items-center">
-              <Icon type="team" className="text-lg text-white" />
+              <Link to={ROUTES.GAMES}>
+                <Icon type="team" className="text-lg text-white" />
+              </Link>
             </li>
             <li className="px-3 py-6 flex justify-center items-center">
               <Icon type="environment" className="text-lg text-white" />
