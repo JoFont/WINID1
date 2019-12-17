@@ -2,11 +2,11 @@ const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema(
   {
-    _id: {
+    uid: {
       type: String,
       required: true,
-      trim: true
-      // unique: true
+      trim: true,
+      unique: true
     },
     username: {
       type: String,
@@ -100,7 +100,7 @@ const schema = new mongoose.Schema(
   }
 )
 
-schema.statics.getModelName = async function() {
+schema.statics.getModelName = async function () {
   const Player = this
   try {
     return (
@@ -112,14 +112,14 @@ schema.statics.getModelName = async function() {
   }
 }
 
-schema.statics.findOrCreate = async function(id, firebaseUser) {
+schema.statics.findOrCreate = async function (uid, firebaseUser) {
   const Player = this
   try {
-    const player = await Player.findById(id).exec()
-    if (player) return player
+    const player = await Player.findOne({ uid: uid }).exec();
+    if (player) return player;
 
     const newPlayer = await Player.create({
-      _id: id,
+      uid: uid,
       email: firebaseUser.email,
       username: firebaseUser.email.split("@")[0] + Math.floor(Math.random() * 1000),
       displayName: firebaseUser.displayName || "Your Name",
@@ -131,10 +131,21 @@ schema.statics.findOrCreate = async function(id, firebaseUser) {
   }
 }
 
-schema.statics.findByUsername = async function(username) {
+schema.statics.findByUsername = async function (username) {
   const Player = this
   try {
     const player = await Player.findOne({ username: username }).exec()
+    if (player) return player
+    throw error("There's no player with that username")
+  } catch (error) {
+    next(error)
+  }
+}
+
+schema.statics.findByUid = async function (uid) {
+  const Player = this
+  try {
+    const player = await Player.findOne({ uid: uid }).exec();
     if (player) return player
     throw error("There's no player with that username")
   } catch (error) {

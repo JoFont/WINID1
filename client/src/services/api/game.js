@@ -46,7 +46,7 @@ export const createOne = async (token, player, data) => {
 
     api.defaults.headers.common['authorization'] = `Bearer ${token}`;
     data.location = newLocation.data;
-    data.player = player._id;
+    data.playerId = player._id;
     const res = await api.post('/create', { data });
     return res;
   } catch (error) {

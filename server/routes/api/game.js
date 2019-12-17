@@ -6,8 +6,7 @@ const addStatus = require("../../services/addStatus");
 
 router.get("/:id", checkAuth, async (req, res, next) => {
   try {
-    const game = await Game.findById(req.params.id).exec();
-    game.populate("location");
+    const game = await Game.findById(req.params.id).populate("location").exec();
     res.status(200).json(game);
   } catch (error) {
     next(error);
@@ -18,7 +17,7 @@ router.get("/:id", checkAuth, async (req, res, next) => {
 router.post("/create", checkAuth, async (req, res, next) => {
   try {
     const data = req.body.data;
-    const newGame = await Game.createAndPush(data, data.player);
+    const newGame = await Game.createAndPush(data, data.playerId);
     // const statusLog = await addStatus(newGame._id, Game, {}, data.status.current);
     res.status(200).json({ newGame });
   } catch (error) {

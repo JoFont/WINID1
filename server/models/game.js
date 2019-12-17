@@ -5,7 +5,7 @@ const schema = new mongoose.Schema(
     starters: {
       type: {
         players: {
-          type: [String],
+          type: [mongoose.Types.ObjectId],
           ref: "Player"
         },
         number: {
@@ -18,7 +18,7 @@ const schema = new mongoose.Schema(
     subs: {
       type: {
         players: {
-          type: [String],
+          type: [mongoose.Types.ObjectId],
           ref: "Player"
         },
         number: {
