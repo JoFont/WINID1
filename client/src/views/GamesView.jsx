@@ -7,11 +7,12 @@ const GamesView = () => {
   const [userToken] = useGlobal("userToken");
   const [gameList, setGameList] = useState([]);
 
+  const buildList = async () => {
+    const games = await getAllGames(userToken);
+    setGameList(games.data);
+  };
+
   useEffect(() => {
-    const buildList = async () => {
-      const games = await getAllGames(userToken);
-      setGameList(games.data);
-    };
     buildList();
   }, [userToken]);
 
@@ -26,7 +27,7 @@ const GamesView = () => {
 
         <div className="w-full bg-gray-white px-4 mb-4">
           <div className="bg-white rounded shadow p-4">
-            <CreateGame></CreateGame>
+            <CreateGame listUpdate={() => buildList()}></CreateGame>
           </div>
         </div>
         {gameList.map(game => {

@@ -46,9 +46,9 @@ const CreateGameForm = props => {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    props.form.validateFields((err, fieldsValue) => {
+    props.form.validateFields(async (err, fieldsValue) => {
       const values = {
         ...fieldsValue,
         datePicker: fieldsValue["date-picker"].format("YYYY-MM-DD"),
@@ -56,8 +56,9 @@ const CreateGameForm = props => {
       };
       if (!err) {
         console.log("Received values of form: ", values);
-        console.log(JSON.parse(values.location));
-        createOneGame(userToken, player, values);
+        console.log(props);
+        const createdGame = await createOneGame(userToken, player, values);
+        props.listUpdate();
       }
     });
   };
