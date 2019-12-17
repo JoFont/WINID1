@@ -74,7 +74,7 @@ const CreateGameForm = props => {
   ));
 
   return (
-    <Form onSubmit={handleSubmit} layout="inline" className="flex justify-between align-center">
+    <Form onSubmit={handleSubmit} className="flex justify-between align-center">
       <Form.Item label="Starters">
         {getFieldDecorator("starters", {
           rules: [{ required: true, message: "Starters is required!" }],
@@ -110,6 +110,7 @@ const CreateGameForm = props => {
           </Select>
         )}
       </Form.Item>
+
       <Form.Item label="DatePicker">{getFieldDecorator("date-picker")(<DatePicker className="w-full" />)}</Form.Item>
       <Form.Item label="TimePicker">
         {getFieldDecorator("time-picker")(<TimePicker format={"HH:mm"} className="w-full" />)}
