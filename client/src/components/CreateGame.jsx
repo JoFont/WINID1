@@ -28,8 +28,7 @@ const CreateGameForm = props => {
 
   const disabledDate = current => {
     // Can not select days before today and today
-    return current && current < moment().endOf('day');
-
+    return current <= moment().startOf('day');
   }
 
 
@@ -85,7 +84,7 @@ const CreateGameForm = props => {
       >
         {locationOptions}
       </Select>
-      <DatePicker format="DD-MM-YYY" className="w-full" onChange={val => handleInputsChange({ date: val })} disabledDate={disabledDate} />
+      <DatePicker format="DD-MM-YYYY" className="w-full" onChange={val => handleInputsChange({ date: val })} disabledDate={disabledDate} />
       <TimePicker format="HH:mm" className="w-full" onChange={val => handleInputsChange({ time: val })} />
       <Button type="primary" className="font-winid1 uppercase w-full" size="large" onClick={handleSubmit}>
         Create!
