@@ -1,4 +1,4 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = new Router();
 const Location = require("../../models/location");
 const checkAuth = require("../../middleware/check-auth");
@@ -14,7 +14,7 @@ const checkAuth = require("../../middleware/check-auth");
 //   }
 // });
 
-router.post('/create', checkAuth, async (req, res, next) => {
+router.post("/create", checkAuth, async (req, res, next) => {
   try {
     const data = req.body.data;
     const newLocation = await Location.create(data);
@@ -43,6 +43,4 @@ router.post('/create', checkAuth, async (req, res, next) => {
 //   }
 // });
 
-
 module.exports = router;
-
