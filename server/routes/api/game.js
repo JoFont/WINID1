@@ -18,8 +18,8 @@ router.post("/create", checkAuth, async (req, res, next) => {
   try {
     const data = req.body.data;
     const newGame = await Game.createAndPush(data, data.playerId);
-    // const statusLog = await addStatus(newGame._id, Game, {}, data.status.current);
-    res.status(200).json({ newGame });
+    const statusLog = await addStatus(newGame._id, Game, {}, data.status ? data.status.current : "Draft");
+    res.status(200).json({ newGame, statusLog });
   } catch (error) {
     next(error);
   }
