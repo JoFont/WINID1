@@ -2,6 +2,7 @@ import React, { useState, useGlobal, useEffect } from "reactn";
 import CreateGame from "../components/CreateGame";
 import CreateModal from "../components/CreateModal";
 import { getAll as getAllGames } from "../services/api/game";
+import CreateRequestForm from "../components/CreateRequest";
 
 const GamesView = () => {
   const [userToken] = useGlobal("userToken");
@@ -24,6 +25,11 @@ const GamesView = () => {
           <div className="w-full bg-white rounded-lg shadow p-6">
             <h1 className="text-3xl font-winid1">EVERY.GAME.</h1>
             <CreateModal></CreateModal>
+          </div>
+        </div>
+        <div className="w-1/4 bg-gray-white px-4 mb-4">
+          <div className="bg-white rounded shadow p-4">
+            <CreateRequestForm></CreateRequestForm>
           </div>
         </div>
 

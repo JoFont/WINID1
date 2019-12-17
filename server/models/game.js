@@ -99,5 +99,4 @@ schema.statics.createAndPush = async function(data, users) {
   }
 };
 
-
 module.exports = mongoose.model("Game", schema);

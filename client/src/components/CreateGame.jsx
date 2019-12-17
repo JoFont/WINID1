@@ -30,7 +30,6 @@ const CreateGameForm = props => {
       ...gameForm,
       ...value
     });
-    console.log(gameForm);
   };
 
   const handleSubmit = async e => {
