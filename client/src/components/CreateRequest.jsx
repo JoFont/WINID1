@@ -65,7 +65,7 @@ const CreateRequestForm = props => {
           </Col>
           <Col span={18}>
             <Button type="primary" className="font-winid1 uppercase w-full" size="large" onClick={handleSubmit}>
-              Create!
+              Ask for players!
             </Button>
           </Col>
         </Row>

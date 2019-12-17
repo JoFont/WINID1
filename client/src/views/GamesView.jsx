@@ -1,8 +1,8 @@
 import React, { useState, useGlobal, useEffect } from "reactn";
+import { Link } from "react-router-dom";
 import CreateGame from "../components/CreateGame";
 import CreateModal from "../components/CreateModal";
 import { getAll as getAllGames } from "../services/api/game";
-import CreateRequestForm from "../components/CreateRequest";
 
 const GamesView = () => {
   const [userToken] = useGlobal("userToken");
@@ -27,11 +27,6 @@ const GamesView = () => {
             <CreateModal></CreateModal>
           </div>
         </div>
-        <div className="w-1/4 bg-gray-white px-4 mb-4">
-          <div className="bg-white rounded shadow p-4">
-            <CreateRequestForm></CreateRequestForm>
-          </div>
-        </div>
 
         <div className="w-1/4 bg-gray-white px-4 mb-4">
           <div className="bg-white rounded shadow p-4">
@@ -44,6 +39,7 @@ const GamesView = () => {
               <div className="bg-white shadow rounded p-6">
                 <p>Starters: {game.starters.number}</p>
                 <p>Subs: {game.subs.number}</p>
+                <Link to={"/game/" + game._id}>Ver Jogo</Link>
               </div>
             </div>
           );
