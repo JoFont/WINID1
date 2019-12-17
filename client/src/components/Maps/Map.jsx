@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useGlobal} from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
 import { getAll as getAllGames } from "../../services/api/game";
-var MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
+import addGameMarker from "../../services/maps/addGameMarker";
+
+const MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 
 const Map = props => {
   mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
@@ -17,6 +19,7 @@ const Map = props => {
   let map;
 
 
+  // Isto faz refrescar duas vezes por causa do useGlobal como dependencia
   useEffect(() => {
     map = new mapbox.Map({
       container: mapContainer,
@@ -51,19 +54,11 @@ const Map = props => {
     }
     
     if(userToken) {
-      map.on("load", function () {
-        map.loadImage("https://i.imgur.com/MK4NUzI.png", async function(error, image) {
-          if (error) throw error;
-          map.addImage("custom-marker", image);
-          const games = await getAllGames(userToken);
-          if(games.data.length > 0) {
-            games.data.forEach(game => {
-              const popup = new mapbox.Popup({ offset: 25 }).setText(game.location.name || "Adiciona Mais locations, boi");
-              new mapbox.Marker().setLngLat(game.location.location.coordinates).setPopup(popup).addTo(map);
-            });
-          }
-          
-        });
+      map.on("load", async () => {
+        const games = await getAllGames(userToken);
+        if(games.data.length > 0) {
+          addGameMarker(games, map);
+        }
       });
     }
 
