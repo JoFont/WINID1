@@ -5,7 +5,7 @@ const schema = new mongoose.Schema(
     starters: {
       type: {
         players: {
-          type: [mongoose.Schema.Types.ObjectId],
+          type: [mongoose.Types.ObjectId],
           ref: "Player"
         },
         number: {
