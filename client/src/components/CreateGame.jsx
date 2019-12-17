@@ -1,9 +1,30 @@
 import React, { useState } from "reactn";
-import { Form, Select, InputNumber, Switch, Radio, Slider, Button, Upload, Icon, Rate, Checkbox, Row, Col } from "antd";
+import {
+  Input,
+  Form,
+  Select,
+  InputNumber,
+  DatePicker,
+  TimePicker,
+  Switch,
+  Radio,
+  Slider,
+  Button,
+  Upload,
+  Icon,
+  Rate,
+  Checkbox,
+  Row,
+  Col
+} from "antd";
 const { Option } = Select;
 
-const CreateGame = props => {
+const CreateGameForm = props => {
   const [number, setNumber] = useState(2);
+
+  const hasErrors = fieldsError => {
+    return Object.keys(fieldsError).some(field => fieldsError[field]);
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -19,33 +40,32 @@ const CreateGame = props => {
     wrapperCol: { span: 12 }
   };
 
+  const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = props.form;
+
   return (
     <div>
       <h1>CREATE GAME</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Item {...formItemLayout}>
-          <InputNumber
-            min={2}
-            value={number}
-            name="starters"
-            onChange={value => {
-              setNumber(value);
-            }}
-          />
+          {getFieldDecorator("starters", {
+            rules: [{ required: true, message: "Username is required!" }]
+          })(<InputNumber min={2} />)}
         </Form.Item>
         <Form.Item {...formItemLayout}>
-          <InputNumber
-            min={0}
-            value={number}
-            name="subs"
-            onChange={value => {
-              setNumber(value);
-            }}
-          />
+          {getFieldDecorator("subs", {
+            rules: [{ required: true, message: "Username is required!" }]
+          })(<InputNumber min={0} />)}
+        </Form.Item>
+        <Form.Item>{getFieldDecorator()}</Form.Item>
+        <Form.Item {...formItemLayout}>
+          <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
+            Create!
+          </Button>
         </Form.Item>
       </Form>
     </div>
   );
 };
 
-export default CreateGame;
+const WrappedCreateGameForm = Form.create({ name: "horizontal_login" })(CreateGameForm);
+export default WrappedCreateGameForm;
