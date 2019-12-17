@@ -1,51 +1,90 @@
-import React, { useState } from "reactn";
-import { Form, Select, InputNumber, Switch, Radio, Slider, Button, Upload, Icon, Rate, Checkbox, Row, Col } from "antd";
+import React, { useState, useGlobal } from "reactn";
+import Geocode from "react-geocode";
+import { createOne as createOneGame } from "../services/api/game";
+
+import { Select, InputNumber, DatePicker, TimePicker, Button } from "antd";
+
+Geocode.setApiKey(process.env.REACT_APP_GEOCODE_API);
+
 const { Option } = Select;
 
-const CreateGame = props => {
-  const [number, setNumber] = useState(2);
+const CreateGameForm = props => {
+  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
+  const [userToken] = useGlobal("userToken");
+  const [player] = useGlobal("player");
+  const [gameForm, setGameForm] = useState({});
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-      }
+  const handleLocationChange = async input => {
+    if (!input) {
+      setAutoCompleteResult([]);
+    } else {
+      try {
+        const response = await Geocode.fromAddress(input);
+        setAutoCompleteResult(response.results);
+      } catch (error) {}
+    }
+  };
+
+  const handleInputsChange = async value => {
+    setGameForm({
+      ...gameForm,
+      ...value
     });
+    console.log(gameForm);
   };
 
-  const formItemLayout = {
-    labelCol: { span: 7 },
-    wrapperCol: { span: 12 }
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const values = {
+      ...gameForm,
+      date: gameForm.date.format("YYYY-MM-DD"),
+      time: gameForm.time.format("HH:mm")
+    };
+    await createOneGame(userToken, player, values);
+    props.listUpdate();
   };
+
+  const locationOptions = autoCompleteResult.map(location => (
+    <Option key={location.place_id} className="w-full" value={JSON.stringify(location)}>
+      {location.formatted_address}
+    </Option>
+  ));
 
   return (
     <div>
-      <h1>CREATE GAME</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Item {...formItemLayout}>
-          <InputNumber
-            min={2}
-            value={number}
-            name="starters"
-            onChange={value => {
-              setNumber(value);
-            }}
-          />
-        </Form.Item>
-        <Form.Item {...formItemLayout}>
-          <InputNumber
-            min={0}
-            value={number}
-            name="subs"
-            onChange={value => {
-              setNumber(value);
-            }}
-          />
-        </Form.Item>
-      </Form>
+      <div className="flex items-center justify-between border rounded-lg mb-2 p-2">
+        <div>
+          <span className="text-xs text-gray-600">Starters</span>
+          <InputNumber min={2} className="w-full" onChange={val => handleInputsChange({ starters_number: val })} />
+        </div>
+        <InputNumber
+          min={0}
+          className="w-full"
+          name="subs"
+          onChange={val => handleInputsChange({ subs_number: val })}
+        />
+        <InputNumber min={0} className="w-full" onChange={val => handleInputsChange({ price: val })} />
+      </div>
+      <Select
+        showSearch
+        defaultActiveFirstOption={false}
+        showArrow={false}
+        filterOption={false}
+        onSearch={handleLocationChange}
+        notFoundContent={"Search for address..."}
+        className="w-full"
+        placeholder="Insert location..."
+        onChange={val => handleInputsChange({ location: val })}
+      >
+        {locationOptions}
+      </Select>
+      <DatePicker className="w-full" onChange={val => handleInputsChange({ date: val })} />
+      <TimePicker format={"HH:mm"} className="w-full" onChange={val => handleInputsChange({ time: val })} />
+      <Button type="primary" className="font-winid1 uppercase w-full" size="large" onClick={handleSubmit}>
+        Create!
+      </Button>
     </div>
   );
 };
 
-export default CreateGame;
+export default CreateGameForm;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
-import HomeView from "./HomeView";
+import IndexView from "./IndexView";
 import PlayerView from "./PlayerView";
 import GameView from "./GameView";
 import GamesView from "./GamesView";
@@ -20,7 +20,7 @@ const MainViews = () => {
       <Route path={ROUTES.TEAM} component={TeamView} />
       <Route path={ROUTES.LEAGUE} component={LeagueView} />
       <Route path={ROUTES.REQUEST} component={RequestView} />
-      <Route path={ROUTES.HOME} exact component={HomeView} />
+      <Route path={ROUTES.HOME} exact component={IndexView} />
     </Switch>
   );
 };

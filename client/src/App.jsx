@@ -1,18 +1,14 @@
 import React, { useEffect, useGlobal, useState } from "reactn";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Link } from "react-router-dom";
 import { findOrCreate as findOrCreatePlayer } from "./services/api/player";
 import MainViews from "./views/views.switch";
 
 import * as ROUTES from "./constants/trimmed.routes";
 
 import { requestNotificationPerm } from "./services/notifications";
-import { notification, Layout, Menu, Icon } from "antd";
-import WrappedLoginForm from "./components/LogIn";
-import WrappedRegisterForm from "./components/Register";
-import BottomBar from "./components/BottomBar";
-import playerView from "./views/PlayerView";
+import { notification, Layout, Icon } from "antd";
 
-const { Header, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 
 function App() {
   const [fire] = useGlobal("fire");
@@ -88,7 +84,9 @@ function App() {
               </li>
             )}
             <li className="px-3 py-6 flex justify-center items-center">
-              <Icon type="team" className="text-lg text-white" />
+              <Link to={ROUTES.GAMES}>
+                <Icon type="team" className="text-lg text-white" />
+              </Link>
             </li>
             <li className="px-3 py-6 flex justify-center items-center">
               <Icon type="environment" className="text-lg text-white" />

@@ -5,7 +5,7 @@ const schema = new mongoose.Schema(
     starters: {
       type: {
         players: {
-          type: [mongoose.Types.ObjectId],
+          type: [String],
           ref: "Player"
         },
         number: {
@@ -18,7 +18,7 @@ const schema = new mongoose.Schema(
     subs: {
       type: {
         players: {
-          type: [mongoose.Types.ObjectId],
+          type: [String],
           ref: "Player"
         },
         number: {
@@ -36,11 +36,11 @@ const schema = new mongoose.Schema(
       ref: "Team"
     },
     players: {
-      type: [mongoose.Types.ObjectId],
+      type: [String],
       ref: "Player"
     },
     admins: {
-      type: [mongoose.Types.ObjectId],
+      type: [String],
       ref: "Player"
     },
     score: {
@@ -77,5 +77,27 @@ const schema = new mongoose.Schema(
     timestamps: true
   }
 );
+
+schema.statics.createAndPush = async function(data, users) {
+  const Game = this;
+  try {
+    const newGame = await Game.create({
+      starters: { number: data.starters_number },
+      subs: { number: data.subs_number },
+      price: {
+        value: data.price * 100
+      },
+      location: data.location._id,
+      schedule: Date.parse(data.date + "T" + data.time)
+    });
+    newGame.admins.push(users);
+    newGame.players.push(users);
+    newGame.save();
+    return newGame;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 module.exports = mongoose.model("Game", schema);

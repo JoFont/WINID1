@@ -15,7 +15,10 @@ const schema = new mongoose.Schema({
     indoor: Boolean
   },
   info: {
-    type: String,
+    type: {
+      name: String,
+      description: String
+    }
   },
   sportsRatings: {
     type: [{
@@ -36,13 +39,15 @@ const schema = new mongoose.Schema({
   location: {
     type: {
       type: String,
-      enum: ['Point'],
-      required: true
+      default: 'Point'
     },
-    coordinates: {
-      type: [Number],
-      required: true
-    }
+    coordinates: [
+      {
+        type: Number,
+        min: -180,
+        max: 180
+      }
+    ],
   },
   type: {
     type: String,
@@ -52,5 +57,8 @@ const schema = new mongoose.Schema({
 {
   timestamps: true
 });
+
+
+schema.index({ location: '2dsphere' });
 
 module.exports = mongoose.model('Location', schema);

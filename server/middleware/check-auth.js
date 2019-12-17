@@ -20,6 +20,7 @@ const checkIfAuthenticated = (req, res, next) => {
       req.authId = userInfo.uid;
       return next();
     } catch (e) {
+      console.log("Deu merda no Check Auth");
       return res
         .status(401)
         .send({ error: 'You are not authorized to make this request' });

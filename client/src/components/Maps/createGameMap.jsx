@@ -8,7 +8,7 @@ const MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 const Map = props => {
   mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
 
-  const [mapState] = useState({
+  const [mapState, setMapState] = useState({
     lat: 38.736946,
     lng: -9.142685,
     zoom: props.zoom
@@ -17,6 +17,17 @@ const Map = props => {
   let mapContainer;
   let map;
 
+  // Isto em principio funciona
+  props.addLocationMarker = coords => {
+    const marker = new mapbox.Marker({ draggable: true }).setLngLat(coords).addTo(map);
+
+    function onDragEnd() {
+      let lngLat = marker.getLngLat();
+      console.log(lngLat);
+    }
+      
+    marker.on('dragend', onDragEnd);
+  }
 
   // Isto faz refrescar duas vezes por causa do useGlobal como dependencia
   useEffect(() => {
@@ -44,12 +55,12 @@ const Map = props => {
 
     if(props.controls) {
       map.addControl(new mapbox.NavigationControl());
-      // map.addControl(new MapboxGeocoder({
-      //   accessToken: mapbox.accessToken,
-      //   mapboxgl: mapbox,
-      //   countries: "pt",
-      //   types: "region, district, place, locality, neighborhood, address, poi"
-      // }));
+      map.addControl(new MapboxGeocoder({
+        accessToken: mapbox.accessToken,
+        mapboxgl: mapbox,
+        countries: "pt",
+        types: "region, district, place, locality, neighborhood, address, poi"
+      }));
     }
     
     map.on("load", async () => {
@@ -64,7 +75,6 @@ const Map = props => {
       map.remove();
     }
   }, [mapContainer]);
-
 
   return <div ref={el => (mapContainer = el)} className="mapContainer w-100 h-screen m-0"></div>;
 };
