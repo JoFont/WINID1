@@ -1,7 +1,7 @@
 import React, { useState, useGlobal } from "reactn";
+import moment from 'moment';
 import Geocode from "react-geocode";
 import { createOne as createOneGame } from "../services/api/game";
-
 import { Select, InputNumber, DatePicker, TimePicker, Button } from "antd";
 
 Geocode.setApiKey(process.env.REACT_APP_GEOCODE_API);
@@ -21,9 +21,16 @@ const CreateGameForm = props => {
       try {
         const response = await Geocode.fromAddress(input);
         setAutoCompleteResult(response.results);
-      } catch (error) {}
+      } catch (error) { }
     }
   };
+
+
+  const disabledDate = current => {
+    // Can not select days before today and today
+    return current <= moment().startOf('day');
+  }
+
 
   const handleInputsChange = async value => {
     setGameForm({
@@ -77,8 +84,8 @@ const CreateGameForm = props => {
       >
         {locationOptions}
       </Select>
-      <DatePicker className="w-full" onChange={val => handleInputsChange({ date: val })} />
-      <TimePicker format={"HH:mm"} className="w-full" onChange={val => handleInputsChange({ time: val })} />
+      <DatePicker format="DD-MM-YYYY" className="w-full" onChange={val => handleInputsChange({ date: val })} disabledDate={disabledDate} />
+      <TimePicker format="HH:mm" className="w-full" onChange={val => handleInputsChange({ time: val })} />
       <Button type="primary" className="font-winid1 uppercase w-full" size="large" onClick={handleSubmit}>
         Create!
       </Button>
