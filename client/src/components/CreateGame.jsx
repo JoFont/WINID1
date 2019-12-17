@@ -1,4 +1,6 @@
 import React, { useState } from "reactn";
+import Geocode from "react-geocode";
+
 import {
   Input,
   Form,
@@ -15,12 +17,35 @@ import {
   Rate,
   Checkbox,
   Row,
-  Col
+  Col,
+  AutoComplete
 } from "antd";
+
+Geocode.setApiKey(process.env.REACT_APP_GEOCODE_API);
+
 const { Option } = Select;
+const AutoCompleteOption = AutoComplete.Option;
 
 const CreateGameForm = props => {
-  const [number, setNumber] = useState(2);
+  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
+
+  const handleLocationChange = async input => {
+    if (!input) {
+      setAutoCompleteResult([]);
+    } else {
+      const response = await Geocode.fromAddress(input);
+      console.log(response.results);
+      const { onChange, value } = props;
+      if (onChange) {
+        onChange({
+          ...value,
+          ...response
+        });
+      }
+      console.log(props);
+      setAutoCompleteResult(response.results);
+    }
+  };
 
   const hasErrors = fieldsError => {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -35,12 +60,18 @@ const CreateGameForm = props => {
     });
   };
 
+  const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = props.form;
+
   const formItemLayout = {
     labelCol: { span: 7 },
     wrapperCol: { span: 12 }
   };
 
-  const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = props.form;
+  const locationOptions = autoCompleteResult.map(location => (
+    <AutoCompleteOption key={[location.geometry.location.lat, location.geometry.location.lng]}>
+      {location.formatted_address}
+    </AutoCompleteOption>
+  ));
 
   return (
     <div>
@@ -48,15 +79,25 @@ const CreateGameForm = props => {
       <Form onSubmit={handleSubmit}>
         <Form.Item {...formItemLayout}>
           {getFieldDecorator("starters", {
-            rules: [{ required: true, message: "Username is required!" }]
+            rules: [{ required: true, message: "Starters is required!" }],
+            initialValue: 5
           })(<InputNumber min={2} />)}
         </Form.Item>
         <Form.Item {...formItemLayout}>
           {getFieldDecorator("subs", {
-            rules: [{ required: true, message: "Username is required!" }]
+            rules: [{ required: true, message: "Subs is required!" }],
+            initialValue: 0
           })(<InputNumber min={0} />)}
         </Form.Item>
-        <Form.Item>{getFieldDecorator()}</Form.Item>
+        <Form.Item label="Location">
+          {getFieldDecorator("location", {
+            rules: [{ required: true, message: "Please input location!" }]
+          })(
+            <AutoComplete dataSource={locationOptions} onChange={handleLocationChange} placeholder="location">
+              <Input />
+            </AutoComplete>
+          )}
+        </Form.Item>
         <Form.Item {...formItemLayout}>
           <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
             Create!
@@ -67,5 +108,7 @@ const CreateGameForm = props => {
   );
 };
 
-const WrappedCreateGameForm = Form.create({ name: "horizontal_login" })(CreateGameForm);
+const WrappedCreateGameForm = Form.create({
+  name: "CreateGameForm"
+})(CreateGameForm);
 export default WrappedCreateGameForm;
