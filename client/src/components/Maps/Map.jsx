@@ -8,7 +8,7 @@ const MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 const Map = props => {
   mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
 
-  const [mapState, setMapState] = useState({
+  const [mapState] = useState({
     lat: 38.736946,
     lng: -9.142685,
     zoom: props.zoom
@@ -44,12 +44,12 @@ const Map = props => {
 
     if(props.controls) {
       map.addControl(new mapbox.NavigationControl());
-      map.addControl(new MapboxGeocoder({
-        accessToken: mapbox.accessToken,
-        mapboxgl: mapbox,
-        countries: "pt",
-        types: "region, district, place, locality, neighborhood, address, poi"
-      }));
+      // map.addControl(new MapboxGeocoder({
+      //   accessToken: mapbox.accessToken,
+      //   mapboxgl: mapbox,
+      //   countries: "pt",
+      //   types: "region, district, place, locality, neighborhood, address, poi"
+      // }));
     }
     
     map.on("load", async () => {
