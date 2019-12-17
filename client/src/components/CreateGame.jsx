@@ -24,7 +24,6 @@ import {
 Geocode.setApiKey(process.env.REACT_APP_GEOCODE_API);
 
 const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
 
 const CreateGameForm = props => {
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
@@ -33,17 +32,10 @@ const CreateGameForm = props => {
     if (!input) {
       setAutoCompleteResult([]);
     } else {
-      const response = await Geocode.fromAddress(input);
-      console.log(response.results);
-      const { onChange, value } = props;
-      if (onChange) {
-        onChange({
-          ...value,
-          ...response
-        });
-      }
-      console.log(props);
-      setAutoCompleteResult(response.results);
+      try {
+        const response = await Geocode.fromAddress(input);
+        setAutoCompleteResult(response.results);
+      } catch (error) {}
     }
   };
 
@@ -56,21 +48,17 @@ const CreateGameForm = props => {
     props.form.validateFields((err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
+        console.log(JSON.parse(values.location));
       }
     });
   };
 
   const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = props.form;
 
-  const formItemLayout = {
-    labelCol: { span: 7 },
-    wrapperCol: { span: 12 }
-  };
+  const formItemLayout = {};
 
   const locationOptions = autoCompleteResult.map(location => (
-    <AutoCompleteOption key={[location.geometry.location.lat, location.geometry.location.lng]}>
-      {location.formatted_address}
-    </AutoCompleteOption>
+    <Option key={JSON.stringify(location)}>{location.formatted_address}</Option>
   ));
 
   return (
@@ -93,9 +81,16 @@ const CreateGameForm = props => {
           {getFieldDecorator("location", {
             rules: [{ required: true, message: "Please input location!" }]
           })(
-            <AutoComplete dataSource={locationOptions} onChange={handleLocationChange} placeholder="location">
-              <Input />
-            </AutoComplete>
+            <Select
+              showSearch
+              defaultActiveFirstOption={false}
+              showArrow={false}
+              filterOption={false}
+              onSearch={handleLocationChange}
+              notFoundContent={"Search for address..."}
+            >
+              {locationOptions}
+            </Select>
           )}
         </Form.Item>
         <Form.Item {...formItemLayout}>
