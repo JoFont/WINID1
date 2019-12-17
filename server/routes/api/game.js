@@ -6,7 +6,7 @@ const addStatus = require("../../services/addStatus");
 
 router.get("/:id", checkAuth, async (req, res, next) => {
   try {
-    const game = await Game.findById(req.params.id).populate("location").exec();
+    const game = await Game.findById(req.params.id).populate("location").populate("players").exec();
     res.status(200).json(game);
   } catch (error) {
     next(error);
@@ -81,7 +81,7 @@ router.post("/:id/status", checkAuth, async (req, res, next) => {
 router.get("/", async (req, res, next) => {
   try {
     // FIXME: Populate players não trabalha porque não sãpo object id, mudar auth para object id
-    const games = await Game.find().populate("location").exec();
+    const games = await Game.find().populate("location").populate("players").exec();
     res.status(200).json(games);
   } catch (error) {
     next(error);

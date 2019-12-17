@@ -5,7 +5,7 @@ const schema = new mongoose.Schema(
     starters: {
       type: {
         players: {
-          type: [mongoose.Types.ObjectId],
+          type: [mongoose.Schema.Types.ObjectId],
           ref: "Player"
         },
         number: {
@@ -36,11 +36,11 @@ const schema = new mongoose.Schema(
       ref: "Team"
     },
     players: {
-      type: [String],
+      type: [mongoose.Types.ObjectId],
       ref: "Player"
     },
     admins: {
-      type: [String],
+      type: [mongoose.Types.ObjectId],
       ref: "Player"
     },
     score: {
@@ -65,11 +65,11 @@ const schema = new mongoose.Schema(
       type: Date
     },
     status: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "Status"
     },
     statusLog: {
-      type: [mongoose.Schema.Types.ObjectId],
+      type: [mongoose.Types.ObjectId],
       ref: "Status"
     }
   },
