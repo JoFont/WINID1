@@ -82,13 +82,13 @@ schema.statics.createAndPush = async function(data, users) {
   const Game = this;
   try {
     const newGame = await Game.create({
-      starters: { number: data.starters },
-      subs: { number: data.subs },
+      starters: { number: data.starters_number },
+      subs: { number: data.subs_number },
       price: {
         value: data.price * 100
       },
       location: data.location._id,
-      schedule: Date.parse(data.datePicker + "T" + data.timePicker)
+      schedule: Date.parse(data.date + "T" + data.time)
     });
     newGame.admins.push(users);
     newGame.players.push(users);
