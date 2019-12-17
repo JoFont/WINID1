@@ -40,7 +40,7 @@ const GamesView = () => {
         </div>
         {gameList.map(game => {
           return (
-            <div className="w-1/4 px-4 mb-6">
+            <div key={game._id} className="w-1/4 px-4 mb-6">
               <div className="bg-white shadow rounded p-6">
                 <p>Starters: {game.starters.number}</p>
                 <p>Subs: {game.subs.number}</p>
