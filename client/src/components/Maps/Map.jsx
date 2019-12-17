@@ -1,9 +1,17 @@
 import React, { useState, useEffect, useGlobal} from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
 import { getAll as getAllGames } from "../../services/api/game";
-import addGameMarker from "../../services/maps/addGameMarker";
 
 const MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
+
+
+const addGameMarker = (arr, map) => {
+  arr.forEach(game => {
+    const popup = new mapbox.Popup({ offset: 25 }).setHTML(`<h1 class="text-xl text-winid-3">${game.players[0].username} <span>💩</span> </h1>`);
+    new mapbox.Marker().setLngLat(game.location.location.coordinates).setPopup(popup).addTo(map);
+  });
+}
+
 
 const Map = props => {
   mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
