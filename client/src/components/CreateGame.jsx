@@ -1,5 +1,6 @@
-import React, { useState } from "reactn";
+import React, { useState, useGlobal } from "reactn";
 import Geocode from "react-geocode";
+import { createOne as createOneGame } from "../services/api/game";
 
 import {
   Input,
@@ -27,6 +28,7 @@ const { Option } = Select;
 
 const CreateGameForm = props => {
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
+  const [userToken] = useGlobal("userToken");
 
   const handleLocationChange = async input => {
     if (!input) {
@@ -54,6 +56,7 @@ const CreateGameForm = props => {
       if (!err) {
         console.log("Received values of form: ", values);
         console.log(JSON.parse(values.location));
+        createOneGame(userToken, values);
       }
     });
   };
