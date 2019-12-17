@@ -53,7 +53,8 @@ const schema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["Public", "Private"]
+    enum: ["Public", "Private"],
+    default: "Private"
   },
 },
 {
