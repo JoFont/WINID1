@@ -29,6 +29,8 @@ const { Option } = Select;
 const CreateGameForm = props => {
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const [userToken] = useGlobal("userToken");
+  const [player] = useGlobal("player");
+
 
   const handleLocationChange = async input => {
     if (!input) {
@@ -56,7 +58,7 @@ const CreateGameForm = props => {
       if (!err) {
         console.log("Received values of form: ", values);
         console.log(JSON.parse(values.location));
-        createOneGame(userToken, values);
+        createOneGame(userToken, player, values);
       }
     });
   };
