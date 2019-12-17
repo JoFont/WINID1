@@ -22,6 +22,19 @@ export const getById = async (token, id) => {
   }
 };
 
+export const getAll = async (token) => {
+  try {
+    const res = await api.get("/", {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    });
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const createOne = async (token, player, data) => {
   try {
     const location = JSON.parse(data.location);

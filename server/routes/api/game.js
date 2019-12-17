@@ -13,6 +13,7 @@ router.get("/:id", checkAuth, async (req, res, next) => {
   }
 });
 
+
 router.post("/create", checkAuth, async (req, res, next) => {
   try {
     const data = req.body.data;
@@ -51,5 +52,16 @@ router.post("/:id/status", checkAuth, async (req, res, next) => {
     next(error);
   }
 });
+
+
+router.get("/", checkAuth, async (req, res, next) => {
+  try {
+    const games = await Game.find().exec();
+    res.status(200).json(games);
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 module.exports = router;
