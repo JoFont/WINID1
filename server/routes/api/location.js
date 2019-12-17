@@ -1,8 +1,9 @@
 const { Router } = require("express");
 const router = new Router();
 const Location = require("../../models/location");
-
 const checkAuth = require("../../middleware/check-auth");
+ 
+
 
 // router.get('/:id', checkAuth, async (req, res, next) => {
 //   try {
