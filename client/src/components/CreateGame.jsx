@@ -50,8 +50,8 @@ const CreateGameForm = props => {
     props.form.validateFields((err, fieldsValue) => {
       const values = {
         ...fieldsValue,
-        "date-picker": fieldsValue["date-picker"].format("YYYY-MM-DD"),
-        "time-picker": fieldsValue["time-picker"].format("HH:mm")
+        "datePicker": fieldsValue["date-picker"].format("YYYY-MM-DD"),
+        "timePicker": fieldsValue["time-picker"].format("HH:mm")
       };
       if (!err) {
         console.log("Received values of form: ", values);

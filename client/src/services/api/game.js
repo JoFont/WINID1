@@ -3,7 +3,7 @@ import * as ROUTES from "../../constants/api.routes";
 import { createOne as createOneLocation } from "./location";
 
 const api = axios.create({
-  baseURL: ROUTES.PLAYER
+  baseURL: ROUTES.GAME
 });
 
 export const getById = async (token, id) => {
@@ -30,12 +30,10 @@ export const createOne = async (token, data) => {
       coordinates: [location.geometry.location.lng, location.geometry.location.lat]
     }
     const newLocation = await createOneLocation(token, { location: gameLocation });
-    // api.defaults.headers.common['authorization'] = `Bearer ${token}`;
-    // const res = await api.post('/create', {
-    //   data
-    // });
-
-    // return res;
+    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
+    data.location = newLocation.data;
+    const res = await api.post('/create', { data });
+    return res;
   } catch (error) {
     throw error;
   }
