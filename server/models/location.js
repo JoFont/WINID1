@@ -14,8 +14,11 @@ const schema = new mongoose.Schema({
     bar: Boolean,
     indoor: Boolean
   },
-  name: {
-    type: String,
+  info: {
+    type: {
+      name: String,
+      description: String
+    }
   },
   sportsRatings: {
     type: [{

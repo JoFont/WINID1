@@ -22,13 +22,9 @@ export const getById = async (token, id) => {
   }
 };
 
-export const getAll = async (token) => {
+export const getAll = async () => {
   try {
-    const res = await api.get("/", {
-      headers: {
-        authorization: `Bearer ${token}`
-      }
-    });
+    const res = await api.get("/");
     return res;
   } catch (error) {
     throw error;
@@ -42,7 +38,9 @@ export const createOne = async (token, player, data) => {
       coordinates: [location.geometry.location.lng, location.geometry.location.lat]
     };
     const newLocation = await createOneLocation(token, { 
-      name: location.formatted_address,
+      info: {
+        name: location.formatted_address,
+      },
       location: gameCoordinates
     });
 

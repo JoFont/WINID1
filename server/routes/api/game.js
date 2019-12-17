@@ -79,8 +79,9 @@ router.post("/:id/status", checkAuth, async (req, res, next) => {
 });
 
 
-router.get("/", checkAuth, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
+    // FIXME: Populate players não trabalha porque não sãpo object id, mudar auth para object id
     const games = await Game.find().populate("location").exec();
     res.status(200).json(games);
   } catch (error) {

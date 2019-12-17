@@ -8,7 +8,6 @@ const MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 const Map = props => {
   mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
 
-  const [userToken] = useGlobal("userToken");
   const [mapState, setMapState] = useState({
     lat: 38.736946,
     lng: -9.142685,
@@ -53,20 +52,18 @@ const Map = props => {
       }));
     }
     
-    if(userToken) {
-      map.on("load", async () => {
-        const games = await getAllGames(userToken);
-        if(games.data.length > 0) {
-          addGameMarker(games, map);
-        }
-      });
-    }
+    map.on("load", async () => {
+      const games = await getAllGames();
+      if(games.data.length > 0) {
+        addGameMarker(games, map);
+      }
+    });
 
     //? Effect cleanup => é igual a componentWilUnmount
     return () => {
       map.remove();
     }
-  }, [mapContainer, userToken]);
+  }, [mapContainer]);
 
 
   return <div ref={el => (mapContainer = el)} className="mapContainer w-100 h-screen m-0"></div>;
