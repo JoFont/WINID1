@@ -5,22 +5,22 @@ const schema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "Player"
   }],
-  game: [{
+  game: {
     type: mongoose.Types.ObjectId,
     ref: "Game",
     required: true
-  }],
+  },
   need: {
     type: Number,
     required: true,
     min: 1
   },
-  plusOnes: {
+  plusOnes: [{
     type: [{
-      player: [{
+      player: {
         type: mongoose.Types.ObjectId,
         ref: "Player"
-      }],
+      },
       status: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Status"
@@ -30,7 +30,15 @@ const schema = new mongoose.Schema({
         ref: "Status"
       }]
     }]
+  }],
+  status: {
+    type: mongoose.Types.ObjectId,
+    ref: "Status"
   },
+  statusLog: [{
+    type: mongoose.Types.ObjectId,
+    ref: "Status"
+  }]
 },
 {
   timestamps: true
