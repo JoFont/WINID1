@@ -31,7 +31,6 @@ const CreateGameForm = props => {
   const [userToken] = useGlobal("userToken");
   const [player] = useGlobal("player");
 
-
   const handleLocationChange = async input => {
     if (!input) {
       setAutoCompleteResult([]);
@@ -52,8 +51,8 @@ const CreateGameForm = props => {
     props.form.validateFields((err, fieldsValue) => {
       const values = {
         ...fieldsValue,
-        "datePicker": fieldsValue["date-picker"].format("YYYY-MM-DD"),
-        "timePicker": fieldsValue["time-picker"].format("HH:mm")
+        datePicker: fieldsValue["date-picker"].format("YYYY-MM-DD"),
+        timePicker: fieldsValue["time-picker"].format("HH:mm")
       };
       if (!err) {
         console.log("Received values of form: ", values);
@@ -68,7 +67,9 @@ const CreateGameForm = props => {
   const formItemLayout = {};
 
   const locationOptions = autoCompleteResult.map(location => (
-    <Option key={JSON.stringify(location)}>{location.formatted_address}</Option>
+    <Option key={JSON.stringify(location)} className="w-full">
+      {location.formatted_address}
+    </Option>
   ));
 
   return (
@@ -91,7 +92,7 @@ const CreateGameForm = props => {
           initialValue: 0
         })(<InputNumber min={0} className="w-10" />)}
       </Form.Item>
-      <Form.Item label="Location">
+      <Form.Item label="Location" className="w-1/4">
         {getFieldDecorator("location", {
           rules: [{ required: true, message: "Please input location!" }]
         })(
@@ -102,7 +103,7 @@ const CreateGameForm = props => {
             filterOption={false}
             onSearch={handleLocationChange}
             notFoundContent={"Search for address..."}
-            className="w-full"
+            className="w-1/2"
           >
             {locationOptions}
           </Select>

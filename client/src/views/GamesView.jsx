@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useState, useGlobal, useEffect } from "reactn";
 import { Row, Col } from "antd";
 import CreateGame from "../components/CreateGame";
+import { getAll as getAllGames } from "../services/api/game";
 
 const GamesView = () => {
+  const [userToken] = useGlobal("userToken");
+  const [gameList, setGameList] = useState([]);
+
+  useEffect(() => {
+    const buildList = async () => {
+      const games = await getAllGames(userToken);
+      setGameList(games.data);
+    };
+    buildList();
+  }, [userToken]);
+
   return (
     <div className="px-6">
       <div className="flex mb-4 flex-wrap -mx-4">
@@ -17,15 +29,13 @@ const GamesView = () => {
             <CreateGame></CreateGame>
           </div>
         </div>
-        <div className="w-1/4 bg-gray-400 px-4">
-          <div className="bg-white shadow rounded h-50">1/4</div>
-        </div>
-        <div className="w-1/4 bg-gray-500 px-4">
-          <div className="bg-white">1/4</div>
-        </div>
-        <div className="w-1/4 bg-gray-400 px-4">
-          <div className="bg-white">1/4</div>
-        </div>
+        {gameList.map(game => {
+          return (
+            <div className="w-1/4 px-4">
+              <div className="bg-white shadow rounded h-50">GAME</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
