@@ -25,7 +25,7 @@ export const getById = async (token, id) => {
 export const createOne = async (token, data) => {
   try {
     const location = JSON.parse(data.location);
-    const newLocation = await createOneLocation({
+    const newLocation = await createOneLocation(token, {
       "location.coordinates": [location.geometry.lng, location.geometry.lat]
     });
     // api.defaults.headers.common['authorization'] = `Bearer ${token}`;

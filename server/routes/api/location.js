@@ -1,9 +1,8 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = new Router();
 const Location = require("../../models/location");
- 
 
-// const checkAuth = require("../../middleware/check-auth");
+const checkAuth = require("../../middleware/check-auth");
 
 // router.get('/:id', checkAuth, async (req, res, next) => {
 //   try {
@@ -14,10 +13,10 @@ const Location = require("../../models/location");
 //   }
 // });
 
-router.post('/create', checkAuth, async (req, res, next) => {
+router.post("/create", checkAuth, async (req, res, next) => {
   try {
     const body = req.body;
-    const newLocation = await Location.create({...body});
+    const newLocation = await Location.create({ ...body });
     res.status(200).json(newLocation);
   } catch (error) {
     next(error);
@@ -43,6 +42,4 @@ router.post('/create', checkAuth, async (req, res, next) => {
 //   }
 // });
 
-
 module.exports = router;
-
