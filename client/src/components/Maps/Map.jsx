@@ -55,7 +55,7 @@ const Map = props => {
     map.on("load", async () => {
       const games = await getAllGames();
       if(games.data.length > 0) {
-        addGameMarker(games, map);
+        addGameMarker(games.data, map);
       }
     });
 

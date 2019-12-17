@@ -46,7 +46,6 @@ function App() {
     fire.auth().onAuthStateChanged(async firebaseUser => {
       if (firebaseUser) {
         setUserToken(firebaseUser._lat);
-        console.log(firebaseUser._lat);
         try {
           const playerFetch = await findOrCreatePlayer(firebaseUser._lat, firebaseUser);
           if (playerFetch && player === null) setPlayer(playerFetch.data);
