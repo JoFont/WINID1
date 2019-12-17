@@ -1,40 +1,39 @@
-import axios from 'axios';
-import * as ROUTES from '../../constants/api.routes';
+import axios from "axios";
+import * as ROUTES from "../../constants/api.routes";
 import { createOne as createOneLocation } from "./location";
 
 const api = axios.create({
   baseURL: ROUTES.PLAYER
 });
 
-
 export const getById = async (token, id) => {
   try {
-    const res = await api.get('/', {
-        headers: {
-          authorization: `Bearer ${token}`
-        },
-        params: {
-          id
-        }
+    const res = await api.get("/", {
+      headers: {
+        authorization: `Bearer ${token}`
+      },
+      params: {
+        id
       }
-    );
+    });
     return res;
   } catch (error) {
     throw error;
   }
 };
 
-
 export const createOne = async (token, data) => {
   try {
-    const location = JSON.parse(data.location)
-    const newLocation = await createOneLocation({"location.coordinates": [location.geometry.lng,location.geometry.lat]});
+    const location = JSON.parse(data.location);
+    const newLocation = await createOneLocation({
+      "location.coordinates": [location.geometry.lng, location.geometry.lat]
+    });
     // api.defaults.headers.common['authorization'] = `Bearer ${token}`;
     // const res = await api.post('/create', {
     //   data
     // });
 
-    return res;
+    // return res;
   } catch (error) {
     throw error;
   }
@@ -42,7 +41,7 @@ export const createOne = async (token, data) => {
 
 export const editOne = async (token, id, data) => {
   try {
-    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
+    api.defaults.headers.common["authorization"] = `Bearer ${token}`;
     const res = await api.patch(`/${id}/edit`, {
       data
     });
@@ -55,14 +54,13 @@ export const editOne = async (token, id, data) => {
 export const deleteOne = async (token, id) => {
   try {
     const res = await api.delete(`/`, {
-        headers: {
-          authorization: `Bearer ${token}`
-        },
-        params: {
-          id
-        }
+      headers: {
+        authorization: `Bearer ${token}`
+      },
+      params: {
+        id
       }
-    );
+    });
     return res;
   } catch (error) {
     throw error;
@@ -71,7 +69,7 @@ export const deleteOne = async (token, id) => {
 
 export const createAndUpdateStatus = async (token, id, data) => {
   try {
-    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
+    api.defaults.headers.common["authorization"] = `Bearer ${token}`;
     const res = await api.post(`/${id}/status`, {
       data
     });
