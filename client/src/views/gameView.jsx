@@ -6,26 +6,26 @@ import { Fragment } from "react";
 
 const GameView = props => {
   const [userToken] = useGlobal("userToken");
-  const [game, setGame] = useState(props.match.params.id);
+  const [game, setGame] = useState({});
 
   const buildGame = async () => {
-    const fetchedGame = await getGameById(userToken, game);
+    const fetchedGame = await getGameById(userToken, props.match.params.id);
     console.log("fetchedGame ==== >", fetchedGame.data);
     setGame(fetchedGame);
   };
 
   useEffect(() => {
     buildGame();
-  }, [game]);
+  }, [userToken]);
 
   return (
     <div>
       <div className="w-1/4 bg-gray-white px-4 mb-4">
         <div className="bg-white rounded shadow p-4">
           {/* <Score {...props} game={game}></Score> */}
-          {game.score && (
+          {game && (
             <Fragment>
-              <div className="text-3xl text-black">{game.score[0]}</div>:<div className="text-3xl">{game.score[1]}</div>
+              <div className="text-3xl text-black">{game.score}</div>:<div className="text-3xl">{game._id}</div>
             </Fragment>
           )}
         </div>
