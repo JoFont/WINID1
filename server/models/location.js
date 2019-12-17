@@ -14,7 +14,7 @@ const schema = new mongoose.Schema({
     bar: Boolean,
     indoor: Boolean
   },
-  info: {
+  name: {
     type: String,
   },
   sportsRatings: {

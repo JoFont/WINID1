@@ -38,10 +38,14 @@ export const getAll = async (token) => {
 export const createOne = async (token, player, data) => {
   try {
     const location = JSON.parse(data.location);
-    const gameLocation = {
+    const gameCoordinates = {
       coordinates: [location.geometry.location.lng, location.geometry.location.lat]
     };
-    const newLocation = await createOneLocation(token, { location: gameLocation });
+    const newLocation = await createOneLocation(token, { 
+      name: location.formatted_address,
+      location: gameCoordinates
+    });
+
     api.defaults.headers.common['authorization'] = `Bearer ${token}`;
     data.location = newLocation.data;
     data.player = player._id;

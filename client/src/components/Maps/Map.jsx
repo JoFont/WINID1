@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "reactn";
+import React, { useState, useEffect, useGlobal} from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
-var MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
+import { getAll as getAllGames } from "../../services/api/game";
+import addGameMarker from "../../services/maps/addGameMarker";
 
+const MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 
 const Map = props => {
   mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
 
+  const [userToken] = useGlobal("userToken");
   const [mapState, setMapState] = useState({
     lat: 38.736946,
     lng: -9.142685,
@@ -16,6 +19,7 @@ const Map = props => {
   let map;
 
 
+  // Isto faz refrescar duas vezes por causa do useGlobal como dependencia
   useEffect(() => {
     map = new mapbox.Map({
       container: mapContainer,
@@ -41,10 +45,6 @@ const Map = props => {
 
     if(props.controls) {
       map.addControl(new mapbox.NavigationControl());
-      // const geoCenas = 
-
-      // console.log(navigator.geolocation);
-
       map.addControl(new MapboxGeocoder({
         accessToken: mapbox.accessToken,
         mapboxgl: mapbox,
@@ -52,12 +52,21 @@ const Map = props => {
         types: "region, district, place, locality, neighborhood, address, poi"
       }));
     }
+    
+    if(userToken) {
+      map.on("load", async () => {
+        const games = await getAllGames(userToken);
+        if(games.data.length > 0) {
+          addGameMarker(games, map);
+        }
+      });
+    }
 
     //? Effect cleanup => é igual a componentWilUnmount
     return () => {
       map.remove();
     }
-  }, [mapContainer]);
+  }, [mapContainer, userToken]);
 
 
   return <div ref={el => (mapContainer = el)} className="mapContainer w-100 h-screen m-0"></div>;

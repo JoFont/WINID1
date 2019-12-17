@@ -95,8 +95,9 @@ schema.statics.createAndPush = async function(data, users) {
     newGame.save();
     return newGame;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
+
 
 module.exports = mongoose.model("Game", schema);
