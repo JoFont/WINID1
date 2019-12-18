@@ -35,7 +35,7 @@ router.get("/", async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const request = await Request.findById(req.params.id);
+    const request = await (await Request.findById(req.params.id)).populated("game").populate("admins");
     res.status(200).json(request);
   } catch (error) {
     next(error);
