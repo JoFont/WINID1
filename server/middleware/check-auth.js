@@ -1,11 +1,8 @@
-const admin = require('../services/firebase-admin');
+const admin = require("../services/firebase-admin");
 
 const getAuthToken = (req, res, next) => {
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.split(' ')[0] === 'Bearer'
-  ) {
-    req.authToken = req.headers.authorization.split(' ')[1];
+  if (req.headers.authorization && req.headers.authorization.split(" ")[0] === "Bearer") {
+    req.authToken = req.headers.authorization.split(" ")[1];
   } else {
     req.authToken = null;
   }
@@ -17,15 +14,12 @@ const checkIfAuthenticated = (req, res, next) => {
     try {
       const { authToken } = req;
       console.log("AUTH TOKEN", authToken);
-      console.log(req)
       const userInfo = await admin.auth().verifyIdToken(authToken);
       req.authId = userInfo.uid;
       return next();
     } catch (e) {
       console.log("Deu merda no Check Auth");
-      return res
-        .status(401)
-        .send({ error: 'You are not authorized to make this request' });
+      return res.status(401).send({ error: "You are not authorized to make this request" });
     }
   });
 };
