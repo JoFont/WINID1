@@ -114,7 +114,7 @@ export const addPlayerToPlayers = async (firebase, token, game, player) => {
     await sendChatStatus(firebase, game.chatRef, {
       type: "player-add",
       text: `${player.displayName} was added to this game.`
-    })
+    });
 
     return res;
   } catch (error) {
