@@ -98,6 +98,21 @@ const RequestView = props => {
             )}
           </div>
         </div>
+
+        <div className="w-full p-4 mb-4">
+          <div className="bg-white rounded shadow p-4">
+            {request &&
+              request.plusOnes &&
+              request.plusOnes.map(player => {
+                return (
+                  <div key={player._id}>
+                    <Link to={"/player/" + player.username}>{player.displayName}</Link>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+
         <div className="">
           <button className="bg-blue-500 text-white rounded w-full" onClick={handleJoin}>
             Join!
