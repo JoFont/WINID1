@@ -142,8 +142,10 @@ schema.statics.addPlayerToPlayers = async function(id, player) {
   const Game = this;
   try {
     const game = await Game.findById(id);
-    game.players.push(player);
-    game.save();
+    if (!game.includes(player)) {
+      game.players.push(player);
+      game.save();
+    }
     return game;
   } catch (error) {
     throw error("Error => [Model: Game | Static: addPlayerToPlayers]");
