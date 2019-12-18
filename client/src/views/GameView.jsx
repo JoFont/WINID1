@@ -43,13 +43,30 @@ const GameView = props => {
       </div>
       <div className="w-2/3 relative">
         <div className="w-full h-full p-4">
-          <div className="bg-white w-1/3 p-4 shadow rounded-l-lg rounded-tr-lg">
-            <span className="font-bold uppercase w-full text-blue-400 text-xs">Filipe Catarino</span>
-            <div className="w-full text-xs">
-              <span className="text-gray-400 uppercase">@Alntjan</span>
-              <span className="text-muted">21:45</span>
+          {/* TO BE MESSAGE COMPONENT */}
+          <div className="w-1/2">
+            <div className="flex justify-between items-center mb-1">
+              <div className="-mb-6 flex items-center">
+                <img
+                  src="https://api.adorable.io/avatars/256/abc@abc.com.png"
+                  alt=""
+                  className="rounded-full w-10 ml-2 shadow z-10"
+                />
+                <span className="text-gray-700 font-bold uppercase text-s leading-none bg-white rounded pl-3 pr-2 py-1 shadow -ml-2 z-0">
+                  Filipe Catarino
+                </span>
+              </div>
+              <span className="text-gray-400 leading-none text-xs">21:45</span>
+            </div>
+            <div className="bg-white p-4 shadow rounded-l-lg rounded-tr-lg">
+              <div className="w-full leading-tight text-base mt-3">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem eaque delectus, ullam est perferendis
+                eius sint dolorum officia libero laboriosam porro dicta, aliquid earum vitae, explicabo dolores id
+                placeat molestiae!
+              </div>
             </div>
           </div>
+          {/* TO BE MESSAGE COMPONENT */}
         </div>
         <div className="w-full absolute bottom-0 left-0 p-3 border-t-2">
           <Input className="shadow" size="large" suffix={<Icon type="right" />}></Input>
