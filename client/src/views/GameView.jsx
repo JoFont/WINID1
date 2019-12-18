@@ -52,8 +52,9 @@ const GameView = props => {
     }
   };
 
-  const addPlayerToPlayers = async playerToAdd => {
-    const response = await addPlayerToPlayers(fire, userToken, game._id, JSON.parse(playerToAdd));
+  const addPlayerToPlayersHandler = async playerToAdd => {
+    playerToAdd = JSON.parse(playerToAdd);
+    const response = await addPlayerToPlayers(fire, userToken, game, playerToAdd);
   };
 
   useEffect(() => {
@@ -94,7 +95,7 @@ const GameView = props => {
           </div>
         </div>
 
-        <SearchUser handlePlayerSelect={addPlayerToPlayers}></SearchUser>
+        <SearchUser handlePlayerSelect={addPlayerToPlayersHandler}></SearchUser>
 
         <div className="w-full p-4 mb-4">
           <div className="bg-white rounded shadow p-4">
