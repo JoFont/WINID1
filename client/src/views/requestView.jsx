@@ -95,11 +95,15 @@ const RequestView = props => {
         </div>
       </div>
       <div className="w-2/3 relative h-screen max-h-screen flex flex-col justify-stretch items-stretch">
-        {(!messages.length && (
-          <div className="w-full h-full py-4 px-8 overflow-y-scroll z-0 flex items-center justify-center">
-            <Empty></Empty>
-          </div>
-        )) || (
+        {(request &&
+          request.plusOnes.reduce((validator, plusOne) => {
+            return plusOne.player === player._id ? !validator : validator;
+          }, false) &&
+          !messages.length && (
+            <div className="w-full h-full py-4 px-8 overflow-y-scroll z-0 flex items-center justify-center">
+              <Empty></Empty>
+            </div>
+          )) || (
           <div className="w-full h-full py-4 px-8 overflow-y-scroll z-0" id="chat">
             {messages.map(message => {
               return <Bubble message={message} key={message.id}></Bubble>;
