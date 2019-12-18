@@ -12,8 +12,7 @@ export const getById = async (token, id) => {
     const res = await api.get(`/${id}`, {
       headers: {
         authorization: `Bearer ${token}`
-      },
-    });
+      }});
     return res;
   } catch (error) {
     throw error;
