@@ -53,10 +53,12 @@ const schema = new mongoose.Schema(
 schema.statics.createAndPushAdmins = async function(data) {
   const Request = this;
   try {
+    console.log(data);
     const newRequest = await Request.create({
       need: data.need,
-      game: data.game
-    }).populate("game");
+      game: data.game,
+      chatRef: data.chatRef
+    });
     newRequest.admins.push(data.admins);
     await newRequest.save();
     return newRequest;
