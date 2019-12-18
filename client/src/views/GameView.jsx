@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useGlobal, Fragment } from "reactn";
-import { Input, Icon } from "antd";
+import { Input, Icon, Empty } from "antd";
 import CreateRequestForm from "../components/CreateRequest";
 import { getById as getGameById } from "../services/api/game";
 import Score from "../components/Games/Score";
@@ -74,12 +74,19 @@ const GameView = props => {
           </div>
         </div>
       </div>
-      <div className="w-2/3 relative h-screen max-h-screen flex flex-col">
-        <div className="w-full h-auto py-4 px-8 overflow-y-scroll z-0" id="chat">
-          {messages.map(message => {
-            return <Bubble message={message} key={message.id}></Bubble>;
-          })}
-        </div>
+      <div className="w-2/3 relative h-screen max-h-screen flex flex-col justify-stretch items-stretch">
+        {(!messages.length && (
+          <div className="w-full h-full py-4 px-8 overflow-y-scroll z-0 flex items-center justify-center">
+            <Empty></Empty>
+          </div>
+        )) || (
+          <div className="w-full h-auto py-4 px-8 overflow-y-scroll z-0" id="chat">
+            {messages.map(message => {
+              return <Bubble message={message} key={message.id}></Bubble>;
+            })}
+          </div>
+        )}
+
         <div className="w-full h-30 p-3 border-t-2 z-10 bg-gray-100">
           <Input
             className="shadow"
