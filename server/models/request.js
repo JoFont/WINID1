@@ -16,19 +16,17 @@ const schema = new mongoose.Schema({
     min: 1
   },
   plusOnes: [{
-    type: [{
-      player: {
-        type: mongoose.Types.ObjectId,
-        ref: "Player"
-      },
-      status: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Status"
-      },
-      statusLog: [{
-        type: mongoose.Types.ObjectId,
-        ref: "Status"
-      }]
+    player: {
+      type: mongoose.Types.ObjectId,
+      ref: "Player"
+    },
+    status: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Status"
+    },
+    statusLog: [{
+      type: mongoose.Types.ObjectId,
+      ref: "Status"
     }]
   }],
   status: {
