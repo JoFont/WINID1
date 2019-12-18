@@ -128,7 +128,7 @@ function App() {
           {/* <Header>
             <Icon className="trigger" type={toggle ? "menu-unfold" : "menu-fold"} onClick={() => setToggle(!toggle)} />
           </Header> */}
-          <Content>
+          <Content className="p-6">
             <Switch>
               <MainViews />
             </Switch>
