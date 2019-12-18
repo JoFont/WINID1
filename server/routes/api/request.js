@@ -44,6 +44,7 @@ router.get('/:id', async (req, res, next) => {
       }
     })
     .populate("admins")
+    .populate("plusOnes")
     .exec();
     res.status(200).json(request);
   } catch (error) {
