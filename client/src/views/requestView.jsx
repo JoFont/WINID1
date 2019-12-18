@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useGlobal, Fragment } from "reactn";
 import { Input, Icon, Empty } from "antd";
 import { Link } from "react-router-dom";
-import { getById as getRequestById } from "../services/api/request";
+import { getById as getRequestById, joinPlusOnes } from "../services/api/request";
 import { sendChatMessage } from "../services/chat";
 import Bubble from "../components/Chats/Bubble";
 
@@ -50,6 +50,11 @@ const RequestView = props => {
     }
   };
 
+  const handleJoin = async e => {
+    const response = await joinPlusOnes(userToken, request._id, player._id);
+    setRequest(response.data);
+  };
+
   useEffect(() => {
     if (userToken) {
       buildRequest();
@@ -92,6 +97,11 @@ const RequestView = props => {
               </div>
             )}
           </div>
+        </div>
+        <div className="">
+          <button className="bg-blue-500 text-white rounded w-full" onClick={handleJoin}>
+            Join!
+          </button>
         </div>
       </div>
       <div className="w-2/3 relative h-screen max-h-screen flex flex-col justify-stretch items-stretch">
