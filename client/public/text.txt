@@ -1,0 +1,11 @@
+https://api.mapbox.com/styles/v1/mapbox/light-v10/static/-80.2761,40.8318,5/300x200?access_token=pk.eyJ1Ijoiam9mb250IiwiYSI6ImNrNDBiOWtxaTAwNzUzbW44NmpiajZ5cXEifQ.pyznAM2ns-_4WLz-DuZEAg
+
+
+https://api.mapbox.com/styles/v1/{username}/{style_id}/static/{overlay}/{lon},{lat},{zoom},{bearing},{pitch}|{auto}/{width}x{height}{@2x}
+
+
+https://api.mapbox.com/styles/v1/jofont/ck48k2a7l0hci1co0xskrj9xl/static/{lon},{lat},{zoom},{pitch}/3
+00x300?access_token=pk.eyJ1Ijoiam9mb250IiwiYSI6ImNrNDBiOWtxaTAwNzUzbW44NmpiajZ5cXEifQ.pyznAM2ns-_4WLz-DuZEAg
+
+
+https://api.mapbox.com/styles/v1/jofont/ck48k2a7l0hci1co0xskrj9xl/static/-9.1306,38.719,15,0,60/300x300?access_token=pk.eyJ1Ijoiam9mb250IiwiYSI6ImNrNDBiOWtxaTAwNzUzbW44NmpiajZ5cXEifQ.pyznAM2ns-_4WLz-DuZEAg

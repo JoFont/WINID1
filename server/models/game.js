@@ -28,6 +28,18 @@ const schema = new mongoose.Schema(
         }
       }
     },
+    queue: [{
+      type: mongoose.Types.ObjectId,
+      ref: "Player"
+    }],
+    team1: [{
+      type: mongoose.Types.ObjectId,
+      ref: "Player"
+    }],
+    team2: [{
+      type: mongoose.Types.ObjectId,
+      ref: "Player"
+    }],
     sport: {
       type: mongoose.Types.ObjectId
     },
@@ -60,6 +72,10 @@ const schema = new mongoose.Schema(
     location: {
       type: mongoose.Types.ObjectId,
       ref: "Location"
+    },
+    locationPhotoUrl: {
+      type: String,
+      trim: true
     },
     schedule: {
       type: Date

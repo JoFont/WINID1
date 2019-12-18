@@ -30,15 +30,11 @@ export const editOne = async (token, playerId, data) => {
 
 export const deleteOne = async (token, id) => {
   try {
-    const res = await api.delete(`/`, {
-        headers: {
-          authorization: `Bearer ${token}`
-        },
-        params: {
-          id
-        }
-      }
-    );
+    const res = await api.delete(`/${id}`, {
+      headers: {
+        authorization: `Bearer ${token}`
+      }});
+
     return res;
   } catch (error) {
     throw error;

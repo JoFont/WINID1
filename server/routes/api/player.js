@@ -86,6 +86,18 @@ router.patch('/:id/review', checkAuth, async (req, res, next) => {
   }
 });
 
+
+// TODO: Finish with static
+router.get("/:username/chatList", checkAuth, async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    // const player = await Player.findByUsername(req.params.username).populate("teams games leagues");
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 module.exports = router;
 
 // - [X]  GET /:username

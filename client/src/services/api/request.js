@@ -9,15 +9,10 @@ const api = axios.create({
 
 export const getById = async (token, id) => {
   try {
-    const res = await api.get('/', {
+    const res = await api.get(`/${id}`, {
       headers: {
         authorization: `Bearer ${token}`
-      },
-      params: {
-        id
-      }
-    }
-    );
+      }});
     return res;
   } catch (error) {
     throw error;
