@@ -60,7 +60,7 @@ const GameView = props => {
   };
 
   useEffect(() => {
-    if(userToken) {
+    if (userToken) {
       buildGame();
     }
   }, [userToken]);
@@ -81,14 +81,14 @@ const GameView = props => {
                   </div>
                 </div>
                 <div className="w-1/3 flex flex-col border-l border-r">
-                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">subs</span>
+                  <span className="uppercase text-xs text-gray-500 bg-gray-200 border-b">subs</span>
                   <div className="text-2xl w-full leading-none py-1">
                     <span className="leading-none">{game.subs.players ? game.subs.players.length : 0}</span>
                     <small className="text-gray-400 text-xs">/{game.subs.number * 2}</small>
                   </div>
                 </div>
                 <div className="w-1/3 flex flex-col">
-                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">invited</span>
+                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tr border-b">invited</span>
                   <div className="text-2xl w-full leading-none py-1">
                     <span className="leading-none">{game.players ? game.players.length : 0}</span>
                     {/* <small className="text-gray-400 text-xs">/{game.subs.number}</small> */}

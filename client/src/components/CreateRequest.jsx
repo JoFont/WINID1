@@ -1,6 +1,6 @@
 import React, { useState, useGlobal, useEffect } from "reactn";
 import Geocode from "react-geocode";
-import { createOne as createOneGame } from "../services/api/game";
+import { createOne as createOneRequest } from "../services/api/request";
 
 import { Select, Input, InputNumber, Button, Row, Col } from "antd";
 
@@ -13,11 +13,15 @@ const CreateRequestForm = props => {
   const [userToken] = useGlobal("userToken");
   const [player] = useGlobal("player");
   const [requestNumber, setRequestNumber] = useState(0);
+  const [maxRequestNumber, setMaxRequestNumber] = useState(99);
 
   useEffect(() => {
     const game = props.game;
     if (game) {
       setRequestNumber(game.starters.number * 2 - ((game.starters.players && game.starters.players.length) || 0));
+      setMaxRequestNumber(
+        (game.starters.number + game.subs.number) * 2 - ((game.starters.players && game.starters.players.length) || 0)
+      );
     }
   }, [props.game]);
 
@@ -26,15 +30,14 @@ const CreateRequestForm = props => {
     console.log(requestNumber);
   };
 
-  const handleSubmit = async e => {
-    // e.preventDefault();
-    // const values = {
-    //   ...gameForm,
-    //   date: gameForm.date.format("YYYY-MM-DD"),
-    //   time: gameForm.time.format("HH:mm")
-    // };
-    // await createOneGame(userToken, player, values);
-    // props.listUpdate();
+  const handleSubmitRequest = async e => {
+    e.preventDefault();
+    const request = await createOneRequest(userToken, {
+      need: requestNumber,
+      game: props.game._id,
+      admins: props.game.admins
+    });
+    console.log(request.data);
   };
 
   return (
@@ -44,6 +47,7 @@ const CreateRequestForm = props => {
           <Col span={6}>
             <InputNumber
               min={1}
+              max={maxRequestNumber}
               className="w-full"
               size="large"
               value={requestNumber}
@@ -51,7 +55,7 @@ const CreateRequestForm = props => {
             />
           </Col>
           <Col span={18}>
-            <Button type="primary" className="font-winid1 uppercase w-full" size="large" onClick={handleSubmit}>
+            <Button type="primary" className="font-winid1 uppercase w-full" size="large" onClick={handleSubmitRequest}>
               Ask for players!
             </Button>
           </Col>
