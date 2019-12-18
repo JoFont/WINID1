@@ -135,24 +135,24 @@ schema.statics.findOrCreate = async function(uid, firebaseUser) {
   }
 };
 
-schema.statics.findByUsername = async function(query) {
+schema.statics.searchByUsername = async function(query) {
   const Player = this;
   try {
     const players = await Player.find({ username: { $regex: query, $options: "g" } }).exec();
     return players;
   } catch (error) {
-    throw error("Error => [Model: Player | Static: findByUsername]");
+    throw error("Error => [Model: Player | Static: searchByUsername]");
   }
 };
 
-schema.statics.searchByUsername = async function(username) {
+schema.statics.findByUsername = async function(username) {
   const Player = this;
   try {
     const player = await Player.findOne({ username: username }).exec();
     if (player) return player;
     throw error("There's no player with that username");
   } catch (error) {
-    next(error);
+    throw error("Error => [Model: Player | Static: findByUsername]");
   }
 };
 
