@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useGlobal} from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
-import { getAll as getAllGames } from "../../services/api/game";
+import { getAll as getAllRequests } from "../../services/api/request";
 
 const MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 
@@ -61,9 +61,10 @@ const Map = props => {
     }
     
     map.on("load", async () => {
-      const games = await getAllGames();
-      if(games.data.length > 0) {
-        addGameMarker(games.data, map);
+      const response = await getAllRequests();
+      console.log(response.data)
+      if(response.data.length) {
+        addGameMarker(response.data, map);
       }
     });
 
