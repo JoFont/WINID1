@@ -16,6 +16,7 @@ module.exports = addStatus = async (id, model, past, current) => {
 
     return modelDocument.statusLog;
   } catch (error) {
-    next(error);
+    error.message = "Deu pirocada no Status";
+    throw error;
   }
 };
