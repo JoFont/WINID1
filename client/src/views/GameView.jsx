@@ -12,15 +12,21 @@ const GameView = props => {
   const [fire] = useGlobal("fire");
   const [player] = useGlobal("player");
   const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState("");
 
   const buildGame = async () => {
     const fetchedGame = await getGameById(userToken, props.match.params.id);
     console.log("fetchedGame ==== >", fetchedGame.data);
     setGame(fetchedGame.data);
 
-    fire.firestore().collection("chatGroups").doc(fetchedGame.data.chatRef).collection("messages").orderBy("date")
-    .onSnapshot(querySnapshot => {
-      const allMessages = [];
+    fire
+      .firestore()
+      .collection("chatGroups")
+      .doc(fetchedGame.data.chatRef)
+      .collection("messages")
+      .orderBy("date")
+      .onSnapshot(querySnapshot => {
+        const allMessages = [];
         querySnapshot.forEach(doc => {
           allMessages.push(doc.data());
         });
@@ -30,16 +36,13 @@ const GameView = props => {
 
   const addMessage = async e => {
     if (e.key === "Enter") {
-      console.log(e.target.value);
-
       await sendChatMessage(fire, game.chatRef, {
         photoUrl: player.photoUrl,
-        text: e.target.value,
+        text: inputMessage,
         displayName: player.displayName,
         username: player.username
       });
-
-      // e.target.innerText = "";
+      setInputMessage("");
     }
   };
 
@@ -81,7 +84,14 @@ const GameView = props => {
           })}
         </div>
         <div className="w-full absolute bottom-0 left-0 p-3 border-t-2">
-          <Input className="shadow" size="large" suffix={<Icon type="right" />} onKeyPress={addMessage}></Input>
+          <Input
+            className="shadow"
+            size="large"
+            suffix={<Icon type="right" />}
+            onKeyPress={addMessage}
+            onChange={e => setInputMessage(e.target.value)}
+            value={inputMessage}
+          ></Input>
         </div>
       </div>
     </div>
