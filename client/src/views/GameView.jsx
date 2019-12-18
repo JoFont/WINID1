@@ -10,24 +10,28 @@ const GameView = props => {
   const [game, setGame] = useState();
   const [fire] = useGlobal("fire");
   const [player] = useGlobal("player");
-  const [messages, setMessages] = useState([]); 
+  const [messages, setMessages] = useState([]);
 
   const buildGame = async () => {
     const fetchedGame = await getGameById(userToken, props.match.params.id);
     console.log("fetchedGame ==== >", fetchedGame.data);
     setGame(fetchedGame.data);
 
-    fire.firestore().collection("chatGroups").doc(fetchedGame.data.chatRef).collection("messages")
-    .onSnapshot(querySnapshot => {
+    fire
+      .firestore()
+      .collection("chatGroups")
+      .doc(fetchedGame.data.chatRef)
+      .collection("messages")
+      .onSnapshot(querySnapshot => {
         querySnapshot.forEach(doc => {
           const msg = doc.data();
           setMessages([...messages, msg]);
         });
-    });
+      });
   };
 
   const addMessage = async e => {
-    if(e.key === "Enter") {
+    if (e.key === "Enter") {
       console.log(e.target.value);
 
       await sendChatMessage(fire, game.chatRef, {
@@ -39,14 +43,11 @@ const GameView = props => {
 
       // e.target.innerText = "";
     }
-  }
+  };
 
   useEffect(() => {
     buildGame();
-
   }, [userToken]);
-
-
 
   return (
     <div className="flex flex-wrap items-stretch min-h-screen">
@@ -73,6 +74,9 @@ const GameView = props => {
       </div>
       <div className="w-2/3 relative">
         <div className="w-full h-full p-4">
+          {messages.map(message => {
+            return <p>{message.text}</p>;
+          })}
           {/* TO BE MESSAGE COMPONENT */}
           <div className="w-1/2">
             <div className="flex justify-between items-center mb-1">
