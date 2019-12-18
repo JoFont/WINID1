@@ -2,9 +2,10 @@ import React from "react";
 import { formatDistanceToNow } from "date-fns";
 
 const Bubble = props => {
+  const [player] = useGlobal("player");
   const message = props.message;
   return (
-    <div className="w-1/2 mb-4">
+    <div className={message.username === player.username ? "ml-auto w-2/5 mb-6" : "w-2/5 mb-6"}>
       <div className="flex justify-between items-center mb-1">
         <div className="-mb-6 flex items-center">
           <img src={message.photoUrl} alt="" className="rounded-full w-10 ml-2 shadow z-10" />
