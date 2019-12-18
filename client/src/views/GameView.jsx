@@ -59,7 +59,9 @@ const GameView = props => {
   };
 
   useEffect(() => {
-    buildGame();
+    if(userToken) {
+      buildGame();
+    }
   }, [userToken]);
 
   return (
