@@ -53,7 +53,7 @@ router.post("/:id/addPlayerToPlayers", checkAuth, async (req, res, next) => {
   try {
     const data = req.body;
     const response = await Game.addPlayerToPlayers(req.params.id, data.playerId);
-    return response;
+    res.status(200).json(response);
   } catch (error) {
     next(error);
   }

@@ -105,12 +105,16 @@ export const createAndUpdateStatus = async (token, id, data) => {
 
 
 export const addPlayerToPlayers = async (firebase, token, game, player) => {
+  console.log("Estou no inicio");
+
   try {
     api.defaults.headers.common["authorization"] = `Bearer ${token}`;
     const res = await api.post(`/${game._id}/addPlayerToPlayers`, {
       playerId: player._id
     });
 
+    console.log(res);
+    console.log("Estou aqui");
     await sendChatStatus(firebase, game.chatRef, {
       type: "player-add",
       text: `${player.displayName} was added to this game.`
