@@ -19,11 +19,12 @@ const GameView = props => {
 
     fire.firestore().collection("chatGroups").doc(fetchedGame.data.chatRef).collection("messages")
     .onSnapshot(querySnapshot => {
+      const allMessages = [];
         querySnapshot.forEach(doc => {
-          const msg = doc.data();
-          setMessages([...messages, msg]);
+          allMessages.push(doc.data());
         });
-    });
+        setMessages(allMessages);
+      });
   };
 
   const addMessage = async e => {
