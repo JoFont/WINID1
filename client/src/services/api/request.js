@@ -52,7 +52,7 @@ export const createOne = async (firebase, token, data) => {
 export const joinPlusOnes = async (token, id, playerId) => {
   try {
     api.defaults.headers.common['authorization'] = `Bearer ${token}`;
-    const res = await api.post(`/${id}/addPlusOne`, playerId);
+    const res = await api.post(`/${id}/addPlusOne`, {...playerId});
     return res;
   } catch (error) {
     throw error;
