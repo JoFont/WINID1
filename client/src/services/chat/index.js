@@ -40,6 +40,7 @@ export const sendChatMessage = async (firebase, groupId, data) => {
       text: data.text,
       displayName: data.displayName,
       username: data.username,
+      playerId: data.playerId,
       date: firebase.firestore.FieldValue.serverTimestamp()
     });
 

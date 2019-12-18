@@ -41,7 +41,8 @@ const GameView = props => {
         photoUrl: player.photoUrl,
         text: inputMessage,
         displayName: player.displayName,
-        username: player.username
+        username: player.username,
+        playerId: player._id
       });
       setInputMessage("");
     }
