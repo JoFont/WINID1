@@ -18,6 +18,10 @@ const schema = new mongoose.Schema(
       required: true,
       min: 1
     },
+    chatRef: {
+      type: String,
+      required: true
+    },
     plusOnes: [
       {
         player: {
