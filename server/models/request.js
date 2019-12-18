@@ -20,7 +20,7 @@ const schema = new mongoose.Schema(
     },
     plusOnes: [
       {
-        type: [
+        type: 
           {
             player: {
               type: mongoose.Types.ObjectId,
@@ -37,7 +37,7 @@ const schema = new mongoose.Schema(
               }
             ]
           }
-        ]
+        
       }
     ],
     status: {
