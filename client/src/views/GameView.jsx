@@ -16,7 +16,6 @@ const GameView = props => {
 
   const buildGame = async () => {
     const fetchedGame = await getGameById(userToken, props.match.params.id);
-    console.log("fetchedGame ==== >", fetchedGame.data);
     setGame(fetchedGame.data);
 
     fire
@@ -31,6 +30,8 @@ const GameView = props => {
           allMessages.push(doc.data());
         });
         setMessages(allMessages);
+        var element = document.getElementById("chat");
+        element.scrollTop = element.scrollHeight - element.clientHeight;
       });
   };
 
@@ -74,7 +75,7 @@ const GameView = props => {
         </div>
       </div>
       <div className="w-2/3 relative">
-        <div className="w-full h-full p-4">
+        <div className="w-full h-screen p-4 overflow-y-scroll z-0 mb-20" id="chat">
           {messages.map(message => {
             return (
               <Fragment>
@@ -83,7 +84,7 @@ const GameView = props => {
             );
           })}
         </div>
-        <div className="w-full absolute bottom-0 left-0 p-3 border-t-2">
+        <div className="w-full absolute bottom-0 left-0 p-3 border-t-2 z-10 bg-gray-100">
           <Input
             className="shadow"
             size="large"
