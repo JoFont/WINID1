@@ -59,7 +59,6 @@ export const sendChatStatus = async (firebase, groupId, data) => {
       text: data.text,
       date: firebase.firestore.FieldValue.serverTimestamp()
     });
-
     return newMessage;
   } catch (error) {
     throw error;

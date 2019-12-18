@@ -26,6 +26,16 @@ export const searchByUsername = async (token, query) => {
   }
 };
 
+export const searchByDisplayName = async (token, query) => {
+  try {
+    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
+    const res = await api.post('/searchByDisplayName', { query });
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 export const editOne = async (token, playerId, data) => {
   try {

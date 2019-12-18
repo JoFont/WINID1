@@ -1,5 +1,5 @@
 import React, { useState, useGlobal } from "reactn";
-import { searchByUsername } from "../services/api/player";
+import { searchByUsername, searchByDisplayName } from "../services/api/player";
 import { Select } from "antd";
 
 const { Option } = Select;
@@ -13,9 +13,17 @@ const SearchUser = props => {
       setAutoCompleteResult([]);
     } else {
       try {
-        const response = await searchByUsername(userToken, query);
-        setAutoCompleteResult(response.data);
-      } catch (error) {}
+        if(query.charAt(0) === "@" && query.length > 1) {
+          const sanitizedQuery = query.substring(1);
+          const response = await searchByUsername(userToken, sanitizedQuery);
+          setAutoCompleteResult(response.data);
+        } else {
+          const response = await searchByDisplayName(userToken, query);
+          setAutoCompleteResult(response.data);
+        }
+      } catch (error) {
+        throw error;
+      }
     }
   };
 
