@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as ROUTES from "../../constants/api.routes";
 import { createOne as createOneLocation } from "./location";
-import { createGroupChat, updateGroupChatMeta} from "../chat";
+import { createGroupChat, updateGroupChatMeta, sendChatStatus } from "../chat";
 
 const api = axios.create({
   baseURL: ROUTES.GAME
@@ -102,3 +102,21 @@ export const createAndUpdateStatus = async (token, id, data) => {
     throw error;
   }
 };
+
+
+export const addPlayerToPlayers = async (firebase, token, gameID, player) => {
+  try {
+    api.defaults.headers.common["authorization"] = `Bearer ${token}`;
+    const res = await api.post(`/${gameID}/addPlayerToPlayers`, {
+      playerId: player._id
+    });
+
+    const newChatStatus = await sendChatStatus(firebase, gameID, {
+      type: "player-add",
+      text: `${player.displayName} was added to this game.`
+    })
+
+  } catch (error) {
+    throw error;
+  }
+}

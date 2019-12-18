@@ -49,3 +49,19 @@ export const sendChatMessage = async (firebase, groupId, data) => {
     throw error;
   }
 }
+
+export const sendChatStatus = async (firebase, groupId, data) => {
+  try {
+    const db = firebase.firestore();
+    const newMessage = await db.collection("chatGroups").doc(groupId).collection("messages").add({
+      isNotification: true,
+      type: data.type,
+      text: data.text,
+      date: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    return newMessage;
+  } catch (error) {
+    throw error;
+  }
+}
