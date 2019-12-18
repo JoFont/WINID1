@@ -77,8 +77,8 @@ const GameView = props => {
         <div className="w-full h-full p-4">
           {messages.map(message => {
             return (
-              <Fragment>
-                <Bubble message={message} key={message.id}></Bubble>
+              <Fragment key={message.id}>
+                <Bubble message={message}></Bubble>
               </Fragment>
             );
           })}
