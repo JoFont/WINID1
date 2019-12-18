@@ -20,5 +20,6 @@
   "bugs": {
     "url": "https://github.com/JoFont/WINID1/issues"
   },
-  "homepage": "https://github.com/JoFont/WINID1#readme"
+  "homepage": "https://github.com/JoFont/WINID1#readme",
+  "dependencies": {}
 }
