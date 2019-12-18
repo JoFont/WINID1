@@ -39,7 +39,7 @@ const GameView = props => {
   };
 
   const addMessage = async e => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && e.target.value !== "") {
       await sendChatMessage(fire, game.chatRef, {
         photoUrl: player.photoUrl,
         text: inputMessage,
@@ -94,7 +94,7 @@ const GameView = props => {
             {game &&
               game.players.map(player => {
                 return (
-                  <div>
+                  <div key={player._id}>
                     <Link to={"/player/" + player.username}>{player.displayName}</Link>
                   </div>
                 );
