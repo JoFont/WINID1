@@ -31,10 +31,11 @@ export const getAll = async () => {
 
 export const createOne = async (firebase, token, data) => {
   try {
+
     const newChatDoc = await createGroupChat(firebase);
 
     data.chatRef = newChatDoc.id;
-
+    console.log(data);
     api.defaults.headers.common['authorization'] = `Bearer ${token}`;
     const res = await api.post('/create', { data });
     await updateGroupChatMeta(firebase, {
@@ -42,7 +43,7 @@ export const createOne = async (firebase, token, data) => {
       id: res.data.newRequest._id,
       type: "Request"
     });
-    
+
     return res;
   } catch (error) {
     throw error;

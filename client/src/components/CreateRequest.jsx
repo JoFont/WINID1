@@ -12,6 +12,7 @@ const InputGroup = Input.Group;
 const CreateRequestForm = props => {
   const [userToken] = useGlobal("userToken");
   const [player] = useGlobal("player");
+  const [fire] = useGlobal("fire");
   const [requestNumber, setRequestNumber] = useState(0);
   const [maxRequestNumber, setMaxRequestNumber] = useState(99);
 
@@ -32,7 +33,7 @@ const CreateRequestForm = props => {
 
   const handleSubmitRequest = async e => {
     e.preventDefault();
-    const request = await createOneRequest(userToken, {
+    const request = await createOneRequest(fire, userToken, {
       need: requestNumber,
       game: props.game._id,
       admins: props.game.admins
