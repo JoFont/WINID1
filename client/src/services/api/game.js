@@ -47,7 +47,8 @@ export const createOne = async (firebase, token, player, data) => {
     data.location = newLocation.data;
     data.playerId = player._id;
     data.chatRef = newChatDoc.id;
-
+    data.locationPhotoUrl = `https://api.mapbox.com/styles/v1/jofont/ck48k2a7l0hci1co0xskrj9xl/static/${location.geometry.location.lng},${location.geometry.location.lat},15,0,60/300x300?access_token=pk.eyJ1Ijoiam9mb250IiwiYSI6ImNrNDBiOWtxaTAwNzUzbW44NmpiajZ5cXEifQ.pyznAM2ns-_4WLz-DuZEAg`;
+    
     api.defaults.headers.common['authorization'] = `Bearer ${token}`;
     const res = await api.post('/create', { data });
     await updateGroupChatMeta(firebase, {
