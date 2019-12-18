@@ -134,7 +134,7 @@ schema.statics.createAndPush = async function(data, users) {
     newGame.save();
     return newGame;
   } catch (error) {
-    throw error("Error => [Model: Game | Static: createAndPush]");
+    throw new Error("Error => [Model: Game | Static: createAndPush]");
   }
 };
 
@@ -142,13 +142,13 @@ schema.statics.addPlayerToPlayers = async function(id, player) {
   const Game = this;
   try {
     const game = await Game.findById(id);
-    if (!game.includes(player)) {
+    if (!game.players.includes(player)) {
       game.players.push(player);
       game.save();
     }
     return game;
   } catch (error) {
-    throw error("Error => [Model: Game | Static: addPlayerToPlayers]");
+    throw new Error("Error => [Model: Game | Static: addPlayerToPlayers]");
   }
 };
 
