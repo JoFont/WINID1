@@ -1,4 +1,5 @@
-import React, { useGlobal } from "reactn";
+import React, {useGlobal} from "reactn";
+import { formatDistanceToNow } from "date-fns";
 
 const Bubble = props => {
   const [player] = useGlobal("player");
@@ -12,7 +13,7 @@ const Bubble = props => {
             {message.displayName}
           </span>
         </div>
-        <span className="text-gray-400 leading-none text-xs">{message.date && message.date.seconds}</span>
+        <span className="text-gray-400 leading-none text-xs">{message.date && formatDistanceToNow(message.date.toMillis(), { addSuffix: true })}</span>
       </div>
       <div className="bg-white p-4 shadow rounded-l-lg rounded-tr-lg">
         <div className="w-full leading-tight text-base mt-3">{message.text}</div>
