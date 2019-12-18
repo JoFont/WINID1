@@ -17,7 +17,7 @@ const GameView = props => {
     console.log("fetchedGame ==== >", fetchedGame.data);
     setGame(fetchedGame.data);
 
-    fire.firestore().collection("chatGroups").doc(fetchedGame.data.chatRef).collection("messages")
+    fire.firestore().collection("chatGroups").doc(fetchedGame.data.chatRef).collection("messages").orderBy("date")
     .onSnapshot(querySnapshot => {
       const allMessages = [];
         querySnapshot.forEach(doc => {
