@@ -52,7 +52,7 @@ router.post("/create", checkAuth, async (req, res, next) => {
 router.post("/:id/addPlayerToPlayers", checkAuth, async (req, res, next) => {
   try {
     const data = req.body;
-    const response = await Game.addPlayerToPlayers(req.params.id, data.playerId);
+    const response = await Game.addPlayerToPlayers(req.params.id, data.playerId).populate("players location");
     res.status(200).json(response);
   } catch (error) {
     next(error);
