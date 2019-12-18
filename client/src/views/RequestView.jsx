@@ -1,12 +1,9 @@
 import React, { useEffect, useState, useGlobal, Fragment } from "reactn";
 import { Input, Icon, Empty } from "antd";
 import { Link } from "react-router-dom";
-import CreateRequestForm from "../components/CreateRequest";
-import { getById as getGameById, addPlayerToPlayers } from "../services/api/game";
-import Score from "../components/Games/Score";
+import { getById as getRequestById } from "../services/api/request";
 import { sendChatMessage } from "../services/chat";
 import Bubble from "../components/Chats/Bubble";
-import SearchUser from "../components/SearchUser";
 
 const RequestView = props => {
   const [userToken] = useGlobal("userToken");
