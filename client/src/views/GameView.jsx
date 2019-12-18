@@ -3,20 +3,50 @@ import { Input, Icon } from "antd";
 import CreateRequestForm from "../components/CreateRequest";
 import { getById as getGameById } from "../services/api/game";
 import Score from "../components/Games/Score";
+import { sendChatMessage } from "../services/chat";
 
 const GameView = props => {
   const [userToken] = useGlobal("userToken");
   const [game, setGame] = useState();
+  const [fire] = useGlobal("fire");
+  const [player] = useGlobal("player");
+  const [messages, setMessages] = useState([]); 
 
   const buildGame = async () => {
     const fetchedGame = await getGameById(userToken, props.match.params.id);
     console.log("fetchedGame ==== >", fetchedGame.data);
     setGame(fetchedGame.data);
+
+    fire.firestore().collection("chatGroups").doc(fetchedGame.data.chatRef).collection("messages")
+    .onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const msg = doc.data();
+          setMessages([...messages, msg]);
+        });
+    });
   };
+
+  const addMessage = async e => {
+    if(e.key === "Enter") {
+      console.log(e.target.value);
+
+      await sendChatMessage(fire, game.chatRef, {
+        photoUrl: player.photoUrl,
+        text: e.target.value,
+        displayName: player.displayName,
+        username: player.username
+      });
+
+      // e.target.innerText = "";
+    }
+  }
 
   useEffect(() => {
     buildGame();
+
   }, [userToken]);
+
+
 
   return (
     <div className="flex flex-wrap items-stretch min-h-screen">
@@ -52,7 +82,7 @@ const GameView = props => {
           </div>
         </div>
         <div className="w-full absolute bottom-0 left-0 p-3 border-t-2">
-          <Input className="shadow" size="large" suffix={<Icon type="right" />}></Input>
+          <Input className="shadow" size="large" suffix={<Icon type="right" />} onKeyPress={addMessage}></Input>
         </div>
       </div>
     </div>

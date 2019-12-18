@@ -31,3 +31,19 @@ export const updateGroupChatMeta = async (firebase, data) => {
     throw error;
   }
 }
+
+export const sendChatMessage = async (firebase, groupId, data) => {
+  try {
+    const db = firebase.firestore();
+    const newMessage = await db.collection("chatGroups").doc(groupId).collection("messages").add({
+      photoUrl: data.photoUrl,
+      text: data.text,
+      displayName: data.displayName,
+      username: data.username
+    });
+
+    return newMessage;
+  } catch (error) {
+    throw error;
+  }
+}
