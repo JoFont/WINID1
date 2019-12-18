@@ -6,5 +6,5 @@ export const GAME = TRIMMED_ROUTES.GAME + "/:id";
 export const GAMES = TRIMMED_ROUTES.GAMES;
 export const TEAM = TRIMMED_ROUTES.TEAM + "/:id";
 export const LEAGUE = TRIMMED_ROUTES.LEAGUE + "/:id";
-export const REQUEST = TRIMMED_ROUTES.REQUEST + "/request/:id";
+export const REQUEST = TRIMMED_ROUTES.REQUEST + "/:id";
 export const LOGIN = TRIMMED_ROUTES.LOGIN;

@@ -53,4 +53,30 @@ schema.statics.createAndPushAdmins = async function(data) {
   }
 };
 
+schema.statics.addPlusOne = async function(id, player) {
+  const Request = this;
+  try {
+    const request = await Request.findById(id).exec();
+    if (!request.plusOnes.includes(player)) {
+      request.plusOnes.push(player);
+      await request.save();
+    }
+    const populatedRequest = await Request.findById(id)
+      .populate({
+        path: "game",
+        model: "Game",
+        populate: {
+          path: "location",
+          model: "Location"
+        }
+      })
+      .populate("admins")
+      .populate("plusOnes")
+      .exec();
+    return populatedRequest;
+  } catch (error) {
+    throw new Error("Error => [Model: Request | Static: addPlusOne]");
+  }
+};
+
 module.exports = mongoose.model("Request", schema);
