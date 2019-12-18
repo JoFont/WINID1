@@ -17,6 +17,15 @@ router.post('/findOrCreate', checkAuth, async (req, res, next) => {
   }
 });
 
+router.post('/searchByUsername', checkAuth, async (req, res, next) => {
+  try {
+    const response = await Player.searchByUsername(req.body.query);
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/:username', async (req, res, next) => {
   try {
     const player = await Player.findByUsername(req.params.username);

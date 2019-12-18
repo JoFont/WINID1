@@ -16,6 +16,17 @@ export const findOrCreate = async (token, user) => {
   }
 };
 
+export const searchByUsername = async (token, query) => {
+  try {
+    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
+    const res = await api.post('/searchByUsername', { query });
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 export const editOne = async (token, playerId, data) => {
   try {
     api.defaults.headers.common['authorization'] = `Bearer ${token}`;
