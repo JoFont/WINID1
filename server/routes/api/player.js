@@ -109,7 +109,8 @@ router.patch('/:id/review', checkAuth, async (req, res, next) => {
 router.get("/:username/chatList", checkAuth, async (req, res, next) => {
   const id = req.params.id;
   try {
-    // const player = await Player.findByUsername(req.params.username).populate("teams games leagues");
+    const player = await Player.findByUsername(req.params.username).populate("teams").populate("games").populate("leagues");
+    
   } catch (error) {
     next(error);
   }
