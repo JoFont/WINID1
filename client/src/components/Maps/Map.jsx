@@ -62,8 +62,8 @@ const Map = props => {
     
     map.on("load", async () => {
       const response = await getAllRequests();
-      console.log(response.data)
       if(response.data.length) {
+        console.log(response.data)
         addGameMarker(response.data, map);
       }
     });
