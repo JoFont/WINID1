@@ -1,4 +1,5 @@
 import React from "react";
+import { formatDistanceToNow } from "date-fns";
 
 const Bubble = props => {
   const message = props.message;
@@ -11,7 +12,7 @@ const Bubble = props => {
             {message.displayName}
           </span>
         </div>
-        <span className="text-gray-400 leading-none text-xs">{message.date && message.date.seconds}</span>
+        <span className="text-gray-400 leading-none text-xs">{message.date && formatDistanceToNow(message.date.seconds, 'MMM')}</span>
       </div>
       <div className="bg-white p-4 shadow rounded-l-lg rounded-tr-lg">
         <div className="w-full leading-tight text-base mt-3">{message.text}</div>
