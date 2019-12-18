@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useGlobal, Fragment } from "reactn";
 import { Input, Icon, Empty } from "antd";
+import { Link } from "react-router-dom";
 import CreateRequestForm from "../components/CreateRequest";
 import { getById as getGameById } from "../services/api/game";
 import Score from "../components/Games/Score";
@@ -54,7 +55,50 @@ const GameView = props => {
   return (
     <div className="flex flex-wrap items-stretch min-h-screen">
       <div className="w-1/3 border-r min-h-screen bg-white">
-        <div className="w-full bg-gray-white px-4 mb-4">
+        {/* {game && <img src={game.location.locationPhotoUrl} alt="" className="w-full" />} */}
+        <div className="w-full p-4 mb-4">
+          <div className="bg-white rounded shadow">
+            {game && (
+              <div className="flex justify-between items-stretch text-center">
+                <div className="w-1/3 flex flex-col">
+                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">starters</span>
+                  <div className="text-2xl w-full leading-none py-1">
+                    <span className="leading-none">{game.starters.players ? game.starters.players.length : 0}</span>
+                    <small className="text-gray-400 text-xs">/{game.starters.number * 2}</small>
+                  </div>
+                </div>
+                <div className="w-1/3 flex flex-col border-l border-r">
+                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">subs</span>
+                  <div className="text-2xl w-full leading-none py-1">
+                    <span className="leading-none">{game.subs.players ? game.subs.players.length : 0}</span>
+                    <small className="text-gray-400 text-xs">/{game.subs.number * 2}</small>
+                  </div>
+                </div>
+                <div className="w-1/3 flex flex-col">
+                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">invited</span>
+                  <div className="text-2xl w-full leading-none py-1">
+                    <span className="leading-none">{game.players ? game.players.length : 0}</span>
+                    {/* <small className="text-gray-400 text-xs">/{game.subs.number}</small> */}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="w-full p-4 mb-4">
+          <div className="bg-white rounded shadow p-4">
+            {game &&
+              game.players.map(player => {
+                return (
+                  <div>
+                    <Link to={"/player/" + player.username}>{player.displayName}</Link>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+        <div className="w-full bg-gray-white p-4 mb-4">
           <div className="bg-white rounded shadow p-4">
             {/* <Score {...props} game={game}></Score> */}
             {game && game.score && (
@@ -86,7 +130,6 @@ const GameView = props => {
             })}
           </div>
         )}
-
         <div className="w-full h-30 p-3 border-t-2 z-10 bg-gray-100">
           <Input
             className="shadow"
