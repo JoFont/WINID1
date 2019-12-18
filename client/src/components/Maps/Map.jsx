@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useGlobal} from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
 import { getAll as getAllRequests } from "../../services/api/request";
-
+import { Link } from "react-router-dom"
 const MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 
 
 const addRequestMarker = (arr, map) => {
   arr.forEach(request => {
-    const popup = new mapbox.Popup({ offset: 25 }).setHTML(`<h1 class="text-xl text-winid-3">${request._id} <span>💩</span> </h1>`);
-    new mapbox.Marker().setLngLat(game.location.location.coordinates).setPopup(popup).addTo(map);
+    const popup = new mapbox.Popup({ offset: 25 }).setHTML(`
+      <h1 class="text-xl text-winid-3">
+        <a onClick={} href=></a>
+      </h1>
+    `);
+    new mapbox.Marker().setLngLat(request.game.location.location.coordinates).setPopup(popup).addTo(map);
   });
 }
 
