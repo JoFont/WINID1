@@ -1,21 +1,25 @@
-import React, { useState, useEffect, useGlobal} from "reactn";
+import React, { useState, useEffect, useGlobal } from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
 import { getAll as getAllRequests } from "../../services/api/request";
-import { Link } from "react-router-dom"
-const MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
-
+import { Link } from "react-router-dom";
+const MapboxGeocoder = require("@mapbox/mapbox-gl-geocoder");
 
 const addRequestMarker = (arr, map) => {
   arr.forEach(request => {
-    const popup = new mapbox.Popup({ offset: 25 }).setHTML(`
-      <h1 class="text-xl text-winid-3">
-        <a onClick={} href=></a>
-      </h1>
-    `);
-    new mapbox.Marker().setLngLat(request.game.location.location.coordinates).setPopup(popup).addTo(map);
-  });
-}
+    const html = `
+      <div>
+        <a class="requestPopup btn bg-blue-500 p-3 text-white" href="/request/${request._id}" data-request="${request._id}">GAMES!</a>
+      </div>
+    `;
+    // DEUS => onclick="(function(){alert('ALBERTO');return false;})();return false;"
 
+    const popup = new mapbox.Popup({ offset: 25 }).setHTML(html);
+    const marker = new mapbox.Marker()
+      .setLngLat(request.game.location.location.coordinates)
+      .setPopup(popup)
+      .addTo(map);
+  });
+};
 
 const Map = props => {
   mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
@@ -29,7 +33,6 @@ const Map = props => {
   let mapContainer;
   let map;
 
-
   // Isto faz refrescar duas vezes por causa do useGlobal como dependencia
   useEffect(() => {
     map = new mapbox.Map({
@@ -39,7 +42,7 @@ const Map = props => {
       zoom: mapState.zoom
     });
 
-    if(props.type === "locateUser") {
+    if (props.type === "locateUser") {
       const geoTracker = new mapbox.GeolocateControl({
         positionOptions: {
           enableHighAccuracy: true
@@ -54,14 +57,14 @@ const Map = props => {
       });
     }
 
-    if(props.controls) {
+    if (props.controls) {
       map.addControl(new mapbox.NavigationControl());
     }
-    
+
     map.on("load", async () => {
       const response = await getAllRequests();
-      if(response.data.length) {
-        console.log(response.data)
+      if (response.data.length) {
+        console.log(response.data);
         addRequestMarker(response.data, map);
       }
     });
@@ -69,9 +72,8 @@ const Map = props => {
     //? Effect cleanup => é igual a componentWilUnmount
     return () => {
       map.remove();
-    }
+    };
   }, [mapContainer]);
-
 
   return <div ref={el => (mapContainer = el)} className="mapContainer w-100 h-screen m-0"></div>;
 };
