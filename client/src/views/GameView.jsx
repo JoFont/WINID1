@@ -98,7 +98,10 @@ const GameView = props => {
           </div>
         </div>
 
-        <SearchUser handlePlayerSelect={addPlayerToPlayersHandler}></SearchUser>
+        <SearchUser
+          handlePlayerSelect={addPlayerToPlayersHandler}
+          compareArray={game ? game.players.map(player => player._id) : []}
+        ></SearchUser>
 
         <div className="w-full p-4 mb-4">
           <div className="bg-white rounded shadow p-4">
@@ -128,7 +131,7 @@ const GameView = props => {
         </div>
         <div className="w-full bg-gray-white px-4 mb-4">
           <div className="bg-white rounded shadow p-4">
-            <CreateRequestForm></CreateRequestForm>
+            <CreateRequestForm game={game}></CreateRequestForm>
           </div>
         </div>
       </div>

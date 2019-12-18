@@ -141,13 +141,17 @@ schema.statics.createAndPush = async function(data, users) {
 schema.statics.addPlayerToPlayers = async function(id, player) {
   const Game = this;
   try {
-    let game = await Game.findById(id);
+    const game = await Game.findById(id).exec();
     if (!game.players.includes(player)) {
       game.players.push(player);
-      game.save();
+      await game.save();
     }
-    game = await Game.findById(id).populate("players location admins");
-    return game;
+    const populatedGame = await Game.findById(id)
+      .populate("players")
+      .populate("admins")
+      .populate("location")
+      .exec();
+    return populatedGame;
   } catch (error) {
     throw new Error("Error => [Model: Game | Static: addPlayerToPlayers]");
   }
