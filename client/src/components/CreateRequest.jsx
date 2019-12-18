@@ -1,4 +1,4 @@
-import React, { useState, useGlobal } from "reactn";
+import React, { useState, useGlobal, useEffect } from "reactn";
 import Geocode from "react-geocode";
 import { createOne as createOneGame } from "../services/api/game";
 
@@ -10,45 +10,32 @@ const { Option } = Select;
 const InputGroup = Input.Group;
 
 const CreateRequestForm = props => {
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const [userToken] = useGlobal("userToken");
   const [player] = useGlobal("player");
-  const [gameForm, setGameForm] = useState({});
+  const [requestNumber, setRequestNumber] = useState(0);
 
-  const handleLocationChange = async input => {
-    if (!input) {
-      setAutoCompleteResult([]);
-    } else {
-      try {
-        const response = await Geocode.fromAddress(input);
-        setAutoCompleteResult(response.results);
-      } catch (error) {}
+  useEffect(() => {
+    const game = props.game;
+    if (game) {
+      setRequestNumber(game.starters.number * 2 - ((game.starters.players && game.starters.players.length) || 0));
     }
-  };
+  }, [props.game]);
 
   const handleInputsChange = async value => {
-    setGameForm({
-      ...gameForm,
-      ...value
-    });
+    setRequestNumber(value);
+    console.log(requestNumber);
   };
 
   const handleSubmit = async e => {
-    e.preventDefault();
-    const values = {
-      ...gameForm,
-      date: gameForm.date.format("YYYY-MM-DD"),
-      time: gameForm.time.format("HH:mm")
-    };
-    await createOneGame(userToken, player, values);
-    props.listUpdate();
+    // e.preventDefault();
+    // const values = {
+    //   ...gameForm,
+    //   date: gameForm.date.format("YYYY-MM-DD"),
+    //   time: gameForm.time.format("HH:mm")
+    // };
+    // await createOneGame(userToken, player, values);
+    // props.listUpdate();
   };
-
-  const locationOptions = autoCompleteResult.map(location => (
-    <Option key={location.place_id} className="w-full" value={JSON.stringify(location)}>
-      {location.formatted_address}
-    </Option>
-  ));
 
   return (
     <div>
@@ -56,11 +43,11 @@ const CreateRequestForm = props => {
         <Row gutter={8}>
           <Col span={6}>
             <InputNumber
-              min={0}
-              defaultValue={1}
+              min={1}
               className="w-full"
               size="large"
-              onChange={val => handleInputsChange({ starters_number: val })}
+              value={requestNumber}
+              onChange={val => handleInputsChange(val)}
             />
           </Col>
           <Col span={18}>
