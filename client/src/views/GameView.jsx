@@ -18,7 +18,6 @@ const GameView = props => {
     buildGame();
   }, [userToken]);
 
-
   return (
     <div>
       <div className="w-1/4 bg-gray-white px-4 mb-4">
@@ -26,7 +25,11 @@ const GameView = props => {
           {/* <Score {...props} game={game}></Score> */}
           {game && game.score && (
             <Fragment>
-              <div className="text-3xl text-black">{game.score[0]}</div>:<div className="text-3xl">{game.score[1]}</div>
+              <div className="text-xl text-black flex justify-center items-center">
+                <span className="text-4xl">{game.score[0]}</span>
+                <span className="mx-2">:</span>
+                <span className="text-4xl">{game.score[1]}</span>
+              </div>
             </Fragment>
           )}
         </div>
