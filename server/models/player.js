@@ -145,6 +145,16 @@ schema.statics.searchByUsername = async function(query) {
   }
 };
 
+schema.statics.searchByDisplayName = async function(query) {
+  const Player = this;
+  try {
+    const players = await Player.find({ displayName: { $regex: query, $options: "ig" } }).exec();
+    return players;
+  } catch (error) {
+    throw error("Error => [Model: Player | Static: searchByDisplayName]");
+  }
+};
+
 schema.statics.findByUsername = async function(username) {
   const Player = this;
   try {

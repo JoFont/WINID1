@@ -26,6 +26,15 @@ router.post('/searchByUsername', checkAuth, async (req, res, next) => {
   }
 });
 
+router.post('/searchByDisplayName', checkAuth, async (req, res, next) => {
+  try {
+    const response = await Player.searchByDisplayName(req.body.query);
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/:username', async (req, res, next) => {
   try {
     const player = await Player.findByUsername(req.params.username);
