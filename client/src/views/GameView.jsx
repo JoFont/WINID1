@@ -53,7 +53,7 @@ const GameView = props => {
   };
 
   const addPlayerToPlayers = async playerToAdd => {
-    const response = await addPlayerToPlayers(fire, userToken, game._id, playerToAdd._id);
+    const response = await addPlayerToPlayers(fire, userToken, game._id, JSON.parse(playerToAdd));
   };
 
   useEffect(() => {
