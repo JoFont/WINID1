@@ -44,18 +44,19 @@ export const createOne = async (firebase, token, player, data) => {
       location: gameCoordinates
     });
 
-    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
     data.location = newLocation.data;
     data.playerId = player._id;
     data.chatRef = newChatDoc.id;
-    const newGame = await api.post('/create', { data });
+
+    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
+    const res = await api.post('/create', { data });
     await updateGroupChatMeta(firebase, {
-      docId: newGame.data.chatRef,
-      id: newGame.data._id,
+      docId: res.data.newGame.chatRef,
+      id: res.data.newGame._id,
       type: "Game"
     });
 
-    return newGame;
+    return res;
   } catch (error) {
     throw error;
   }
