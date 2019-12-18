@@ -28,7 +28,7 @@ const GameView = props => {
       .onSnapshot(querySnapshot => {
         const allMessages = [];
         querySnapshot.forEach(doc => {
-          allMessages.push(doc.data());
+          allMessages.push({...doc.data(), id: doc.id});
         });
         setMessages(allMessages);
       });
@@ -77,9 +77,7 @@ const GameView = props => {
         <div className="w-full h-full p-4">
           {messages.map(message => {
             return (
-              <Fragment key={message.id}>
-                <Bubble message={message}></Bubble>
-              </Fragment>
+              <Bubble message={message} key={message.id}></Bubble>
             );
           })}
         </div>
