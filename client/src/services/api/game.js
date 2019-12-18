@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as ROUTES from "../../constants/api.routes";
 import { createOne as createOneLocation } from "./location";
+import { createGroupChat, updateGroupChatMeta} from "../chat";
 
 const api = axios.create({
   baseURL: ROUTES.GAME
@@ -28,8 +29,10 @@ export const getAll = async () => {
   }
 };
 
-export const createOne = async (token, player, data) => {
+export const createOne = async (firebase, token, player, data) => {
   try {
+    const newChatDoc = await createGroupChat(firebase);
+
     const location = JSON.parse(data.location);
     const gameCoordinates = {
       coordinates: [location.geometry.location.lng, location.geometry.location.lat]
@@ -44,8 +47,15 @@ export const createOne = async (token, player, data) => {
     api.defaults.headers.common['authorization'] = `Bearer ${token}`;
     data.location = newLocation.data;
     data.playerId = player._id;
-    const res = await api.post('/create', { data });
-    return res;
+    data.chatRef = newChatDoc.id;
+    const newGame = await api.post('/create', { data });
+    await updateGroupChatMeta(firebase, {
+      docId: newGame.data.chatRef,
+      id: newGame.data._id,
+      type: "Game"
+    });
+
+    return newGame;
   } catch (error) {
     throw error;
   }

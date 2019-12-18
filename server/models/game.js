@@ -68,6 +68,10 @@ const schema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Status"
     },
+    chatRef: {
+      type: String,
+      required: true
+    },
     statusLog: [{
       type: mongoose.Types.ObjectId,
       ref: "Status"
@@ -88,7 +92,8 @@ schema.statics.createAndPush = async function(data, users) {
         value: data.price * 100
       },
       location: data.location._id,
-      schedule: Date.parse(data.date + "T" + data.time)
+      schedule: Date.parse(data.date + "T" + data.time),
+      chatRef: data.chatRef
     });
     newGame.admins.push(users);
     newGame.players.push(users);

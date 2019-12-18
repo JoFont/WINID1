@@ -3,6 +3,7 @@ import moment from 'moment';
 import Geocode from "react-geocode";
 import { createOne as createOneGame } from "../services/api/game";
 import { Select, InputNumber, DatePicker, TimePicker, Button } from "antd";
+import { createGroupChat } from "../services/chat";
 
 Geocode.setApiKey(process.env.REACT_APP_GEOCODE_API);
 
@@ -13,6 +14,7 @@ const CreateGameForm = props => {
   const [userToken] = useGlobal("userToken");
   const [player] = useGlobal("player");
   const [gameForm, setGameForm] = useState({});
+  const [fire] = useGlobal("fire");
 
   const handleLocationChange = async input => {
     if (!input) {
@@ -46,6 +48,7 @@ const CreateGameForm = props => {
       date: gameForm.date.format("YYYY-MM-DD"),
       time: gameForm.time.format("HH:mm")
     };
+    const chatDoc = await createGroupChat(fire, {id: "afdghdftghrdthertb", type: "Game"});
     await createOneGame(userToken, player, values);
     props.listUpdate();
   };
