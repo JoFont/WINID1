@@ -6,6 +6,7 @@ import { getById as getGameById } from "../services/api/game";
 import Score from "../components/Games/Score";
 import { sendChatMessage } from "../services/chat";
 import Bubble from "../components/Chats/Bubble";
+import SearchUser from "../components/SearchUser";
 
 const GameView = props => {
   const [userToken] = useGlobal("userToken");
@@ -51,6 +52,10 @@ const GameView = props => {
     }
   };
 
+  const addPlayerToPlayers = async player => {
+    console.log(player);
+  };
+
   useEffect(() => {
     buildGame();
   }, [userToken]);
@@ -88,6 +93,8 @@ const GameView = props => {
             )}
           </div>
         </div>
+
+        <SearchUser handlePlayerSelect={() => addPlayerToPlayers()}></SearchUser>
 
         <div className="w-full p-4 mb-4">
           <div className="bg-white rounded shadow p-4">
