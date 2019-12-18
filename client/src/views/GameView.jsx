@@ -2,7 +2,7 @@ import React, { useEffect, useState, useGlobal, Fragment } from "reactn";
 import { Input, Icon, Empty } from "antd";
 import { Link } from "react-router-dom";
 import CreateRequestForm from "../components/CreateRequest";
-import { getById as getGameById } from "../services/api/game";
+import { getById as getGameById, addPlayerToPlayers } from "../services/api/game";
 import Score from "../components/Games/Score";
 import { sendChatMessage } from "../services/chat";
 import Bubble from "../components/Chats/Bubble";
@@ -52,8 +52,8 @@ const GameView = props => {
     }
   };
 
-  const addPlayerToPlayers = async player => {
-    console.log(player);
+  const addPlayerToPlayers = async playerToAdd => {
+    const response = await addPlayerToPlayers(fire, userToken, game._id, playerToAdd._id);
   };
 
   useEffect(() => {
@@ -94,7 +94,7 @@ const GameView = props => {
           </div>
         </div>
 
-        <SearchUser handlePlayerSelect={() => addPlayerToPlayers()}></SearchUser>
+        <SearchUser handlePlayerSelect={addPlayerToPlayers}></SearchUser>
 
         <div className="w-full p-4 mb-4">
           <div className="bg-white rounded shadow p-4">

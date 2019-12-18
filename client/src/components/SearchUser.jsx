@@ -19,13 +19,10 @@ const SearchUser = props => {
     }
   };
 
-  props.handlePlayerSelect = player => {
-    return player;
-  };
-
   const playerOptions = autoCompleteResult.map(player => (
     <Option key={player._id} className="w-full" value={JSON.stringify(player)}>
-      {player.displayName} | {player.username}
+      <span className="font-semibold">{player.displayName}</span>
+      <span className="text-gray-500 ml-2 text-xs">@{player.username}</span>
     </Option>
   ));
 
@@ -40,7 +37,7 @@ const SearchUser = props => {
         notFoundContent={"Search for address..."}
         className="w-full"
         placeholder="Insert location..."
-        onChange={val => props.handlePlayerSelect({ location: val })}
+        onChange={val => props.handlePlayerSelect(val)}
       >
         {playerOptions}
       </Select>

@@ -4,10 +4,12 @@ const schema = new mongoose.Schema(
   {
     starters: {
       type: {
-        players: [{
-          type: mongoose.Types.ObjectId,
-          ref: "Player"
-        }],
+        players: [
+          {
+            type: mongoose.Types.ObjectId,
+            ref: "Player"
+          }
+        ],
         number: {
           type: Number,
           default: 0,
@@ -17,10 +19,12 @@ const schema = new mongoose.Schema(
     },
     subs: {
       type: {
-        players: [{
-          type: mongoose.Types.ObjectId,
-          ref: "Player"
-        }],
+        players: [
+          {
+            type: mongoose.Types.ObjectId,
+            ref: "Player"
+          }
+        ],
         number: {
           type: Number,
           default: 0,
@@ -28,33 +32,45 @@ const schema = new mongoose.Schema(
         }
       }
     },
-    queue: [{
-      type: mongoose.Types.ObjectId,
-      ref: "Player"
-    }],
-    team1: [{
-      type: mongoose.Types.ObjectId,
-      ref: "Player"
-    }],
-    team2: [{
-      type: mongoose.Types.ObjectId,
-      ref: "Player"
-    }],
+    queue: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Player"
+      }
+    ],
+    team1: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Player"
+      }
+    ],
+    team2: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Player"
+      }
+    ],
     sport: {
       type: mongoose.Types.ObjectId
     },
-    teams: [{
-      type: mongoose.Types.ObjectId,
-      ref: "Team"
-    }],
-    players: [{
-      type: mongoose.Types.ObjectId,
-      ref: "Player"
-    }],
-    admins: [{
-      type: mongoose.Types.ObjectId,
-      ref: "Player"
-    }],
+    teams: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Team"
+      }
+    ],
+    players: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Player"
+      }
+    ],
+    admins: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Player"
+      }
+    ],
     score: {
       type: [Number],
       default: [0, 0]
@@ -88,10 +104,12 @@ const schema = new mongoose.Schema(
       type: String,
       required: true
     },
-    statusLog: [{
-      type: mongoose.Types.ObjectId,
-      ref: "Status"
-    }]
+    statusLog: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Status"
+      }
+    ]
   },
   {
     timestamps: true
@@ -116,7 +134,19 @@ schema.statics.createAndPush = async function(data, users) {
     newGame.save();
     return newGame;
   } catch (error) {
-    throw error;
+    throw error("Error => [Model: Game | Static: createAndPush]");
+  }
+};
+
+schema.statics.addPlayerToPlayers = async function(id, player) {
+  const Game = this;
+  try {
+    const game = await Game.findById(id);
+    game.players.push(player);
+    game.save();
+    return game;
+  } catch (error) {
+    throw error("Error => [Model: Game | Static: addPlayerToPlayers]");
   }
 };
 
