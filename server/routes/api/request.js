@@ -63,8 +63,7 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/:id/addPlusOne', checkAuth, async (req, res, next) => {
   try {
-    const data = req.body.data;
-    const request = await Player.addPlusOne(req.params.id, data.playerId);
+    const request = await Player.addPlusOne(req.params.id, req.body.playerId);
     res.status(200).json(request);
   } catch (error) {
     next(error);
