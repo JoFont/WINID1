@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
   admins: [{
@@ -33,13 +33,25 @@ const schema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "Status"
   },
-  statusLog: [{
-    type: mongoose.Types.ObjectId,
-    ref: "Status"
-  }]
 },
-{
-  timestamps: true
-});
+  {
+    timestamps: true
+  }
+);
 
-module.exports = mongoose.model('Request', schema);
+schema.statics.createAndPushAdmins = async function (data) {
+  const Request = this;
+  try {
+    const newRequest = await Request.create({
+      need: data.need,
+      game: data.game
+    });
+    newRequest.admins.push(data.admins);
+    await newRequest.save();
+    return newRequest;
+  } catch (error) {
+    throw new Error("Error => [Model: Request | Static: createAndPushAdmins]");
+  }
+};
+
+module.exports = mongoose.model("Request", schema);
