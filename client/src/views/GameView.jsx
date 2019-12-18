@@ -16,6 +16,7 @@ const GameView = props => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
 
+
   const buildGame = async () => {
     const fetchedGame = await getGameById(userToken, props.match.params.id);
     setGame(fetchedGame.data);
