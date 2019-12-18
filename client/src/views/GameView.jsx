@@ -31,8 +31,10 @@ const GameView = props => {
           allMessages.push({ ...doc.data(), id: doc.id });
         });
         setMessages(allMessages);
-        var element = document.getElementById("chat");
-        element.scrollTop = element.scrollHeight - element.clientHeight;
+        if (allMessages.length > 0) {
+          const element = document.getElementById("chat");
+          element.scrollTop = element.scrollHeight - element.clientHeight;
+        }
       });
   };
 
@@ -125,7 +127,7 @@ const GameView = props => {
             <Empty></Empty>
           </div>
         )) || (
-          <div className="w-full h-auto py-4 px-8 overflow-y-scroll z-0" id="chat">
+          <div className="w-full h-full py-4 px-8 overflow-y-scroll z-0" id="chat">
             {messages.map(message => {
               return <Bubble message={message} key={message.id}></Bubble>;
             })}
