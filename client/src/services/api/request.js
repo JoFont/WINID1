@@ -49,12 +49,10 @@ export const createOne = async (firebase, token, data) => {
   }
 };
 
-export const editOne = async (token, id, data) => {
+export const joinPlusOnes = async (token, id, data) => {
   try {
     api.defaults.headers.common['authorization'] = `Bearer ${token}`;
-    const res = await api.patch(`/${id}/edit`, {
-      data
-    });
+    const res = await api.post(`/${id}/addPlusOne`, { data });
     return res;
   } catch (error) {
     throw error;
