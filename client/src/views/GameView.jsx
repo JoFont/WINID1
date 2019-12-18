@@ -27,7 +27,7 @@ const GameView = props => {
       .onSnapshot(querySnapshot => {
         const allMessages = [];
         querySnapshot.forEach(doc => {
-          allMessages.push({...doc.data(), id: doc.id});
+          allMessages.push({ ...doc.data(), id: doc.id });
         });
         setMessages(allMessages);
         var element = document.getElementById("chat");
@@ -75,11 +75,9 @@ const GameView = props => {
         </div>
       </div>
       <div className="w-2/3 relative">
-        <div className="w-full h-screen p-4 overflow-y-scroll z-0 mb-20" id="chat">
+        <div className="w-full h-screen p-4 overflow-y-scroll z-0 pb-20" id="chat">
           {messages.map(message => {
-            return (
-              <Bubble message={message} key={message.id}></Bubble>
-            );
+            return <Bubble message={message} key={message.id}></Bubble>;
           })}
         </div>
         <div className="w-full absolute bottom-0 left-0 p-3 border-t-2 z-10 bg-gray-100">
@@ -88,6 +86,7 @@ const GameView = props => {
             size="large"
             suffix={<Icon type="right" />}
             onKeyPress={addMessage}
+            placeholder="send message..."
             onChange={e => setInputMessage(e.target.value)}
             value={inputMessage}
           ></Input>
