@@ -4,6 +4,7 @@ import CreateRequestForm from "../components/CreateRequest";
 import { getById as getGameById } from "../services/api/game";
 import Score from "../components/Games/Score";
 import { sendChatMessage } from "../services/chat";
+import Bubble from "../components/Chats/Bubble";
 
 const GameView = props => {
   const [userToken] = useGlobal("userToken");
@@ -17,9 +18,13 @@ const GameView = props => {
     console.log("fetchedGame ==== >", fetchedGame.data);
     setGame(fetchedGame.data);
 
-    fire.firestore().collection("chatGroups").doc(fetchedGame.data.chatRef).collection("messages")
-    .onSnapshot(querySnapshot => {
-      const allMessages = [];
+    fire
+      .firestore()
+      .collection("chatGroups")
+      .doc(fetchedGame.data.chatRef)
+      .collection("messages")
+      .onSnapshot(querySnapshot => {
+        const allMessages = [];
         querySnapshot.forEach(doc => {
           allMessages.push(doc.data());
         });
@@ -72,32 +77,12 @@ const GameView = props => {
       <div className="w-2/3 relative">
         <div className="w-full h-full p-4">
           {messages.map(message => {
-            return <p>{message.text}</p>;
+            return (
+              <Fragment>
+                <Bubble message={message} key={message.id}></Bubble>
+              </Fragment>
+            );
           })}
-          {/* TO BE MESSAGE COMPONENT */}
-          <div className="w-1/2">
-            <div className="flex justify-between items-center mb-1">
-              <div className="-mb-6 flex items-center">
-                <img
-                  src="https://api.adorable.io/avatars/256/abc@abc.com.png"
-                  alt=""
-                  className="rounded-full w-10 ml-2 shadow z-10"
-                />
-                <span className="text-gray-700 font-bold uppercase text-s leading-none bg-white rounded pl-3 pr-2 py-1 shadow -ml-2 z-0">
-                  Filipe Catarino
-                </span>
-              </div>
-              <span className="text-gray-400 leading-none text-xs">21:45</span>
-            </div>
-            <div className="bg-white p-4 shadow rounded-l-lg rounded-tr-lg">
-              <div className="w-full leading-tight text-base mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem eaque delectus, ullam est perferendis
-                eius sint dolorum officia libero laboriosam porro dicta, aliquid earum vitae, explicabo dolores id
-                placeat molestiae!
-              </div>
-            </div>
-          </div>
-          {/* TO BE MESSAGE COMPONENT */}
         </div>
         <div className="w-full absolute bottom-0 left-0 p-3 border-t-2">
           <Input className="shadow" size="large" suffix={<Icon type="right" />} onKeyPress={addMessage}></Input>
