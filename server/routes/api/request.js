@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = new Router();
-const Request = require('../../models/request');
+const Request = require("../../models/request");
 
 const checkAuth = require("../../middleware/check-auth");
 
@@ -16,13 +16,22 @@ router.post("/create", checkAuth, async (req, res, next) => {
 
 router.get("/", async (req, res, next) => {
   try {
-    const requests = await Request.find().populate("game").populate("admins").exec();
+    const requests = await Request.find()
+      .populate({
+        path: "game",
+        model: "Game",
+        populate: {
+          path: "location",
+          model: "Location"
+        }
+      })
+      .populate("admins")
+      .exec();
     res.status(200).json(requests);
   } catch (error) {
     next(error);
   }
 });
-
 
 // router.get('/:username', async (req, res, next) => {
 //   try {
