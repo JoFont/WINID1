@@ -9,6 +9,7 @@ class CreateModal extends React.Component {
   setModalVisible(modalVisible) {
     this.setState({ modalVisible });
   }
+ 
 
   render() {
     return (
