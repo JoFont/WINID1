@@ -8,7 +8,7 @@ router.post("/create", checkAuth, async (req, res, next) => {
   try {
     const data = req.body.data;
     const newRequest = await Request.createAndPushAdmins(data);
-    res.status(200).json(newRequest);
+    res.status(200).json({newRequest});
   } catch (error) {
     next(error);
   }
@@ -33,14 +33,23 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// router.get('/:username', async (req, res, next) => {
-//   try {
-//     const player = await Player.findByUsername(req.params.username);
-//     res.status(200).json(player);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+router.get('/:id', async (req, res, next) => {
+  try {
+    const request = await Request.findById(req.params.id).populate({
+      path: "game",
+      model: "Game",
+      populate: {
+        path: "location",
+        model: "Location"
+      }
+    })
+    .populate("admins")
+    .exec();
+    res.status(200).json(request);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // router.delete('/:id', checkAuth, async (req, res, next) => {
 //   try {

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as ROUTES from '../../constants/api.routes';
+import { createGroupChat, updateGroupChatMeta, sendChatStatus } from "../chat";
 
 
 const api = axios.create({
@@ -28,13 +29,20 @@ export const getAll = async () => {
   }
 };
 
-export const createOne = async (token, data) => {
+export const createOne = async (firebase, token, data) => {
   try {
-    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
-    const res = await api.post('/create', {
-      data
-    });
+    const newChatDoc = await createGroupChat(firebase);
 
+    data.chatRef = newChatDoc.id;
+
+    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
+    const res = await api.post('/create', { data });
+    await updateGroupChatMeta(firebase, {
+      docId: res.data.newRequest.chatRef,
+      id: res.data.newRequest._id,
+      type: "Request"
+    });
+    
     return res;
   } catch (error) {
     throw error;
