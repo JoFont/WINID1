@@ -1,10 +1,10 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = new Router();
 const Request = require('../../models/request');
 
-const checkAuth = require('../../middleware/check-auth');
+const checkAuth = require("../../middleware/check-auth");
 
-router.post('/create', checkAuth, async (req, res, next) => {
+router.post("/create", checkAuth, async (req, res, next) => {
   try {
     const data = req.body.data;
     const newRequest = await Request.createAndPushAdmins(data);
