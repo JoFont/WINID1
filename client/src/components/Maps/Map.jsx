@@ -5,9 +5,9 @@ import { getAll as getAllRequests } from "../../services/api/request";
 const MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 
 
-const addGameMarker = (arr, map) => {
-  arr.forEach(game => {
-    const popup = new mapbox.Popup({ offset: 25 }).setHTML(`<h1 class="text-xl text-winid-3">${game.players[0].username} <span>💩</span> </h1>`);
+const addRequestMarker = (arr, map) => {
+  arr.forEach(request => {
+    const popup = new mapbox.Popup({ offset: 25 }).setHTML(`<h1 class="text-xl text-winid-3">${request._id} <span>💩</span> </h1>`);
     new mapbox.Marker().setLngLat(game.location.location.coordinates).setPopup(popup).addTo(map);
   });
 }
@@ -52,19 +52,13 @@ const Map = props => {
 
     if(props.controls) {
       map.addControl(new mapbox.NavigationControl());
-      // map.addControl(new MapboxGeocoder({
-      //   accessToken: mapbox.accessToken,
-      //   mapboxgl: mapbox,
-      //   countries: "pt",
-      //   types: "region, district, place, locality, neighborhood, address, poi"
-      // }));
     }
     
     map.on("load", async () => {
       const response = await getAllRequests();
       if(response.data.length) {
         console.log(response.data)
-        addGameMarker(response.data, map);
+        addRequestMarker(response.data, map);
       }
     });
 
