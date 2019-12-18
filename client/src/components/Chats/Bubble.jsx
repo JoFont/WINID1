@@ -17,7 +17,13 @@ const Bubble = props => {
           {message.date && formatDistanceToNow(message.date.toMillis(), { addSuffix: true })}
         </span>
       </div>
-      <div className="bg-white p-4 shadow rounded-l-lg rounded-tr-lg">
+      <div
+        className={
+          message.playerId === player._id
+            ? "bg-white p-4 shadow rounded-l-lg rounded-tr-lg"
+            : "bg-white p-4 shadow rounded-r-lg rounded-tl-lg"
+        }
+      >
         <div className="w-full leading-tight text-base mt-3">{message.text}</div>
       </div>
     </div>
