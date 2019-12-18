@@ -44,6 +44,7 @@ router.get('/:id', async (req, res, next) => {
       }
     })
     .populate("admins")
+    .populate("plusOnes")
     .exec();
     res.status(200).json(request);
   } catch (error) {
@@ -60,21 +61,15 @@ router.get('/:id', async (req, res, next) => {
 //   }
 // });
 
-// router.patch('/:id/edit', checkAuth, async (req, res, next) => {
-//   try {
-//     await Player.findByIdAndUpdate(req.params.id, {
-//       ...username && username,
-//       ...displayName && displayName,
-//       ...email && email,
-//       ...photoUrl && photoUrl,
-//       ...sports && sports,
-//       ...range && range
-//     }).exec();
-//     res.status(200);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+router.post('/:id/addPlusOne', checkAuth, async (req, res, next) => {
+  try {
+    const data = req.body.data;
+    const request = await Player.addPlusOne(req.params.id, data.playerId);
+    res.status(200).json(request);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // router.post('/:id/status', checkAuth, async (req, res, next) => {
 //   const id = req.params.id;
