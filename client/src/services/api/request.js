@@ -35,7 +35,6 @@ export const createOne = async (firebase, token, data) => {
     const newChatDoc = await createGroupChat(firebase);
 
     data.chatRef = newChatDoc.id;
-    console.log(data);
     api.defaults.headers.common['authorization'] = `Bearer ${token}`;
     const res = await api.post('/create', { data });
     await updateGroupChatMeta(firebase, {

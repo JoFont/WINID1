@@ -28,7 +28,6 @@ const CreateRequestForm = props => {
 
   const handleInputsChange = async value => {
     setRequestNumber(value);
-    console.log(requestNumber);
   };
 
   const handleSubmitRequest = async e => {
@@ -38,7 +37,6 @@ const CreateRequestForm = props => {
       game: props.game._id,
       admins: props.game.admins
     });
-    console.log(request.data);
   };
 
   return (
