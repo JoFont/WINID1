@@ -39,7 +39,8 @@ export const sendChatMessage = async (firebase, groupId, data) => {
       photoUrl: data.photoUrl,
       text: data.text,
       displayName: data.displayName,
-      username: data.username
+      username: data.username,
+      date: Date.now()
     });
 
     return newMessage;
