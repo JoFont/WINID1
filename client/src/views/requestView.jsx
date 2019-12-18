@@ -51,7 +51,7 @@ const RequestView = props => {
   };
 
   const handleJoin = async e => {
-    const response = await joinPlusOnes(userToken, request._id, player._id);
+    const response = await joinPlusOnes(fire, userToken, request._id, player);
     setRequest(response.data);
   };
 
