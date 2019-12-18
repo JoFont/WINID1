@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema(
   {
@@ -31,18 +31,22 @@ const schema = new mongoose.Schema(
     auth: {
       type: mongoose.Schema.Types.Mixed
     },
-    sports: [{
-      type: mongoose.Types.ObjectId,
-      ref: "Sport"
-    }],
+    sports: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Sport"
+      }
+    ],
     status: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Status"
     },
-    statusLog: [{
-      type: mongoose.Types.ObjectId,
-      ref: "Status"
-    }],
+    statusLog: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Status"
+      }
+    ],
     range: {
       type: Number,
       default: 30
@@ -98,22 +102,22 @@ const schema = new mongoose.Schema(
   {
     timestamps: true
   }
-)
+);
 
-schema.statics.getModelName = async function () {
-  const Player = this
+schema.statics.getModelName = async function() {
+  const Player = this;
   try {
     return (
       Player.collection.name.charAt(0).toUpperCase() +
       Player.collection.name.slice(1, Player.collection.name.length - 1)
-    )
+    );
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
-schema.statics.findOrCreate = async function (uid, firebaseUser) {
-  const Player = this
+schema.statics.findOrCreate = async function(uid, firebaseUser) {
+  const Player = this;
   try {
     const player = await Player.findOne({ uid: uid }).exec();
     if (player) return player;
@@ -124,33 +128,43 @@ schema.statics.findOrCreate = async function (uid, firebaseUser) {
       username: firebaseUser.email.split("@")[0] + Math.floor(Math.random() * 1000),
       displayName: firebaseUser.displayName || "Your Name",
       photoUrl: firebaseUser.photoURL || `https://api.adorable.io/avatars/256/${firebaseUser.email}.png`
-    })
-    return newPlayer
+    });
+    return newPlayer;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
-schema.statics.findByUsername = async function (username) {
-  const Player = this
+schema.statics.findByUsername = async function(query) {
+  const Player = this;
   try {
-    const player = await Player.findOne({ username: username }).exec()
-    if (player) return player
-    throw error("There's no player with that username")
+    const players = await Player.find({ username: { $regex: query, $options: "g" } }).exec();
+    return players;
   } catch (error) {
-    next(error)
+    throw error("Error => [Model: Player | Static: findByUsername]");
   }
-}
+};
 
-schema.statics.findByUid = async function (uid) {
-  const Player = this
+schema.statics.searchByUsername = async function(username) {
+  const Player = this;
+  try {
+    const player = await Player.findOne({ username: username }).exec();
+    if (player) return player;
+    throw error("There's no player with that username");
+  } catch (error) {
+    next(error);
+  }
+};
+
+schema.statics.findByUid = async function(uid) {
+  const Player = this;
   try {
     const player = await Player.findOne({ uid: uid }).exec();
-    if (player) return player
-    throw error("There's no player with that username")
+    if (player) return player;
+    throw error("There's no player with that username");
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
-module.exports = mongoose.model("Player", schema)
+module.exports = mongoose.model("Player", schema);
