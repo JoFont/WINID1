@@ -7,7 +7,7 @@ const checkAuth = require('../../middleware/check-auth');
 router.post('/create', checkAuth, async (req, res, next) => {
   try {
     const data = req.body.data;
-    const newRequest = await Request.create({...data});
+    const newRequest = await Request.createAndPushAdmins(data);
     res.status(200).json(newRequest);
   } catch (error) {
     next(error);
