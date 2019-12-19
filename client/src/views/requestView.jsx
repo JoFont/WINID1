@@ -259,6 +259,7 @@ const RequestView = props => {
             lng={request.game.location.location.coordinates[0]}
             showDirections={directions}
             showMarkers={false}
+            isInteractive={directions}
             classes="absolute left-0 top-0 w-full h-full z-0"
           ></Map>
         )}
