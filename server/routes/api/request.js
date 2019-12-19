@@ -14,6 +14,17 @@ router.post("/create", checkAuth, async (req, res, next) => {
   }
 });
 
+
+router.get("/search", async (req, res, next) => {
+  try {
+    console.log(req.query);
+    const requests = Request.find({game: {"sport.name": { $regex: req.query, $options: "ig" }}});
+    res.status(200).json(requests);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/", async (req, res, next) => {
   try {
     const requests = await Request.find()
@@ -73,6 +84,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+
 // router.delete('/:id', checkAuth, async (req, res, next) => {
 //   try {
 //     await Player.findByIdAndDelete(req.params.id).exec();
@@ -99,6 +111,8 @@ router.post("/:id/acceptPlusOne", checkAuth, async (req, res, next) => {
     next(error);
   }
 });
+
+
 
 // router.post('/:id/status', checkAuth, async (req, res, next) => {
 //   const id = req.params.id;

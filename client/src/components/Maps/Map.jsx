@@ -23,6 +23,8 @@ const addRequestMarker = (arr, map) => {
   });
 };
 
+
+
 const Map = props => {
   mapbox.accessToken = MapboxAccessToken;
   const [playerCoordinates] = useGlobal("playerCoordinates");
@@ -38,6 +40,8 @@ const Map = props => {
   let map;
   let geoTracker;
 
+  
+
   // Isto faz refrescar duas vezes por causa do useGlobal como dependencia
   useEffect(() => {
     map = new mapbox.Map({
@@ -45,9 +49,9 @@ const Map = props => {
       style: "mapbox://styles/jofont/ck48k2a7l0hci1co0xskrj9xl",
       center: [mapState.lng, mapState.lat],
       zoom: mapState.zoom,
-      interactive: props.isInteractive
+      interactive: props.isInteractive,
+      pitch: 60,
     });
-    console.log(props)
 
     if (props.type === "locateUser") {
       geoTracker = new mapbox.GeolocateControl({
@@ -76,6 +80,7 @@ const Map = props => {
           addRequestMarker(response.data, map);
         }
       }
+
       if (map && props.showDirections) {
         const directionsPlugin = new Directions({
           accessToken: mapbox.accessToken,
@@ -92,6 +97,46 @@ const Map = props => {
         directionsPlugin.setDestination([props.lng, props.lat])
       }
 
+      if(props.rotate) {
+        rotateCamera(0);
+      }
+
+      if (props.buildings3D) {
+        map.addLayer({
+          'id': '3d-buildings',
+          'source': 'composite',
+          'source-layer': 'building',
+          'filter': ['==', 'extrude', 'true'],
+          'type': 'fill-extrusion',
+          'minzoom': 15,
+          'paint': {
+            'fill-extrusion-color': '#aaa',
+  
+            // use an 'interpolate' expression to add a smooth transition effect to the
+            // buildings as the user zooms in
+            'fill-extrusion-height': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              15,
+              0,
+              15.05,
+              ['get', 'height']
+            ],
+            'fill-extrusion-base': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              15,
+              0,
+              15.05,
+              ['get', 'min_height']
+            ],
+            'fill-extrusion-opacity': 0.6
+          }
+        });
+      }
+
     });
 
     //? Effect cleanup => é igual a componentWilUnmount
@@ -101,6 +146,13 @@ const Map = props => {
   }, [mapContainer, props]);
 
 
+  const rotateCamera = (timestamp) => {
+    // clamp the rotation between 0 -360 degrees
+    // Divide timestamp by 100 to slow rotation to ~10 degrees / sec
+    map.rotateTo((timestamp / 100) % 360, { duration: 0 });
+    // Request the next frame of the animation.
+    requestAnimationFrame(rotateCamera);
+  }
 
   return <div ref={el => (mapContainer = el)} className={`mapContainer w-100 h-screen m-0 ${props.classes}`}></div>;
 };
