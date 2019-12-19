@@ -9,11 +9,13 @@ import TeamView from "./TeamView";
 import LeagueView from "./LeagueView";
 import RequestView from "./RequestView";
 import LoginView from "./LoginView";
+import RegisterView from "./RegisterView";
 
 const MainViews = () => {
   return (
     <Switch>
       <Route path={ROUTES.LOGIN} exact component={LoginView} />
+      <Route path={ROUTES.REGISTER} exact component={RegisterView} />
       <Route path={ROUTES.PLAYER} component={PlayerView} />
       <Route path={ROUTES.GAME} component={GameView} />
       <Route path={ROUTES.GAMES} component={GamesView} />

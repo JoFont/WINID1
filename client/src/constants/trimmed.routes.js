@@ -6,3 +6,4 @@ export const TEAM = "/team";
 export const LEAGUE = "/league";
 export const REQUEST = "/request";
 export const LOGIN = "/login";
+export const REGISTER = "/register";

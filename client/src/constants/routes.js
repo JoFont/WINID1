@@ -8,3 +8,4 @@ export const TEAM = TRIMMED_ROUTES.TEAM + "/:id";
 export const LEAGUE = TRIMMED_ROUTES.LEAGUE + "/:id";
 export const REQUEST = TRIMMED_ROUTES.REQUEST + "/:id";
 export const LOGIN = TRIMMED_ROUTES.LOGIN;
+export const REGISTER = TRIMMED_ROUTES.REGISTER;

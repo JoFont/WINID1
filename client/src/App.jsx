@@ -1,4 +1,4 @@
-import React, { useEffect, useGlobal, useState } from "reactn";
+import React, { useEffect, useGlobal, useState, resetGlobal, getGlobal } from "reactn";
 import { BrowserRouter as Router, Switch, Link } from "react-router-dom";
 import { findOrCreate as findOrCreatePlayer } from "./services/api/player";
 import MainViews from "./views/views.switch";
@@ -50,9 +50,11 @@ function App(props) {
         }
       } else {
         // resets the token to null when the user is not signed in
-        if (userToken) setUserToken(null);
-        setPlayer(null);
-        props.history.push("/");
+        if (userToken) {
+          setUserToken(null);
+          setPlayer(null);
+          props.history.push("/");
+        }
       }
     });
   }, []);
