@@ -16,6 +16,7 @@ const RequestView = props => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const [animation, setAnimation] = useState("");
+  const [directions, setDirections] = useState(false);
 
   const buildRequest = async () => {
     const response = await getRequestById(userToken, props.match.params.id);
@@ -241,13 +242,21 @@ const RequestView = props => {
               </span>
             </div>
           )}
-          <button onClick={() => setAnimation("fadeOut")}>Check Directions</button>
+          <button
+            onClick={() => {
+              setAnimation("fadeOut");
+              setDirections(true);
+            }}
+          >
+            Check Directions
+          </button>
         </div>
         {request && (
           <Map
             zoom={18}
             lat={request.game.location.location.coordinates[1]}
             lng={request.game.location.location.coordinates[0]}
+            directions={directions}
             classes="absolute left-0 top-0 w-full h-full z-0"
           ></Map>
         )}
