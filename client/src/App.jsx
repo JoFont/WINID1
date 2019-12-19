@@ -16,6 +16,7 @@ function App(props) {
   const [player, setPlayer] = useGlobal("player");
   const [, setMessageToken] = useGlobal("playerMessagingToken");
   const [toggle, setToggle] = useState(true);
+  const [coordinates, setCoordinates] = useGlobal([]);
 
   // Use effect for Firebase Magic
   useEffect(() => {
@@ -57,6 +58,24 @@ function App(props) {
         }
       }
     });
+  }, []);
+
+  useEffect(() => {
+    const success = async pos => {
+      await setCoordinates([pos.coords.longitude, pos.coords.latitude]);
+    };
+
+    const error = err => {
+      console.warn("ERRO(" + err.code + "): " + err.message);
+    };
+
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    navigator.geolocation.watchPosition(success, error, options);
   }, []);
 
   const handleSignOut = () => {
