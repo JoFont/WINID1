@@ -30,11 +30,12 @@ const Map = props => {
     lat: props.lat,
     lng: props.lng,
     zoom: props.zoom,
-    directions: props.directions
+    directions: props.showDirections
   });
 
   let mapContainer;
   let map;
+  let geoTracker;
 
   // Isto faz refrescar duas vezes por causa do useGlobal como dependencia
   useEffect(() => {
@@ -46,7 +47,7 @@ const Map = props => {
     });
 
     if (props.type === "locateUser") {
-      const geoTracker = new mapbox.GeolocateControl({
+      geoTracker = new mapbox.GeolocateControl({
         positionOptions: {
           enableHighAccuracy: true
         },
@@ -57,6 +58,7 @@ const Map = props => {
 
       map.on("load", () => {
         geoTracker._geolocateButton.click();
+        
       });
     }
 
@@ -67,33 +69,30 @@ const Map = props => {
     map.on("load", async () => {
       const response = await getAllRequests();
       if (response.data.length) {
-        console.log(response.data);
         addRequestMarker(response.data, map);
       }
+
+      if (map && props.showDirections) {
+        const directionsPlugin = new Directions({
+          accessToken: mapbox.accessToken,
+          unit: "metric"
+        });
+
+        map.addControl(directionsPlugin, "top-left");
+        directionsPlugin.setDestination([props.lng, props.lat])
+      }
+
     });
 
     //? Effect cleanup => é igual a componentWilUnmount
     return () => {
       map.remove();
     };
-  }, [mapContainer]);
+  }, [mapContainer, props]);
 
 
-  useEffect(() => {
-    console.log("Isnide Effect", props);
-    if (props.directions) {
-      console.log("Add controls", props);
-      const directionsPlugin = new Directions({
-        accessToken: mapbox.accessToken,
-        unit: "metric"
-      });
 
-      map.addControl(directionsPlugin, "top-left");
-    }
-  }, [props])
-
-
-  return <div ref={el => (mapContainer = el)} className={`mapContainer w-100 h-screen m-0 ${props.classes}`}>{console.log("PROPSDadsf", props)}</div>;
+  return <div ref={el => (mapContainer = el)} className={`mapContainer w-100 h-screen m-0 ${props.classes}`}></div>;
 };
 
 export default Map;
