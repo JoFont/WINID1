@@ -4,7 +4,7 @@ import { getAll as getAllRequests } from "../../services/api/request";
 import { MapboxAccessToken } from "../../constants/access-tokens";
 import Directions from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import "mapbox-gl/dist/mapbox-gl.css";
-import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css"; // Updating node module will keep css up to date.
+import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
 
 const addRequestMarker = (arr, map) => {
   arr.forEach(request => {
@@ -29,7 +29,8 @@ const Map = props => {
   const [mapState] = useState({
     lat: props.lat,
     lng: props.lng,
-    zoom: props.zoom
+    zoom: props.zoom,
+    directions: props.directions
   });
 
   let mapContainer;
@@ -59,15 +60,6 @@ const Map = props => {
       });
     }
 
-    if (props.directions) {
-      const directionsPlugin = new Directions({
-        accessToken: mapbox.accessToken,
-        unit: "metric"
-      });
-
-      map.addControl(directionsPlugin, "top-left");
-    }
-
     if (props.controls) {
       map.addControl(new mapbox.NavigationControl());
     }
@@ -84,13 +76,24 @@ const Map = props => {
     return () => {
       map.remove();
     };
-  }, [mapContainer, props]);
+  }, [mapContainer]);
 
-  return (
-    <div ref={el => (mapContainer = el)} className={`mapContainer w-100 h-screen m-0 ${props.classes}`}>
-      {console.log("DENTRO DO MAPA", props)}
-    </div>
-  );
+
+  useEffect(() => {
+    console.log("Isnide Effect", props);
+    if (props.directions) {
+      console.log("Add controls", props);
+      const directionsPlugin = new Directions({
+        accessToken: mapbox.accessToken,
+        unit: "metric"
+      });
+
+      map.addControl(directionsPlugin, "top-left");
+    }
+  }, [props])
+
+
+  return <div ref={el => (mapContainer = el)} className={`mapContainer w-100 h-screen m-0 ${props.classes}`}>{console.log("PROPSDadsf", props)}</div>;
 };
 
 export default Map;
