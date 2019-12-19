@@ -69,7 +69,8 @@ export const acceptPlusOne = async (firebase, token, id, plusOne, admin) => {
     const res = await api.post(`/${id}/acceptPlusOne`, { playerId: plusOne._id });
     await sendChatStatus(firebase, res.data.chatRef, {
       type: "player-accept-plusOne",
-      text: `${admin.displayName} accepted ${plusOne.displayName} for this game.`
+      text: `${admin.displayName} accepted ${plusOne.displayName} for this game.`,
+      render: true
     });
     return res;
   } catch (error) {
