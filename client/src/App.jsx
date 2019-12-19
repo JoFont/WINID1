@@ -41,6 +41,7 @@ function App(props) {
     // Authentication Event Listener
     fire.auth().onAuthStateChanged(async firebaseUser => {
       if (firebaseUser) {
+        console.log("FIREBASE USER: ", firebaseUser._lat);
         setUserToken(firebaseUser._lat);
         try {
           const playerFetch = await findOrCreatePlayer(firebaseUser._lat, firebaseUser);
@@ -53,7 +54,6 @@ function App(props) {
         if (userToken) {
           setUserToken(null);
           setPlayer(null);
-          props.history.push("/");
         }
       }
     });

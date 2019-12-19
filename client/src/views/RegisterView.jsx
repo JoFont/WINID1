@@ -5,6 +5,7 @@ const LoginView = props => {
   const [fire] = useGlobal("fire");
   const handleSignOut = () => {
     fire.auth().signOut();
+    window.location.href = "/";
   };
 
   return (
