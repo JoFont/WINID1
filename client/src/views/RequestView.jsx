@@ -120,6 +120,8 @@ const RequestView = props => {
 
         {request && request.acceptedPlusOnes.length > 0 && (
           <div className="w-full p-4 mb-4">
+            <div className="uppercase text-gray-400 font-bold text-sm">Accepted</div>
+
             <div className="bg-white rounded shadow p-4">
               {request &&
                 request.acceptedPlusOnes &&
