@@ -50,6 +50,12 @@ const PandaSvg = () => (
   </svg>
 );
 
-export const SportIcon = props => <Icon component={props.sport} {...props} />;
+export const SportIcon = props => {
+
+  console.log(props);
+  return (
+    <Icon component={props.sport} {...props} />
+  );
+};
 
 export const PandaIcon = props => <Icon component={PandaSvg} {...props} />;
