@@ -29,7 +29,7 @@ const RequestView = props => {
         querySnapshot.forEach(async doc => {
           if (doc.data().render) {
             await messageRenderToFalse(fire, response.data.chatRef, doc.id);
-            buildRequest();
+            await buildRequest();
           }
           allMessages.push({ ...doc.data(), id: doc.id });
         });
