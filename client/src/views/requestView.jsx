@@ -80,126 +80,126 @@ const RequestView = props => {
   }, [userToken]);
 
   return (
-    <div className="flex flex-wrap items-stretch min-h-screen">
-      {console.log("REQUEST", request)}
-
-      <div className="w-1/3 border-r min-h-screen bg-white">
-        <div className="w-full p-4">
-          <div className="bg-white rounded shadow">
-            {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
-              <div className="flex justify-between items-stretch text-center">
-                <div className="w-1/3 flex flex-col">
-                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">we need</span>
-                  {(!request.acceptedPlusOnes && <Skeleton active paragraph={false} />) || (
+    (player && (
+      <div className="flex flex-wrap items-stretch min-h-screen">
+        <div className="w-1/3 border-r min-h-screen bg-white">
+          <div className="w-full p-4">
+            <div className="bg-white rounded shadow">
+              {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
+                <div className="flex justify-between items-stretch text-center">
+                  <div className="w-1/3 flex flex-col">
+                    <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">we need</span>
+                    {(!request.acceptedPlusOnes && <Skeleton active paragraph={false} />) || (
+                      <div className="text-2xl w-full leading-none py-1">
+                        <span className="leading-none">{request.need - request.acceptedPlusOnes.length}</span>
+                        <small className="text-gray-400 text-xs">/{request.need}</small>
+                      </div>
+                    )}
+                  </div>
+                  <div className="w-1/3 flex flex-col border-l border-r">
+                    <span className="uppercase text-xs text-gray-500 bg-gray-200 border-b">accepted</span>
                     <div className="text-2xl w-full leading-none py-1">
-                      <span className="leading-none">{request.need - request.acceptedPlusOnes.length}</span>
-                      <small className="text-gray-400 text-xs">/{request.need}</small>
+                      <span className="leading-none">
+                        {request.acceptedPlusOnes ? request.acceptedPlusOnes.length : 0}
+                      </span>
+                      {/* <small className="text-gray-400 text-xs">/{request.game.subs.number * 2}</small> */}
                     </div>
-                  )}
-                </div>
-                <div className="w-1/3 flex flex-col border-l border-r">
-                  <span className="uppercase text-xs text-gray-500 bg-gray-200 border-b">accepted</span>
-                  <div className="text-2xl w-full leading-none py-1">
-                    <span className="leading-none">
-                      {request.acceptedPlusOnes ? request.acceptedPlusOnes.length : 0}
-                    </span>
-                    {/* <small className="text-gray-400 text-xs">/{request.game.subs.number * 2}</small> */}
+                  </div>
+                  <div className="w-1/3 flex flex-col">
+                    <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tr border-b">interested</span>
+                    <div className="text-2xl w-full leading-none py-1">
+                      <span className="leading-none">{request.plusOnes ? request.plusOnes.length : 0}</span>
+                      {/* <small className="text-gray-400 text-xs">/{game.subs.number}</small> */}
+                    </div>
                   </div>
                 </div>
-                <div className="w-1/3 flex flex-col">
-                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tr border-b">interested</span>
-                  <div className="text-2xl w-full leading-none py-1">
-                    <span className="leading-none">{request.plusOnes ? request.plusOnes.length : 0}</span>
-                    {/* <small className="text-gray-400 text-xs">/{game.subs.number}</small> */}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {request && request.acceptedPlusOnes.length > 0 && (
-          <div className="w-full p-4 mb-4">
-            <div className="uppercase text-gray-400 font-bold text-sm">Accepted</div>
-
-            <div className="bg-white rounded shadow p-4">
-              {request &&
-                request.acceptedPlusOnes &&
-                request.acceptedPlusOnes.map(acceptedPlusOne => {
-                  return (
-                    <div key={acceptedPlusOne._id} className="flex items-center justify-between">
-                      <Link to={"/player/" + acceptedPlusOne.username}>{acceptedPlusOne.displayName}</Link>
-                      <Icon type="check-circle" className="text-green-500 text-lg" />
-                    </div>
-                  );
-                })}
+              )}
             </div>
           </div>
-        )}
 
-        {request &&
-          !(request.plusOnes.length === request.acceptedPlusOnes.length) &&
-          request.admins.reduce((validate, admin) => {
-            return player._id === admin._id ? !validate : validate;
-          }, false) && (
+          {request && request.acceptedPlusOnes.length > 0 && (
             <div className="w-full p-4 mb-4">
-              <div className="uppercase text-gray-400 font-bold text-sm">Interested</div>
+              <div className="uppercase text-gray-400 font-bold text-sm">Accepted</div>
+
               <div className="bg-white rounded shadow p-4">
                 {request &&
-                  request.plusOnes &&
-                  request.plusOnes.map(plusOne => {
-                    if (!checkAccepted(plusOne)) {
-                      return (
-                        <div key={plusOne._id} className="flex items-center justify-between">
-                          <Link to={"/player/" + plusOne.username}>{plusOne.displayName}</Link>
-                          <button
-                            className="bg-transparent hover:bg-green-500 text-gray-300 hover:text-white py-1 px-2 border border-gray-300 hover:border-transparent rounded flex items-center"
-                            onClick={() => handleAccept(plusOne)}
-                          >
-                            <Icon type="check-circle" className="text-lg" />
-                          </button>
-                        </div>
-                      );
-                    }
+                  request.acceptedPlusOnes &&
+                  request.acceptedPlusOnes.map(acceptedPlusOne => {
+                    return (
+                      <div key={acceptedPlusOne._id} className="flex items-center justify-between">
+                        <Link to={"/player/" + acceptedPlusOne.username}>{acceptedPlusOne.displayName}</Link>
+                        <Icon type="check-circle" className="text-green-500 text-lg" />
+                      </div>
+                    );
                   })}
               </div>
             </div>
           )}
-        <div className="">
-          <button className="bg-blue-500 text-white rounded w-full" onClick={handleJoin}>
-            Join!
-          </button>
-        </div>
-      </div>
-      <div className="w-2/3 relative h-screen max-h-screen flex flex-col justify-stretch items-stretch">
-        {(request &&
-          request.plusOnes.reduce((validator, plusOne) => {
-            return plusOne.player === player._id ? !validator : validator;
-          }, false) &&
-          !messages.length && (
-            <div className="w-full h-full py-4 px-8 overflow-y-scroll z-0 flex items-center justify-center">
-              <Empty></Empty>
-            </div>
-          )) || (
-          <div className="w-full h-full py-4 px-8 overflow-y-scroll z-0" id="chat">
-            {messages.map(message => {
-              return <Bubble message={message} key={message.id}></Bubble>;
-            })}
+
+          {request &&
+            !(request.plusOnes.length === request.acceptedPlusOnes.length) &&
+            request.admins.reduce((validate, admin) => {
+              return player._id === admin._id ? !validate : validate;
+            }, false) && (
+              <div className="w-full p-4 mb-4">
+                <div className="uppercase text-gray-400 font-bold text-sm">Interested</div>
+                <div className="bg-white rounded shadow p-4">
+                  {request &&
+                    request.plusOnes &&
+                    request.plusOnes.map(plusOne => {
+                      if (!checkAccepted(plusOne)) {
+                        return (
+                          <div key={plusOne._id} className="flex items-center justify-between">
+                            <Link to={"/player/" + plusOne.username}>{plusOne.displayName}</Link>
+                            <button
+                              className="bg-transparent hover:bg-green-500 text-gray-300 hover:text-white py-1 px-2 border border-gray-300 hover:border-transparent rounded flex items-center"
+                              onClick={() => handleAccept(plusOne)}
+                            >
+                              <Icon type="check-circle" className="text-lg" />
+                            </button>
+                          </div>
+                        );
+                      }
+                    })}
+                </div>
+              </div>
+            )}
+          <div className="">
+            <button className="bg-blue-500 text-white rounded w-full" onClick={handleJoin}>
+              Join!
+            </button>
           </div>
-        )}
-        <div className="w-full h-30 p-3 border-t-2 z-10 bg-gray-100">
-          <Input
-            className="shadow"
-            size="large"
-            suffix={<Icon type="right" />}
-            onKeyPress={addMessage}
-            placeholder="send message..."
-            onChange={e => setInputMessage(e.target.value)}
-            value={inputMessage}
-          ></Input>
+        </div>
+        <div className="w-2/3 relative h-screen max-h-screen flex flex-col justify-stretch items-stretch">
+          {(request &&
+            request.plusOnes.reduce((validator, plusOne) => {
+              return plusOne.player === player._id ? !validator : validator;
+            }, false) &&
+            !messages.length && (
+              <div className="w-full h-full py-4 px-8 overflow-y-scroll z-0 flex items-center justify-center">
+                <Empty></Empty>
+              </div>
+            )) || (
+            <div className="w-full h-full py-4 px-8 overflow-y-scroll z-0" id="chat">
+              {messages.map(message => {
+                return <Bubble message={message} key={message.id}></Bubble>;
+              })}
+            </div>
+          )}
+          <div className="w-full h-30 p-3 border-t-2 z-10 bg-gray-100">
+            <Input
+              className="shadow"
+              size="large"
+              suffix={<Icon type="right" />}
+              onKeyPress={addMessage}
+              placeholder="send message..."
+              onChange={e => setInputMessage(e.target.value)}
+              value={inputMessage}
+            ></Input>
+          </div>
         </div>
       </div>
-    </div>
+    )) || <div>NOA ESTAS LOGGADO</div>
   );
 };
 
