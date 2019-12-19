@@ -74,7 +74,7 @@ const Map = props => {
     };
   }, [mapContainer]);
 
-  return <div ref={el => (mapContainer = el)} className="mapContainer w-100 h-screen m-0"></div>;
+  return <div ref={el => (mapContainer = el)} className={`mapContainer w-100 h-screen m-0 ${props.classes}`}></div>;
 };
 
 export default Map;
