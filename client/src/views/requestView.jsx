@@ -39,7 +39,7 @@ const RequestView = props => {
           element.scrollTop = element.scrollHeight + element.clientHeight;
 
           const lastBubble = document.querySelector(".bubble:last-of-type");
-          lastBubble.classList.add("animated", "fadeInUp");
+          lastBubble.classList.add("animated", "fadeInUp", "faster");
         }
       });
   };
@@ -82,7 +82,7 @@ const RequestView = props => {
             {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
               <div className="flex justify-between items-stretch text-center">
                 <div className="w-1/3 flex flex-col">
-                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">need</span>
+                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">we need</span>
                   {(!request.acceptedPlusOnes && <Skeleton active paragraph={false} />) || (
                     <div className="text-2xl w-full leading-none py-1">
                       <span className="leading-none">{request.need - request.acceptedPlusOnes.length}</span>
@@ -100,7 +100,7 @@ const RequestView = props => {
                   </div>
                 </div>
                 <div className="w-1/3 flex flex-col">
-                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tr border-b">plusones</span>
+                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tr border-b">interested</span>
                   <div className="text-2xl w-full leading-none py-1">
                     <span className="leading-none">{request.plusOnes ? request.plusOnes.length : 0}</span>
                     {/* <small className="text-gray-400 text-xs">/{game.subs.number}</small> */}
@@ -110,22 +110,25 @@ const RequestView = props => {
             )}
           </div>
         </div>
-
-        <div className="w-full p-4 mb-4">
-          <div className="bg-white rounded shadow p-4">
-            {request &&
-              request.plusOnes &&
-              request.plusOnes.map(plusOne => {
-                return (
-                  <div key={player._id} className="flex items-center justify-between">
-                    <Link to={"/player/" + plusOne.username}>{plusOne.displayName}</Link>
-                    <button onClick={() => handleAccept(plusOne)}>Accept!</button>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-
+        {request &&
+          request.admins.reduce((validate, admin) => {
+            return player._id === admin._id ? !validate : validate;
+          }, false) && (
+            <div className="w-full p-4 mb-4">
+              <div className="bg-white rounded shadow p-4">
+                {request &&
+                  request.plusOnes &&
+                  request.plusOnes.map(plusOne => {
+                    return (
+                      <div key={player._id} className="flex items-center justify-between">
+                        <Link to={"/player/" + plusOne.username}>{plusOne.displayName}</Link>
+                        <button onClick={() => handleAccept(plusOne)}>Accept!</button>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          )}
         <div className="">
           <button className="bg-blue-500 text-white rounded w-full" onClick={handleJoin}>
             Join!

@@ -199,6 +199,7 @@ schema.statics.findSpotForPlayer = async function(id, player) {
         .exec();
       return populatedGame;
     }
+    return false;
   } catch (error) {
     throw new Error("Error => [Model: Game | Static: addPlayerToPlayers]");
   }
