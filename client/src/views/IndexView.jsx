@@ -4,7 +4,7 @@ import Map from "../components/Maps/Map";
 const IndexView = () => {
   return (
     <div>
-      <Map zoom={8} type="locateUser" lat={38.736946} lng={-9.142685} controls></Map>
+      <Map zoom={8} type="locateUser" lat={38.736946} lng={-9.142685} controls directions={true}></Map>
     </div>
   );
 };

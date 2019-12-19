@@ -2,6 +2,10 @@ import React, { useState, useEffect, useGlobal } from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
 import { getAll as getAllRequests } from "../../services/api/request";
 import { MapboxAccessToken } from "../../constants/access-tokens";
+import Directions from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
+import "mapbox-gl/dist/mapbox-gl.css";
+import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css' // Updating node module will keep css up to date.
+
 
 const addRequestMarker = (arr, map) => {
   arr.forEach(request => {
@@ -54,6 +58,15 @@ const Map = props => {
       map.on("load", () => {
         geoTracker._geolocateButton.click();
       });
+    }
+
+    if (props.directions) {
+      const directionsPlugin = new Directions({
+        accessToken: mapbox.accessToken,
+        unit: 'metric',
+      })
+
+      map.addControl(directionsPlugin, 'top-left');
     }
 
     if (props.controls) {

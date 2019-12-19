@@ -4,8 +4,6 @@ import { getAll as getAllGames } from "../../services/api/game";
 import addGameMarker from "../../services/maps/addGameMarker";
 import { MapboxAccessToken } from "../../constants/access-tokens";
 
-const MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
-
 const Map = props => {
   mapbox.accessToken = MapboxAccessToken;
 
