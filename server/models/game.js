@@ -157,4 +157,55 @@ schema.statics.addPlayerToPlayers = async function(id, player) {
   }
 };
 
+schema.statics.findAndPushToStartersOrSubsOrQueue = async function(id, player) {
+  const Game = this;
+  try {
+    const game = await Game.findById(id).exec();
+    if (!game.players.includes(player)) {
+      game.players.push(player);
+      await game.save();
+    }
+
+    if (!game.starters.players.includes(player)) {
+      game.starters.players.push(player);
+      await game.save();
+      const populatedGame = await Game.findById(id)
+        .populate("players")
+        .populate("starters")
+        .populate("subs")
+        .populate("queue")
+        .populate("admins")
+        .populate("location")
+        .exec();
+      return populatedGame;
+    } else if (!game.subs.players.includes(player)) {
+      game.subs.players.push(player);
+      await game.save();
+      const populatedGame = await Game.findById(id)
+        .populate("players")
+        .populate("starters")
+        .populate("subs")
+        .populate("queue")
+        .populate("admins")
+        .populate("location")
+        .exec();
+      return populatedGame;
+    } else if (!game.queue.includes(player)) {
+      game.queue.push(player);
+      await game.save();
+      const populatedGame = await Game.findById(id)
+        .populate("players")
+        .populate("starters")
+        .populate("subs")
+        .populate("queue")
+        .populate("admins")
+        .populate("location")
+        .exec();
+      return populatedGame;
+    }
+  } catch (error) {
+    throw new Error("Error => [Model: Game | Static: addPlayerToPlayers]");
+  }
+};
+
 module.exports = mongoose.model("Game", schema);

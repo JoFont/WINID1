@@ -1,19 +1,16 @@
 import React, { useGlobal, Fragment } from "reactn";
 import { formatDistanceToNow } from "date-fns";
 import { Icon } from "antd";
-import Microlink from '@microlink/react';
-
+import Microlink from "@microlink/react";
 
 const Bubble = props => {
   const [player] = useGlobal("player");
   const message = props.message;
 
-
-
   return (
     <Fragment>
       {(!message.isNotification && (
-        <div className={message.playerId === player._id ? "ml-auto w-2/5 mb-6" : "w-2/5 mb-6"}>
+        <div className={message.playerId === player._id ? "bubble ml-auto w-2/5 mb-6" : "bubble w-2/5 mb-6"}>
           <div className="flex justify-between items-center mb-1">
             <div className="-mb-6 flex items-center">
               <img src={message.photoUrl} alt="" className="rounded-full w-10 ml-2 shadow z-10" />

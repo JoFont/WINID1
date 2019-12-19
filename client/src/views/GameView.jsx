@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useGlobal, Fragment } from "reactn";
 import { Input, Icon, Empty } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import CreateRequestForm from "../components/CreateRequest";
-import { getById as getGameById, addPlayerToPlayers } from "../services/api/game";
+import { getById as getGameById, addPlayerToPlayers, deleteOne } from "../services/api/game";
 import Score from "../components/Games/Score";
 import { sendChatMessage } from "../services/chat";
 import Bubble from "../components/Chats/Bubble";
@@ -15,7 +15,6 @@ const GameView = props => {
   const [player] = useGlobal("player");
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
-
 
   const buildGame = async () => {
     const fetchedGame = await getGameById(userToken, props.match.params.id);
@@ -57,6 +56,12 @@ const GameView = props => {
     playerToAdd = JSON.parse(playerToAdd);
     const response = await addPlayerToPlayers(fire, userToken, game, playerToAdd);
     setGame(response.data);
+  };
+
+  const handleDeleteGame = async game => {
+    const response = await deleteOne(fire, userToken, game, player);
+    let history = useHistory();
+    if (response.data.deleted) history.push("/games");
   };
 
   useEffect(() => {
@@ -133,6 +138,11 @@ const GameView = props => {
         <div className="w-full bg-gray-white px-4 mb-4">
           <div className="bg-white rounded shadow p-4">
             <CreateRequestForm game={game}></CreateRequestForm>
+          </div>
+        </div>
+        <div className="w-full bg-gray-white px-4 mb-4">
+          <div className="bg-white rounded shadow p-4">
+            <button onClick={() => handleDeleteGame(game)}>Delete Game</button>
           </div>
         </div>
       </div>
