@@ -39,7 +39,7 @@ const Map = props => {
   let mapContainer;
   let map;
   let geoTracker;
-
+  let rotateAnimFrame;
   
 
   // Isto faz refrescar duas vezes por causa do useGlobal como dependencia
@@ -66,6 +66,15 @@ const Map = props => {
       map.on("load", () => {
         geoTracker._geolocateButton.click();
 
+        if(props.rotate) {
+          setTimeout(() => {
+            rotateCamera(0);
+          }, 1000);
+
+          map.on("drag", () => {
+            window.cancelAnimationFrame(rotateAnimFrame);
+          })
+        }
       });
     }
 
@@ -97,9 +106,7 @@ const Map = props => {
         directionsPlugin.setDestination([props.lng, props.lat])
       }
 
-      if(props.rotate) {
-        rotateCamera(0);
-      }
+  
 
       if (props.buildings3D) {
         map.addLayer({
@@ -151,7 +158,7 @@ const Map = props => {
     // Divide timestamp by 100 to slow rotation to ~10 degrees / sec
     map.rotateTo((timestamp / 100) % 360, { duration: 0 });
     // Request the next frame of the animation.
-    requestAnimationFrame(rotateCamera);
+    rotateAnimFrame = requestAnimationFrame(rotateCamera);
   }
 
   return <div ref={el => (mapContainer = el)} className={`mapContainer w-100 h-screen m-0 ${props.classes}`}></div>;
