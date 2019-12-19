@@ -26,6 +26,10 @@ const schema = new mongoose.Schema(
         type: mongoose.Types.ObjectId,
         ref: "Player"
     }],
+    acceptedPlusOnes: [{
+      type: mongoose.Types.ObjectId,
+      ref: "Player"
+    }],
     status: {
       type: mongoose.Types.ObjectId,
       ref: "Status"
@@ -72,10 +76,38 @@ schema.statics.addPlusOne = async function(id, player) {
       })
       .populate("admins")
       .populate("plusOnes")
+      .populate("acceptedPlusOnes")
       .exec();
     return populatedRequest;
   } catch (error) {
     throw new Error("Error => [Model: Request | Static: addPlusOne]");
+  }
+};
+
+schema.statics.acceptPlusOne = async function(id, player) {
+  const Request = this;
+  try {
+    const request = await Request.findById(id).exec();
+    if (!request.acceptedPlusOnes.includes(player)) {
+      request.acceptedPlusOnes.push(player);
+      await request.save();
+    }
+    const populatedRequest = await Request.findById(id)
+      .populate({
+        path: "game",
+        model: "Game",
+        populate: {
+          path: "location",
+          model: "Location"
+        }
+      })
+      .populate("admins")
+      .populate("plusOnes")
+      .populate("acceptedPlusOnes")
+      .exec();
+    return populatedRequest;
+  } catch (error) {
+    throw new Error("Error => [Model: Request | Static: acceptPlusOne]");
   }
 };
 
