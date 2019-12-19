@@ -56,9 +56,8 @@ const RequestView = props => {
   };
 
   const handleAccept = async plusOne => {
-    console.log(plusOne);
-    // const response = await acceptPlusOne(fire, userToken, request._id, e.target.value, player);
-    // setRequest(response.data);
+    const response = await acceptPlusOne(fire, userToken, request._id, plusOne, player);
+    setRequest(response.data);
   };
 
   useEffect(() => {
@@ -113,7 +112,7 @@ const RequestView = props => {
                 return (
                   <div key={player._id} className="flex items-center justify-between">
                     <Link to={"/player/" + plusOne.username}>{plusOne.displayName}</Link>
-                    <button onClick={() => handleAccept(plusOne._id)}>Accept!</button>
+                    <button onClick={() => handleAccept(plusOne)}>Accept!</button>
                   </div>
                 );
               })}
