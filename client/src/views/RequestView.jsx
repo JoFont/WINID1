@@ -243,12 +243,13 @@ const RequestView = props => {
             </div>
           )}
           <button
+            className="w-full mt-4 bg-winid-1 hover:bg-blue-600 text-white font-bold py-2 px-4 border-b-4 border-winid-4 hover:border-blue-700 rounded"
             onClick={() => {
               setAnimation("fadeOut");
               setDirections(true);
             }}
           >
-            Check Directions
+            Get Directions
           </button>
         </div>
         {request && (
