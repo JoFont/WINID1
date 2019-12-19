@@ -77,7 +77,7 @@ const RequestView = props => {
     <div className="flex flex-wrap items-stretch min-h-screen">
       <div className="w-1/3 border-r min-h-screen bg-white">
         {/* {game && <img src={game.location.locationPhotoUrl} alt="" className="w-full" />} */}
-        <div className="w-full p-4 mb-4">
+        <div className="w-full p-4">
           <div className="bg-white rounded shadow">
             {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
               <div className="flex justify-between items-stretch text-center">
