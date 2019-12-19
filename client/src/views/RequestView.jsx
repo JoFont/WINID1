@@ -2,7 +2,7 @@ import React, { useEffect, useState, useGlobal, Fragment } from "reactn";
 import { Input, Icon, Empty, Skeleton } from "antd";
 import { Link } from "react-router-dom";
 import { getById as getRequestById, joinPlusOnes, acceptPlusOne } from "../services/api/request";
-import { sendChatMessage } from "../services/chat";
+import { sendChatMessage, messageRenderToFalse } from "../services/chat";
 import Bubble from "../components/Chats/Bubble";
 
 const RequestView = props => {
@@ -26,7 +26,11 @@ const RequestView = props => {
       .orderBy("date")
       .onSnapshot(querySnapshot => {
         const allMessages = [];
-        querySnapshot.forEach(doc => {
+        querySnapshot.forEach(async doc => {
+          if (doc.data().render) {
+            await messageRenderToFalse(fire, response.data.chatRef, doc.id);
+            buildRequest();
+          }
           allMessages.push({ ...doc.data(), id: doc.id });
         });
         setMessages(allMessages);

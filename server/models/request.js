@@ -99,7 +99,7 @@ schema.statics.acceptPlusOne = async function(id, player) {
       request.acceptedPlusOnes.push(player);
       await request.save();
 
-      const game = await Game.findAndPushToStartersOrSubsOrQueue(request.game._id, player);
+      const game = await Game.findSpotForPlayer(request.game._id, player);
     }
     const populatedRequest = await Request.findById(id)
       .populate({

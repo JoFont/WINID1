@@ -153,7 +153,7 @@ schema.statics.addPlayerToPlayers = async function(id, player) {
   }
 };
 
-schema.statics.findAndPushToStartersOrSubsOrQueue = async function(id, player) {
+schema.statics.findSpotForPlayer = async function(id, player) {
   const Game = this;
   try {
     const game = await Game.findById(id).exec();
@@ -162,8 +162,8 @@ schema.statics.findAndPushToStartersOrSubsOrQueue = async function(id, player) {
       await game.save();
     }
 
-    if (!game.starters.players.includes(player)) {
-      game.starters.players.push(player);
+    if (!game.starters.includes(player)) {
+      game.starters.push(player);
       await game.save();
       const populatedGame = await Game.findById(id)
         .populate("players")
@@ -174,8 +174,8 @@ schema.statics.findAndPushToStartersOrSubsOrQueue = async function(id, player) {
         .populate("location")
         .exec();
       return populatedGame;
-    } else if (!game.subs.players.includes(player)) {
-      game.subs.players.push(player);
+    } else if (!game.subs.includes(player)) {
+      game.subs.push(player);
       await game.save();
       const populatedGame = await Game.findById(id)
         .populate("players")
