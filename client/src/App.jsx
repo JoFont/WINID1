@@ -50,9 +50,7 @@ function App(props) {
         }
       } else {
         // resets the token to null when the user is not signed in
-        if (userToken) setUserToken(null);
-        setPlayer(null);
-        props.history.push("/");
+        // if (userToken) setUserToken(null);
       }
     });
   }, []);
