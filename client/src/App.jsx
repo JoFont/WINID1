@@ -16,7 +16,7 @@ function App(props) {
   const [player, setPlayer] = useGlobal("player");
   const [, setMessageToken] = useGlobal("playerMessagingToken");
   const [toggle, setToggle] = useState(true);
-  const [coordinates, setCoordinates] = useGlobal([]);
+  const [, setPlayerCoordinates] = useGlobal("playerCoordinates");
 
   // Use effect for Firebase Magic
   useEffect(() => {
@@ -62,7 +62,7 @@ function App(props) {
 
   useEffect(() => {
     const success = async pos => {
-      await setCoordinates([pos.coords.longitude, pos.coords.latitude]);
+      await setPlayerCoordinates([pos.coords.longitude, pos.coords.latitude]);
     };
 
     const error = err => {
