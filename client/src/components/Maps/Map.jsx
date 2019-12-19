@@ -45,7 +45,7 @@ const Map = props => {
       style: "mapbox://styles/jofont/ck48k2a7l0hci1co0xskrj9xl",
       center: [mapState.lng, mapState.lat],
       zoom: mapState.zoom,
-      interactive: props.interactive
+      interactive: props.isInteractive || true
     });
 
     if (props.type === "locateUser") {
