@@ -24,6 +24,15 @@ export const getById = async (token, id) => {
   }
 };
 
+export const getAll = async () => {
+  try {
+    const res = await api.get('/');
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 export const createOne = async (token, data) => {
   try {
