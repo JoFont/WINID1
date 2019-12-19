@@ -8,7 +8,7 @@ router.post("/create", checkAuth, async (req, res, next) => {
   try {
     const data = req.body.data;
     const newRequest = await Request.createAndPushAdmins(data);
-    res.status(200).json({newRequest});
+    res.status(200).json({ newRequest });
   } catch (error) {
     next(error);
   }
@@ -26,27 +26,31 @@ router.get("/", async (req, res, next) => {
         }
       })
       .populate("admins")
+      .populate("plusOnes")
+      .populate("acceptedPlusOnes")
       .exec();
-      Request.find
+    Request.find;
     res.status(200).json(requests);
   } catch (error) {
     next(error);
   }
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
-    const request = await Request.findById(req.params.id).populate({
-      path: "game",
-      model: "Game",
-      populate: {
-        path: "location",
-        model: "Location"
-      }
-    })
-    .populate("admins")
-    .populate("plusOnes")
-    .exec();
+    const request = await Request.findById(req.params.id)
+      .populate({
+        path: "game",
+        model: "Game",
+        populate: {
+          path: "location",
+          model: "Location"
+        }
+      })
+      .populate("admins")
+      .populate("plusOnes")
+      .populate("acceptedPlusOnes")
+      .exec();
     res.status(200).json(request);
   } catch (error) {
     next(error);
@@ -62,7 +66,7 @@ router.get('/:id', async (req, res, next) => {
 //   }
 // });
 
-router.post('/:id/addPlusOne', checkAuth, async (req, res, next) => {
+router.post("/:id/addPlusOne", checkAuth, async (req, res, next) => {
   try {
     const request = await Request.addPlusOne(req.params.id, req.body.playerId);
     res.status(200).json(request);
@@ -71,7 +75,7 @@ router.post('/:id/addPlusOne', checkAuth, async (req, res, next) => {
   }
 });
 
-router.post('/:id/acceptPlusOne', checkAuth, async (req, res, next) => {
+router.post("/:id/acceptPlusOne", checkAuth, async (req, res, next) => {
   try {
     const request = await Request.acceptPlusOne(req.params.id, req.body.playerId);
     res.status(200).json(request);

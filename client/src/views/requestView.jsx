@@ -67,6 +67,12 @@ const RequestView = props => {
     setRequest(response.data);
   };
 
+  const checkAccepted = plusOne => {
+    return request.acceptedPlusOnes.reduce((validate, acceptedPlusOne) => {
+      return acceptedPlusOne._id === plusOne._id ? !validate : validate;
+    }, false);
+  };
+
   useEffect(() => {
     if (userToken) {
       buildRequest();
@@ -75,8 +81,9 @@ const RequestView = props => {
 
   return (
     <div className="flex flex-wrap items-stretch min-h-screen">
+      {console.log("REQUEST", request)}
+
       <div className="w-1/3 border-r min-h-screen bg-white">
-        {/* {game && <img src={game.location.locationPhotoUrl} alt="" className="w-full" />} */}
         <div className="w-full p-4">
           <div className="bg-white rounded shadow">
             {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
@@ -86,7 +93,7 @@ const RequestView = props => {
                   {(!request.acceptedPlusOnes && <Skeleton active paragraph={false} />) || (
                     <div className="text-2xl w-full leading-none py-1">
                       <span className="leading-none">{request.need - request.acceptedPlusOnes.length}</span>
-                      {/* <small className="text-gray-400 text-xs">/{request.startersNumber * 2}</small> */}
+                      <small className="text-gray-400 text-xs">/{request.need}</small>
                     </div>
                   )}
                 </div>
@@ -110,21 +117,48 @@ const RequestView = props => {
             )}
           </div>
         </div>
+
+        {request && request.acceptedPlusOnes.length > 0 && (
+          <div className="w-full p-4 mb-4">
+            <div className="bg-white rounded shadow p-4">
+              {request &&
+                request.acceptedPlusOnes &&
+                request.acceptedPlusOnes.map(acceptedPlusOne => {
+                  return (
+                    <div key={acceptedPlusOne._id} className="flex items-center justify-between">
+                      <Link to={"/player/" + acceptedPlusOne.username}>{acceptedPlusOne.displayName}</Link>
+                      <Icon type="check-circle" className="text-green-500 text-lg" />
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        )}
+
         {request &&
+          !(request.plusOnes.length === request.acceptedPlusOnes.length) &&
           request.admins.reduce((validate, admin) => {
             return player._id === admin._id ? !validate : validate;
           }, false) && (
             <div className="w-full p-4 mb-4">
+              <div className="uppercase text-gray-400 font-bold text-sm">Interested</div>
               <div className="bg-white rounded shadow p-4">
                 {request &&
                   request.plusOnes &&
                   request.plusOnes.map(plusOne => {
-                    return (
-                      <div key={player._id} className="flex items-center justify-between">
-                        <Link to={"/player/" + plusOne.username}>{plusOne.displayName}</Link>
-                        <button onClick={() => handleAccept(plusOne)}>Accept!</button>
-                      </div>
-                    );
+                    if (!checkAccepted(plusOne)) {
+                      return (
+                        <div key={plusOne._id} className="flex items-center justify-between">
+                          <Link to={"/player/" + plusOne.username}>{plusOne.displayName}</Link>
+                          <button
+                            className="bg-transparent hover:bg-green-500 text-gray-300 hover:text-white py-1 px-2 border border-gray-300 hover:border-transparent rounded flex items-center"
+                            onClick={() => handleAccept(plusOne)}
+                          >
+                            <Icon type="check-circle" className="text-lg" />
+                          </button>
+                        </div>
+                      );
+                    }
                   })}
               </div>
             </div>
