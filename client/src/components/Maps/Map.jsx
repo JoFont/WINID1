@@ -77,7 +77,10 @@ const Map = props => {
       if (map && props.showDirections) {
         const directionsPlugin = new Directions({
           accessToken: mapbox.accessToken,
-          unit: "metric"
+          unit: "metric",
+          controls: {
+            instructions: false
+          }
         });
 
         map.addControl(directionsPlugin, "top-left");
