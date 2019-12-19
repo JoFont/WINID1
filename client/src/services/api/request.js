@@ -109,7 +109,7 @@ export const searchBySport = async (query) => {
   try {
     const res = await api.get(`/search`, {
       params: {
-        query
+        sport
       }
     });
 

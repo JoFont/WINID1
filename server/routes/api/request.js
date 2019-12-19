@@ -17,9 +17,32 @@ router.post("/create", checkAuth, async (req, res, next) => {
 
 router.get("/search", async (req, res, next) => {
   try {
-    console.log(req.query);
-    const requests = Request.find({game: {"sport.name": { $regex: req.query, $options: "ig" }}});
-    res.status(200).json(requests);
+    console.log(req.query.sport);
+    
+    const requests = await Request.find()
+      .populate({
+        path: "game",
+        model: "Game",
+        populate: {
+          path: "location",
+          model: "Location"
+        }
+      })
+      .populate({
+        path: "game",
+        model: "Game",
+        populate: {
+          path: "sport",
+          model: "Sport"
+        }
+      })
+      .populate("admins")
+      .populate("plusOnes")
+      .populate("acceptedPlusOnes")
+      .exec();
+
+    const filteredRequests = requests.filter(doc => doc.game.sport.name.includes(req.query.sport));
+    res.status(200).json(filteredRequests);
   } catch (error) {
     next(error);
   }
@@ -48,7 +71,6 @@ router.get("/", async (req, res, next) => {
       .populate("plusOnes")
       .populate("acceptedPlusOnes")
       .exec();
-    Request.find;
     res.status(200).json(requests);
   } catch (error) {
     next(error);
