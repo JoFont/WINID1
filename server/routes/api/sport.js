@@ -12,6 +12,15 @@ router.get('/:id', checkAuth, async (req, res, next) => {
   }
 });
 
+router.get("/", async (req, res, next) => {
+  try {
+    const requests = await Sport.find()
+    res.status(200).json(requests);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/create', checkAuth, async (req, res, next) => {
   try {
     const body = req.body;
