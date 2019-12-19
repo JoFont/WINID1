@@ -78,6 +78,10 @@ schema.statics.addPlusOne = async function(id, player) {
         populate: {
           path: "location",
           model: "Location"
+        },
+        populate: {
+          path: "sport",
+          model: "Sport"
         }
       })
       .populate("admins")
@@ -108,6 +112,10 @@ schema.statics.acceptPlusOne = async function(id, player) {
         populate: {
           path: "location",
           model: "Location"
+        },
+        populate: {
+          path: "sport",
+          model: "Sport"
         }
       })
       .populate("admins")
