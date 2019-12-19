@@ -46,6 +46,7 @@ const schema = new mongoose.Schema(
 
 schema.statics.createAndPushAdmins = async function(data) {
   const Request = this;
+  const Game = mongoose.model("Game");
   try {
     console.log(data);
     const newRequest = await Request.create({
@@ -55,6 +56,7 @@ schema.statics.createAndPushAdmins = async function(data) {
     });
     newRequest.admins.push(data.admins);
     await newRequest.save();
+    await Game.findByIdAndUpdate(data.game, { requestRef: newRequest._id });
     return newRequest;
   } catch (error) {
     throw new Error("Error => [Model: Request | Static: createAndPushAdmins]");

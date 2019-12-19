@@ -36,6 +36,9 @@ const GameView = props => {
         if (allMessages.length > 0) {
           const element = document.getElementById("chat");
           element.scrollTop = element.scrollHeight - element.clientHeight;
+
+          const lastBubble = document.querySelector(".bubble:last-of-type");
+          lastBubble.classList.add("animated", "fadeInUp");
         }
       });
   };
@@ -81,15 +84,15 @@ const GameView = props => {
                 <div className="w-1/3 flex flex-col">
                   <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">starters</span>
                   <div className="text-2xl w-full leading-none py-1">
-                    <span className="leading-none">{game.starters.players ? game.starters.players.length : 0}</span>
-                    <small className="text-gray-400 text-xs">/{game.starters.number * 2}</small>
+                    <span className="leading-none">{game.starters ? game.starters.length : 0}</span>
+                    <small className="text-gray-400 text-xs">/{game.startersNum * 2}</small>
                   </div>
                 </div>
                 <div className="w-1/3 flex flex-col border-l border-r">
                   <span className="uppercase text-xs text-gray-500 bg-gray-200 border-b">subs</span>
                   <div className="text-2xl w-full leading-none py-1">
-                    <span className="leading-none">{game.subs.players ? game.subs.players.length : 0}</span>
-                    <small className="text-gray-400 text-xs">/{game.subs.number * 2}</small>
+                    <span className="leading-none">{game.subs ? game.subs.length : 0}</span>
+                    <small className="text-gray-400 text-xs">/{game.subsNum * 2}</small>
                   </div>
                 </div>
                 <div className="w-1/3 flex flex-col">

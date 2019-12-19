@@ -32,7 +32,7 @@ const RequestView = props => {
         setMessages(allMessages);
         if (allMessages.length > 0) {
           const element = document.getElementById("chat");
-          element.scrollTop = element.scrollHeight;
+          element.scrollTop = element.scrollHeight + element.clientHeight;
 
           const lastBubble = document.querySelector(".bubble:last-of-type");
           lastBubble.classList.add("animated", "fadeInUp");
