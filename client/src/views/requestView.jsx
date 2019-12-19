@@ -112,7 +112,7 @@ const RequestView = props => {
                 return (
                   <div key={player._id} className="flex items-center justify-between">
                     <Link to={"/player/" + plusOne.username}>{plusOne.displayName}</Link>
-                    <button onClick={() => handleAccept(plusOne._id)}>Accept!</button>
+                    <button onClick={() => handleAccept(plusOne)}>Accept!</button>
                   </div>
                 );
               })}
