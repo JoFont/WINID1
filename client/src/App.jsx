@@ -75,7 +75,7 @@ function App(props) {
       maximumAge: 0
     };
 
-    navigator.geolocation.watchPosition(success, error, options);
+    navigator.geolocation.getCurrentPosition(success, error, options);
   }, []);
 
   const handleSignOut = () => {
