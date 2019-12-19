@@ -105,7 +105,7 @@ export const createAndUpdateStatus = async (token, id, data) => {
   }
 };
 
-export const searchBySport = async (query) => {
+export const searchBySport = async (sport) => {
   try {
     const res = await api.get(`/search`, {
       params: {
