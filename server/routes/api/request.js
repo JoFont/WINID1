@@ -27,6 +27,7 @@ router.get("/", async (req, res, next) => {
       })
       .populate("admins")
       .exec();
+      Request.find
     res.status(200).json(requests);
   } catch (error) {
     next(error);
