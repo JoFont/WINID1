@@ -6,24 +6,6 @@ import Directions from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
 
-const addRequestMarker = (arr, map) => {
-  arr.forEach(request => {
-    const html = `
-      <div>
-        <a class="requestPopup btn bg-blue-500 p-3 text-white" href="/request/${request._id}" data-request="${request._id}">GAMES!</a>
-      </div>
-    `;
-    // DEUS => onclick="(function(){alert('ALBERTO');return false;})();return false;"
-
-    const popup = new mapbox.Popup({ offset: 25 }).setHTML(html);
-    const marker = new mapbox.Marker()
-      .setLngLat(request.game.location.location.coordinates)
-      .setPopup(popup)
-      .addTo(map);
-  });
-};
-
-
 
 const Map = props => {
   mapbox.accessToken = MapboxAccessToken;
@@ -36,12 +18,15 @@ const Map = props => {
     directions: props.showDirections
   });
 
+  const [markers, setMarkers] = useState([]);
+
   let mapContainer;
   let map;
   let geoTracker;
   let rotateAnimFrame;
   
 
+  
   // Isto faz refrescar duas vezes por causa do useGlobal como dependencia
   useEffect(() => {
     map = new mapbox.Map({
@@ -83,11 +68,12 @@ const Map = props => {
     }
 
     map.on("load", async () => {
-      if (props.showMarkers) {
-        const response = await getAllRequests();
-        if (response.data.length) {
-          addRequestMarker(response.data, map);
-        }
+      if (props.showMarkers && props.markerArray.length > 0) {
+        addRequestMarkers(props.markerArray, map);
+        // const response = await getAllRequests();
+        // if (response.data.length) {
+        //   addRequestMarkers(response.data, map);
+        // }
       }
 
       if (map && props.showDirections) {
@@ -152,6 +138,27 @@ const Map = props => {
     };
   }, [mapContainer, props]);
 
+  const addRequestMarkers = (arr, map) => {
+    const markerArr = [];
+
+    markers.forEach(el => el.remove());
+    arr.forEach(request => {
+      const html = `
+        <div>
+          <a class="requestPopup btn bg-blue-500 p-3 text-white" href="/request/${request._id}" data-request="${request._id}">GAMES!</a>
+        </div>
+      `;
+      // DEUS => onclick="(function(){alert('ALBERTO');return false;})();return false;"
+  
+      const popup = new mapbox.Popup({ offset: 25 }).setHTML(html);
+      const marker = new mapbox.Marker()
+        .setLngLat(request.game.location.location.coordinates)
+        .setPopup(popup)
+        .addTo(map);
+      markerArr.push(marker);
+    });
+    setMarkers(markers);
+  };
 
   const rotateCamera = (timestamp) => {
     // clamp the rotation between 0 -360 degrees
