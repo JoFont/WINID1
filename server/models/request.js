@@ -22,14 +22,18 @@ const schema = new mongoose.Schema(
       type: String,
       required: true
     },
-    plusOnes: [{
+    plusOnes: [
+      {
         type: mongoose.Types.ObjectId,
         ref: "Player"
-    }],
-    acceptedPlusOnes: [{
-      type: mongoose.Types.ObjectId,
-      ref: "Player"
-    }],
+      }
+    ],
+    acceptedPlusOnes: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Player"
+      }
+    ],
     status: {
       type: mongoose.Types.ObjectId,
       ref: "Status"
@@ -86,11 +90,14 @@ schema.statics.addPlusOne = async function(id, player) {
 
 schema.statics.acceptPlusOne = async function(id, player) {
   const Request = this;
+  const Game = mongoose.model("Game");
   try {
     const request = await Request.findById(id).exec();
-    if (!request.acceptedPlusOnes.includes(player)) {
+    if (!request.acceptedPlusOnes.includes(player) && request.acceptedPlusOnes.length < request.need) {
       request.acceptedPlusOnes.push(player);
       await request.save();
+
+      const game = await Game.findAndPushToStartersOrSubsOrQueue(request.game._id, player);
     }
     const populatedRequest = await Request.findById(id)
       .populate({

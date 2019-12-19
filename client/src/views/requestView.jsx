@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useGlobal, Fragment } from "reactn";
-import { Input, Icon, Empty } from "antd";
+import { Input, Icon, Empty, Skeleton } from "antd";
 import { Link } from "react-router-dom";
 import { getById as getRequestById, joinPlusOnes, acceptPlusOne } from "../services/api/request";
 import { sendChatMessage } from "../services/chat";
@@ -32,7 +32,10 @@ const RequestView = props => {
         setMessages(allMessages);
         if (allMessages.length > 0) {
           const element = document.getElementById("chat");
-          element.scrollTop = element.scrollHeight - element.clientHeight;
+          element.scrollTop = element.scrollHeight;
+
+          const lastBubble = document.querySelector(".bubble:last-of-type");
+          lastBubble.classList.add("animated", "fadeInUp");
         }
       });
   };
@@ -72,30 +75,30 @@ const RequestView = props => {
         {/* {game && <img src={game.location.locationPhotoUrl} alt="" className="w-full" />} */}
         <div className="w-full p-4 mb-4">
           <div className="bg-white rounded shadow">
-            {request && (
+            {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
               <div className="flex justify-between items-stretch text-center">
                 <div className="w-1/3 flex flex-col">
-                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">starters</span>
-                  <div className="text-2xl w-full leading-none py-1">
-                    <span className="leading-none">
-                      {request.game.starters.players ? request.game.starters.players.length : 0}
-                    </span>
-                    <small className="text-gray-400 text-xs">/{request.game.starters.number * 2}</small>
-                  </div>
+                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">need</span>
+                  {(!request.acceptedPlusOnes && <Skeleton active paragraph={false} />) || (
+                    <div className="text-2xl w-full leading-none py-1">
+                      <span className="leading-none">{request.need - request.acceptedPlusOnes.length}</span>
+                      <small className="text-gray-400 text-xs">/{request.game.starters.number * 2}</small>
+                    </div>
+                  )}
                 </div>
                 <div className="w-1/3 flex flex-col border-l border-r">
-                  <span className="uppercase text-xs text-gray-500 bg-gray-200 border-b">subs</span>
+                  <span className="uppercase text-xs text-gray-500 bg-gray-200 border-b">accepted</span>
                   <div className="text-2xl w-full leading-none py-1">
                     <span className="leading-none">
-                      {request.game.subs.players ? request.game.subs.players.length : 0}
+                      {request.acceptedPlusOnes ? request.acceptedPlusOnes.length : 0}
                     </span>
                     <small className="text-gray-400 text-xs">/{request.game.subs.number * 2}</small>
                   </div>
                 </div>
                 <div className="w-1/3 flex flex-col">
-                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tr border-b">invited</span>
+                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tr border-b">plusones</span>
                   <div className="text-2xl w-full leading-none py-1">
-                    <span className="leading-none">{request.game.players ? request.game.players.length : 0}</span>
+                    <span className="leading-none">{request.plusOnes ? request.plusOnes.length : 0}</span>
                     {/* <small className="text-gray-400 text-xs">/{game.subs.number}</small> */}
                   </div>
                 </div>
