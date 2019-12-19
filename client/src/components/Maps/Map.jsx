@@ -44,7 +44,8 @@ const Map = props => {
       container: mapContainer,
       style: "mapbox://styles/jofont/ck48k2a7l0hci1co0xskrj9xl",
       center: [mapState.lng, mapState.lat],
-      zoom: mapState.zoom
+      zoom: mapState.zoom,
+      interactive: props.isInteractive || true
     });
 
     if (props.type === "locateUser") {
@@ -59,7 +60,7 @@ const Map = props => {
 
       map.on("load", () => {
         geoTracker._geolocateButton.click();
-        
+
       });
     }
 
@@ -68,15 +69,20 @@ const Map = props => {
     }
 
     map.on("load", async () => {
-      const response = await getAllRequests();
-      if (response.data.length) {
-        addRequestMarker(response.data, map);
+      if (props.showMarkers) {
+        const response = await getAllRequests();
+        if (response.data.length) {
+          addRequestMarker(response.data, map);
+        }
       }
-
       if (map && props.showDirections) {
         const directionsPlugin = new Directions({
           accessToken: mapbox.accessToken,
-          unit: "metric"
+          unit: "metric",
+          controls: {
+            instructions: false
+          },
+          interactive: false
         });
 
         map.addControl(directionsPlugin, "top-left");
