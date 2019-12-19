@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getById as getRequestById, joinPlusOnes, acceptPlusOne } from "../services/api/request";
 import { sendChatMessage, messageRenderToFalse } from "../services/chat";
 import Bubble from "../components/Chats/Bubble";
+import Map from "../components/Maps/Map";
 
 const RequestView = props => {
   const [userToken] = useGlobal("userToken");
@@ -17,31 +18,32 @@ const RequestView = props => {
   const buildRequest = async () => {
     const response = await getRequestById(userToken, props.match.params.id);
     setRequest(response.data);
+    if (userToken) {
+      fire
+        .firestore()
+        .collection("chatGroups")
+        .doc(response.data.chatRef)
+        .collection("messages")
+        .orderBy("date")
+        .onSnapshot(querySnapshot => {
+          const allMessages = [];
+          querySnapshot.forEach(async doc => {
+            if (doc.data().render) {
+              await messageRenderToFalse(fire, response.data.chatRef, doc.id);
+              await buildRequest();
+            }
+            allMessages.push({ ...doc.data(), id: doc.id });
+          });
+          setMessages(allMessages);
+          if (allMessages && allMessages.length > 0) {
+            const element = document.getElementById("chat");
+            element.scrollTop = element.scrollHeight + element.clientHeight;
 
-    fire
-      .firestore()
-      .collection("chatGroups")
-      .doc(response.data.chatRef)
-      .collection("messages")
-      .orderBy("date")
-      .onSnapshot(querySnapshot => {
-        const allMessages = [];
-        querySnapshot.forEach(async doc => {
-          if (doc.data().render) {
-            await messageRenderToFalse(fire, response.data.chatRef, doc.id);
-            await buildRequest();
+            const lastBubble = document.querySelector(".bubble:last-of-type");
+            lastBubble.classList.add("animated", "fadeInUp", "faster");
           }
-          allMessages.push({ ...doc.data(), id: doc.id });
         });
-        setMessages(allMessages);
-        if (allMessages && allMessages.length > 0) {
-          const element = document.getElementById("chat");
-          element.scrollTop = element.scrollHeight + element.clientHeight;
-
-          const lastBubble = document.querySelector(".bubble:last-of-type");
-          lastBubble.classList.add("animated", "fadeInUp", "faster");
-        }
-      });
+    }
   };
 
   const addMessage = async e => {
@@ -74,9 +76,8 @@ const RequestView = props => {
   };
 
   useEffect(() => {
-    if (userToken) {
-      buildRequest();
-    }
+    // sem if, porque isto é publico
+    buildRequest();
   }, [userToken]);
 
   return (
@@ -199,7 +200,21 @@ const RequestView = props => {
           </div>
         </div>
       </div>
-    )) || <div>NOA ESTAS LOGGADO</div>
+    )) || (
+      <div className="flex items-center justify-center min-h-screen relative">
+        <div className="bg-white shadow rounded w-1/3 min-h-1/2 z-10">
+          <h1>{request && request.need}</h1>
+        </div>
+        {request && (
+          <Map
+            zoom={8}
+            lat={request.game.location.location.coordinates[1]}
+            lng={request.game.location.location.coordinates[0]}
+            classes="absolute left-0 top-0 w-full h-full z-0"
+          ></Map>
+        )}
+      </div>
+    )
   );
 };
 
