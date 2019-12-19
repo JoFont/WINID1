@@ -78,7 +78,7 @@ export const deleteOne = async (firebase, token, game, player) => {
 
   try {
     api.defaults.headers.common['authorization'] = `Bearer ${token}`;
-    const res = await api.delete(`/${id}/delete`, {
+    const res = await api.delete(`/${game._id}/delete`, {
       firebase,
       game,
       player
