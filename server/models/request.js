@@ -93,13 +93,13 @@ schema.statics.addPlusOne = async function(id, player) {
 schema.statics.acceptPlusOne = async function(id, player) {
   const Request = this;
   const Game = mongoose.model("Game");
+  let spotWasFound;
   try {
     const request = await Request.findById(id).exec();
     if (!request.acceptedPlusOnes.includes(player) && request.acceptedPlusOnes.length < request.need) {
       request.acceptedPlusOnes.push(player);
       await request.save();
-
-      const game = await Game.findSpotForPlayer(request.game._id, player);
+      spotWasFound = await Game.findSpotForPlayer(request.game._id, player);
     }
     const populatedRequest = await Request.findById(id)
       .populate({
@@ -114,7 +114,7 @@ schema.statics.acceptPlusOne = async function(id, player) {
       .populate("plusOnes")
       .populate("acceptedPlusOnes")
       .exec();
-    return populatedRequest;
+    return { populatedRequest: populatedRequest, spotWasFound: spotWasFound };
   } catch (error) {
     throw new Error("Error => [Model: Request | Static: acceptPlusOne]");
   }
