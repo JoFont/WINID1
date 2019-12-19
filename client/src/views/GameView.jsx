@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useGlobal, Fragment } from "reactn";
 import { Input, Icon, Empty } from "antd";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import CreateRequestForm from "../components/CreateRequest";
 import { getById as getGameById, addPlayerToPlayers, deleteOne } from "../services/api/game";
 import Score from "../components/Games/Score";
@@ -58,10 +59,9 @@ const GameView = props => {
     setGame(response.data);
   };
 
-  const handleDeleteGame = async game => {
+  const handleDeleteGame = async () => {
     const response = await deleteOne(fire, userToken, game, player);
-    let history = useHistory();
-    if (response.data.deleted) history.push("/games");
+    if (response.data.deleted) props.history.push("/games");
   };
 
   useEffect(() => {
@@ -142,7 +142,7 @@ const GameView = props => {
         </div>
         <div className="w-full bg-gray-white px-4 mb-4">
           <div className="bg-white rounded shadow p-4">
-            <button onClick={() => handleDeleteGame(game)}>Delete Game</button>
+            <button onClick={() => handleDeleteGame()}>Delete Game</button>
           </div>
         </div>
       </div>
