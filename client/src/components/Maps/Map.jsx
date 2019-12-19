@@ -68,12 +68,8 @@ const Map = props => {
     }
 
     map.on("load", async () => {
-      if (props.showMarkers && props.markerArray.length > 0) {
-        addRequestMarkers(props.markerArray, map);
-        // const response = await getAllRequests();
-        // if (response.data.length) {
-        //   addRequestMarkers(response.data, map);
-        // }
+      if (props.showMarkers && props.markersArray.length > 0) {
+        addRequestMarkers(props.markersArray, map);
       }
 
       if (map && props.showDirections) {
