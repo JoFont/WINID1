@@ -25,6 +25,14 @@ router.get("/", async (req, res, next) => {
           model: "Location"
         }
       })
+      .populate({
+        path: "game",
+        model: "Game",
+        populate: {
+          path: "sport",
+          model: "Sport"
+        }
+      })
       .populate("admins")
       .populate("plusOnes")
       .populate("acceptedPlusOnes")
