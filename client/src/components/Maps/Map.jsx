@@ -67,13 +67,13 @@ const Map = props => {
         geoTracker._geolocateButton.click();
 
         if(props.rotate) {
-          setTimeout(() => {
+          map.on("zoomend", () => {
             rotateCamera(0);
-          }, 1000);
+          });
 
           map.on("drag", () => {
             window.cancelAnimationFrame(rotateAnimFrame);
-          })
+          });
         }
       });
     }
