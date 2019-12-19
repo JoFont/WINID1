@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useGlobal, Fragment } from "reactn";
 import { Input, Icon, Empty, Skeleton } from "antd";
 import { Link } from "react-router-dom";
+import { formatRelative } from "date-fns";
 import { getById as getRequestById, joinPlusOnes, acceptPlusOne } from "../services/api/request";
 import { sendChatMessage, messageRenderToFalse } from "../services/chat";
 import Bubble from "../components/Chats/Bubble";
@@ -14,6 +15,7 @@ const RequestView = props => {
   const [player] = useGlobal("player");
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
+  const [animation, setAnimation] = useState("");
 
   const buildRequest = async () => {
     const response = await getRequestById(userToken, props.match.params.id);
@@ -202,12 +204,48 @@ const RequestView = props => {
       </div>
     )) || (
       <div className="flex items-center justify-center min-h-screen relative">
-        <div className="bg-white shadow rounded w-1/3 min-h-1/2 z-10">
-          <h1>{request && request.need}</h1>
+        <div className={`bg-white shadow rounded w-1/3 min-h-1/2 z-10 animated p-6 ${animation}`}>
+          {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
+            <div className="flex justify-between items-stretch text-center shadow rounded-lg">
+              <div className="w-1/3 flex flex-col">
+                <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">we need</span>
+                {(!request.acceptedPlusOnes && <Skeleton active paragraph={false} />) || (
+                  <div className="text-2xl w-full leading-none py-1">
+                    <span className="leading-none">{request.need - request.acceptedPlusOnes.length}</span>
+                    <small className="text-gray-400 text-xs">/{request.need}</small>
+                  </div>
+                )}
+              </div>
+              <div className="w-1/3 flex flex-col border-l border-r">
+                <span className="uppercase text-xs text-gray-500 bg-gray-200 border-b">accepted</span>
+                <div className="text-2xl w-full leading-none py-1">
+                  <span className="leading-none">{request.acceptedPlusOnes ? request.acceptedPlusOnes.length : 0}</span>
+                  {/* <small className="text-gray-400 text-xs">/{request.game.subs.number * 2}</small> */}
+                </div>
+              </div>
+              <div className="w-1/3 flex flex-col">
+                <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tr border-b">interested</span>
+                <div className="text-2xl w-full leading-none py-1">
+                  <span className="leading-none">{request.plusOnes ? request.plusOnes.length : 0}</span>
+                  {/* <small className="text-gray-400 text-xs">/{game.subs.number}</small> */}
+                </div>
+              </div>
+            </div>
+          )}
+          {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-4" />) || (
+            <div className="flex flex-col justify-center items-stretch text-center shadow rounded-lg mt-4 py-2">
+              {console.log("REQUEST", request)}
+              <span className="text-gray-400 font-light text-sm leading-none">on the</span>
+              <span className="text-2xl font-semibold">
+                {formatRelative(new Date(request.game.schedule), Date.now())}
+              </span>
+            </div>
+          )}
+          <button onClick={() => setAnimation("fadeOut")}>Check Directions</button>
         </div>
         {request && (
           <Map
-            zoom={8}
+            zoom={18}
             lat={request.game.location.location.coordinates[1]}
             lng={request.game.location.location.coordinates[0]}
             classes="absolute left-0 top-0 w-full h-full z-0"
