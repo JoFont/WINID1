@@ -57,7 +57,20 @@ export const sendChatStatus = async (firebase, groupId, data) => {
       isNotification: true,
       type: data.type,
       text: data.text,
+      render: data.render || false,
       date: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    return newMessage;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const messageRenderToFalse = async (firebase, groupId, docId) => {
+  try {
+    const db = firebase.firestore();
+    const newMessage = await db.collection("chatGroups").doc(groupId).collection("messages").doc(docId).update({
+      render: false
     });
     return newMessage;
   } catch (error) {
