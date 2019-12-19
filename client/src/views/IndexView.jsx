@@ -1,5 +1,5 @@
 import React from "react";
-import Map from "../components/Maps/CreateGameMap";
+import Map from "../components/Maps/Map";
 
 const IndexView = () => {
   return (
