@@ -38,7 +38,7 @@ const GameView = props => {
           element.scrollTop = element.scrollHeight - element.clientHeight;
 
           const lastBubble = document.querySelector(".bubble:last-of-type");
-          lastBubble.classList.add("animated", "fadeInUp");
+          lastBubble.classList.add("animated", "fadeInUp", "faster");
         }
       });
   };

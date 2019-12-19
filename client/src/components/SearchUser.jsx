@@ -8,8 +8,6 @@ const SearchUser = props => {
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const [userToken] = useGlobal("userToken");
 
-  console.log("PROPS", props.compareArray);
-
   const handleSearchChange = async query => {
     if (!query) {
       setAutoCompleteResult([]);

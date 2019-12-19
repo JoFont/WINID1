@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useGlobal } from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
 import { getAll as getAllRequests } from "../../services/api/request";
-import { Link } from "react-router-dom";
 import { MapboxAccessToken } from "../../constants/access-tokens";
-const MapboxGeocoder = require("@mapbox/mapbox-gl-geocoder");
 
 const addRequestMarker = (arr, map) => {
   arr.forEach(request => {
