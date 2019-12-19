@@ -205,13 +205,19 @@ const RequestView = props => {
       </div>
     )) || (
       <div className="flex items-center justify-center min-h-screen relative">
-        <div className={`bg-white shadow rounded w-1/3 min-h-1/2 z-10 animated p-6 ${animation}`}>
+        <div className={`bg-white shadow rounded w-1/3 min-h-1/2 z-10 animated p-6`}>
           {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
-            <div className="flex items-center justify-end">
-              <div className="leading-none font-semibold -mt-10 rounded-full bg-white p-2 shadow text-white bg-winid-1">
-                <span className="text-2xl">{request.game.price.value / 100}</span>
-                <small className="text-gray-300 text-xs">€</small>
-                {/* TODO: {request.game.price.currency} => CONVERT CURRENCY IN THE FUTURE*/}
+            <div className="flex items-center justify-center mb-4">
+              <div className="leading-none font-semibold -mt-16 p-2 rounded-full bg-white shadow text-white bg-white relative">
+                <Icon type="smile" theme="twoTone" className="text-6xl" />
+                <div
+                  className="leading-none font-semibold -mt-6 -ml-6 rounded-full bg-white p-2 shadow text-white bg-winid-1 absolute"
+                  style={{ right: -1 + "em", bottom: -0.5 + "em" }}
+                >
+                  <span className="text-2xl">{request.game.price.value / 100}</span>
+                  <small className="text-gray-300 text-xs">€</small>
+                  {/* TODO: {request.game.price.currency} => CONVERT CURRENCY IN THE FUTURE*/}
+                </div>
               </div>
             </div>
           )}
@@ -261,13 +267,13 @@ const RequestView = props => {
             Get Directions
           </button>
           <div className="text-center mt-2">
-            <div className="leading-none text-gray-500 font-semibold">Wanna to play?</div>
-            <div>
-              <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+            <div className="leading-none text-winid-1 font-semibold py-3">Wanna to play?</div>
+            <div className="flex items-center">
+              <button class="w-1/2 bg-transparent hover:bg-winid-1 text-winid-1 font-semibold hover:text-white py-1 px-4 border border-winid-1 hover:border-transparent rounded">
                 Login
               </button>
-              <span>or</span>
-              <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+              <span className="px-3 text-gray-400">or</span>
+              <button class="w-1/2 bg-transparent hover:bg-winid-1 text-winid-1 font-semibold hover:text-white py-1 px-4 border border-winid-1 hover:border-transparent rounded">
                 Register
               </button>
             </div>
