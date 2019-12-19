@@ -96,6 +96,10 @@ const schema = new mongoose.Schema(
       type: String,
       required: true
     },
+    requestRef: {
+      type: mongoose.Types.ObjectId,
+      ref: "Request"
+    },
     statusLog: [
       {
         type: mongoose.Types.ObjectId,
