@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useGlobal, Fragment } from "reactn";
 import { Input, Icon, Empty } from "antd";
 import { Link } from "react-router-dom";
-import { getById as getRequestById, joinPlusOnes } from "../services/api/request";
+import { getById as getRequestById, joinPlusOnes, acceptPlusOne } from "../services/api/request";
 import { sendChatMessage } from "../services/chat";
 import Bubble from "../components/Chats/Bubble";
 
@@ -55,6 +55,12 @@ const RequestView = props => {
     setRequest(response.data);
   };
 
+  const handleAccept = async plusOne => {
+    console.log(plusOne);
+    // const response = await acceptPlusOne(fire, userToken, request._id, e.target.value, player);
+    // setRequest(response.data);
+  };
+
   useEffect(() => {
     if (userToken) {
       buildRequest();
@@ -103,10 +109,11 @@ const RequestView = props => {
           <div className="bg-white rounded shadow p-4">
             {request &&
               request.plusOnes &&
-              request.plusOnes.map(player => {
+              request.plusOnes.map(plusOne => {
                 return (
-                  <div key={player._id}>
-                    <Link to={"/player/" + player.username}>{player.displayName}</Link>
+                  <div key={player._id} className="flex items-center justify-between">
+                    <Link to={"/player/" + plusOne.username}>{plusOne.displayName}</Link>
+                    <button onClick={() => handleAccept(plusOne._id)}>Accept!</button>
                   </div>
                 );
               })}
