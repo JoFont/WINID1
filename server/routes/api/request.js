@@ -70,6 +70,15 @@ router.post('/:id/addPlusOne', checkAuth, async (req, res, next) => {
   }
 });
 
+router.post('/:id/acceptPlusOne', checkAuth, async (req, res, next) => {
+  try {
+    const request = await Request.acceptPlusOne(req.params.id, req.body.playerId);
+    res.status(200).json(request);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // router.post('/:id/status', checkAuth, async (req, res, next) => {
 //   const id = req.params.id;
 //   try {
