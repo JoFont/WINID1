@@ -207,6 +207,15 @@ const RequestView = props => {
       <div className="flex items-center justify-center min-h-screen relative">
         <div className={`bg-white shadow rounded w-1/3 min-h-1/2 z-10 animated p-6 ${animation}`}>
           {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
+            <div className="flex items-center justify-end">
+              <div className="leading-none font-semibold -mt-10 rounded-full bg-white p-2 shadow text-white bg-winid-1">
+                <span className="text-2xl">{request.game.price.value / 100}</span>
+                <small className="text-gray-300 text-xs">€</small>
+                {/* TODO: {request.game.price.currency} => CONVERT CURRENCY IN THE FUTURE*/}
+              </div>
+            </div>
+          )}
+          {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
             <div className="flex justify-between items-stretch text-center shadow rounded-lg">
               <div className="w-1/3 flex flex-col">
                 <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">we need</span>
@@ -251,6 +260,18 @@ const RequestView = props => {
           >
             Get Directions
           </button>
+          <div className="text-center mt-2">
+            <div className="leading-none text-gray-500 font-semibold">Wanna to play?</div>
+            <div>
+              <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                Login
+              </button>
+              <span>or</span>
+              <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                Register
+              </button>
+            </div>
+          </div>
         </div>
         {request && (
           <Map
