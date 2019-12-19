@@ -45,7 +45,11 @@ router.get("/:id", async (req, res, next) => {
         populate: {
           path: "location",
           model: "Location"
-        },
+        }
+      })
+      .populate({
+        path: "game",
+        model: "Game",
         populate: {
           path: "sport",
           model: "Sport"
