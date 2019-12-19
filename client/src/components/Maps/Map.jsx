@@ -85,7 +85,7 @@ const Map = props => {
     return () => {
       map.remove();
     };
-  }, [mapContainer]);
+  }, [mapContainer, props]);
 
   return <div ref={el => (mapContainer = el)} className={`mapContainer w-100 h-screen m-0 ${props.classes}`}></div>;
 };
