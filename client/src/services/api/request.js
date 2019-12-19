@@ -65,14 +65,15 @@ export const acceptPlusOne = async (firebase, token, id, plusOne, admin) => {
   try {
     api.defaults.headers.common["authorization"] = `Bearer ${token}`;
     const res = await api.post(`/${id}/acceptPlusOne`, { playerId: plusOne._id });
-    if(res.status !== 406) {
+    console.log(res);
+    if(res.data.spotWasFound) {
       await sendChatStatus(firebase, res.data.chatRef, {
         type: "player-accept-plusOne",
         text: `${admin.displayName} accepted ${plusOne.displayName} for this game.`,
         render: true
       });
     }
-    
+    res.data = res.data.populatedRequest;
     return res;
   } catch (error) {
     throw error;
