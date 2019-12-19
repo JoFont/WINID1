@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { formatRelative } from "date-fns";
 import { getById as getRequestById, joinPlusOnes, acceptPlusOne } from "../services/api/request";
 import { sendChatMessage, messageRenderToFalse } from "../services/chat";
-import { SportIcon } from "../components/Icons/Sports";
 import Bubble from "../components/Chats/Bubble";
 import Map from "../components/Maps/Map";
 
