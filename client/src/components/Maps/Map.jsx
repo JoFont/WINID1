@@ -24,8 +24,8 @@ const Map = props => {
   mapbox.accessToken = MapboxAccessToken;
 
   const [mapState] = useState({
-    lat: 38.736946,
-    lng: -9.142685,
+    lat: props.lat,
+    lng: props.lng,
     zoom: props.zoom
   });
 
