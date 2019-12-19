@@ -2,10 +2,9 @@ import React, { useState, useEffect, useGlobal } from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
 import { getAll as getAllRequests } from "../../services/api/request";
 import { MapboxAccessToken } from "../../constants/access-tokens";
-import Directions from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
+import Directions from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import "mapbox-gl/dist/mapbox-gl.css";
-import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css' // Updating node module will keep css up to date.
-
+import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css"; // Updating node module will keep css up to date.
 
 const addRequestMarker = (arr, map) => {
   arr.forEach(request => {
@@ -63,10 +62,10 @@ const Map = props => {
     if (props.directions) {
       const directionsPlugin = new Directions({
         accessToken: mapbox.accessToken,
-        unit: 'metric',
-      })
+        unit: "metric"
+      });
 
-      map.addControl(directionsPlugin, 'top-left');
+      map.addControl(directionsPlugin, "top-left");
     }
 
     if (props.controls) {
@@ -85,7 +84,7 @@ const Map = props => {
     return () => {
       map.remove();
     };
-  }, [mapContainer]);
+  }, [mapContainer, props]);
 
   return <div ref={el => (mapContainer = el)} className={`mapContainer w-100 h-screen m-0 ${props.classes}`}></div>;
 };
