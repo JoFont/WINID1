@@ -210,7 +210,7 @@ const RequestView = props => {
           {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
             <div className="flex items-center justify-center mb-4">
               <div className="leading-none font-semibold -mt-16 p-2 rounded-full bg-white shadow text-white bg-white relative">
-                <SportIcon type="smile" theme="twoTone" className="text-xs" />
+                <SportIcon type="football" size="large" theme="twoTone" className="text-xs" />
                 <div
                   className="leading-none font-semibold -mt-6 -ml-6 rounded-full bg-white p-2 shadow text-white bg-winid-1 absolute"
                   style={{ right: -1 + "em", bottom: -0.5 + "em" }}
