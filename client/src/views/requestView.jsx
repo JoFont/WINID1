@@ -82,7 +82,7 @@ const RequestView = props => {
                   {(!request.acceptedPlusOnes && <Skeleton active paragraph={false} />) || (
                     <div className="text-2xl w-full leading-none py-1">
                       <span className="leading-none">{request.need - request.acceptedPlusOnes.length}</span>
-                      <small className="text-gray-400 text-xs">/{request.game.starters.number * 2}</small>
+                      {/* <small className="text-gray-400 text-xs">/{request.startersNumber * 2}</small> */}
                     </div>
                   )}
                 </div>
@@ -92,7 +92,7 @@ const RequestView = props => {
                     <span className="leading-none">
                       {request.acceptedPlusOnes ? request.acceptedPlusOnes.length : 0}
                     </span>
-                    <small className="text-gray-400 text-xs">/{request.game.subs.number * 2}</small>
+                    {/* <small className="text-gray-400 text-xs">/{request.game.subs.number * 2}</small> */}
                   </div>
                 </div>
                 <div className="w-1/3 flex flex-col">

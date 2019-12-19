@@ -19,10 +19,8 @@ const CreateRequestForm = props => {
   useEffect(() => {
     const game = props.game;
     if (game) {
-      setRequestNumber(game.starters.number * 2 - ((game.starters.players && game.starters.players.length) || 0));
-      setMaxRequestNumber(
-        (game.starters.number + game.subs.number) * 2 - ((game.starters.players && game.starters.players.length) || 0)
-      );
+      setRequestNumber(game.startersNum * 2 - ((game.starters && game.starters.length) || 0));
+      setMaxRequestNumber((game.startersNum + game.subsNum) * 2 - ((game.starters && game.starters.length) || 0));
     }
   }, [props.game]);
 
