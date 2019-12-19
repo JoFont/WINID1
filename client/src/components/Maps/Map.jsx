@@ -93,10 +93,6 @@ const Map = props => {
     };
   }, [mapContainer, props]);
 
-  useEffect(() => {
-
-  }, [input])
-
 
 
   return <div ref={el => (mapContainer = el)} className={`mapContainer w-100 h-screen m-0 ${props.classes}`}></div>;
