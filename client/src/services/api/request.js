@@ -63,13 +63,13 @@ export const joinPlusOnes = async (firebase, token, id, player) => {
   }
 };
 
-export const acceptPlusOne = async (firebase, token, id, player, admin) => {
+export const acceptPlusOne = async (firebase, token, id, plusOne, admin) => {
   try {
     api.defaults.headers.common['authorization'] = `Bearer ${token}`;
-    const res = await api.post(`/${id}/acceptPlusOne`, { playerId: player._id });
+    const res = await api.post(`/${id}/acceptPlusOne`, { playerId: plusOne._id });
     await sendChatStatus(firebase, res.data.chatRef, {
       type: "player-accept-plusOne",
-      text: `${admin.displayName} accepted ${player.displayName} fro this game.`
+      text: `${admin.displayName} accepted ${plusOne.displayName} for this game.`
     });
     return res;
   } catch (error) {

@@ -74,15 +74,14 @@ export const editOne = async (token, id, data) => {
   }
 };
 
-export const deleteOne = async (token, id) => {
+export const deleteOne = async (firebase, token, game, player) => {
+
   try {
-    const res = await api.delete(`/`, {
-      headers: {
-        authorization: `Bearer ${token}`
-      },
-      params: {
-        id
-      }
+    api.defaults.headers.common['authorization'] = `Bearer ${token}`;
+    const res = await api.delete(`/${id}/delete`, {
+      firebase,
+      game,
+      player
     });
     return res;
   } catch (error) {

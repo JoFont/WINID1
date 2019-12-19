@@ -2,6 +2,7 @@ import React, { useState, useEffect, useGlobal } from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
 import { getAll as getAllRequests } from "../../services/api/request";
 import { Link } from "react-router-dom";
+import { MapboxAccessToken } from "../../constants/access-tokens";
 const MapboxGeocoder = require("@mapbox/mapbox-gl-geocoder");
 
 const addRequestMarker = (arr, map) => {
@@ -22,7 +23,7 @@ const addRequestMarker = (arr, map) => {
 };
 
 const Map = props => {
-  mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
+  mapbox.accessToken = MapboxAccessToken;
 
   const [mapState] = useState({
     lat: 38.736946,

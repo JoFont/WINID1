@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = new Router();
 const checkAuth = require("../../middleware/check-auth");
 const Game = require("../../models/game");
+const Request = require("../../models/request");
 const addStatus = require("../../services/addStatus");
 
 router.get("/:id", checkAuth, async (req, res, next) => {
@@ -69,10 +70,18 @@ router.patch("/:id/edit", checkAuth, async (req, res, next) => {
   }
 });
 
-router.delete("/:id", checkAuth, async (req, res, next) => {
+router.post("/:id/delete", checkAuth, async (req, res, next) => {
   try {
-    await Game.findByIdAndDelete(req.params.id).exec();
-    res.status(200).json({ message: `Game with id: ${req.params.id} has been deleted!` });
+    const data = req.body.data;
+    if(data.game.admins.includes(data.player._id)) {
+      await Game.findByIdAndDelete(req.params.id).exec();
+      await data.firebase.firestore().collection("chatGroups").doc(data.game.chatRef).delete();
+      if(data.game.requestRef) await Request.findByIdAndDelete(data.game.requestRef).exec();
+      
+      res.status(200).json({ deleted: true });
+    } else {
+      res.status(401).json({ message: `User is not an Admin and cannot delete game ${req.params.id}` });
+    }
   } catch (error) {
     next(error);
   }

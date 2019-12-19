@@ -2,35 +2,27 @@ const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema(
   {
-    starters: {
-      type: {
-        players: [
-          {
-            type: mongoose.Types.ObjectId,
-            ref: "Player"
-          }
-        ],
-        number: {
-          type: Number,
-          default: 0,
-          min: 0
-        }
+    starters: [
+      {
+        type: [mongoose.Types.ObjectId],
+        ref: "Player"
       }
+    ],
+    startersNum: {
+      type: Number,
+      default: 0,
+      min: 0
     },
-    subs: {
-      type: {
-        players: [
-          {
-            type: mongoose.Types.ObjectId,
-            ref: "Player"
-          }
-        ],
-        number: {
-          type: Number,
-          default: 0,
-          min: 0
-        }
+    subs: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Player"
       }
+    ],
+    subsNum: {
+      type: Number,
+      default: 0,
+      min: 0
     },
     queue: [
       {
@@ -103,6 +95,10 @@ const schema = new mongoose.Schema(
     chatRef: {
       type: String,
       required: true
+    },
+    requestRef: {
+      type: mongoose.Types.ObjectId,
+      ref: "Request"
     },
     statusLog: [
       {

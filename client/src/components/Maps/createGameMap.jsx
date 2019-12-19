@@ -2,11 +2,12 @@ import React, { useState, useEffect, useGlobal} from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
 import { getAll as getAllGames } from "../../services/api/game";
 import addGameMarker from "../../services/maps/addGameMarker";
+import { MapboxAccessToken } from "../../constants/access-tokens";
 
 const MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 
 const Map = props => {
-  mapbox.accessToken = process.env.REACT_APP_MapboxAccessToken;
+  mapbox.accessToken = MapboxAccessToken;
 
   const [mapState, setMapState] = useState({
     lat: 38.736946,

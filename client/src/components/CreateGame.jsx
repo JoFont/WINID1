@@ -4,8 +4,9 @@ import Geocode from "react-geocode";
 import { createOne as createOneGame } from "../services/api/game";
 import { Select, InputNumber, DatePicker, TimePicker, Button } from "antd";
 import { createGroupChat } from "../services/chat";
+import { GEOCODE_API } from "../constants/access-tokens";
 
-Geocode.setApiKey(process.env.REACT_APP_GEOCODE_API);
+Geocode.setApiKey(GEOCODE_API);
 
 const { Option } = Select;
 
