@@ -85,27 +85,15 @@ function App(props) {
   return (
     <Fragment>
       <Layout>
-        <Sider trigger={null} collapsible collapsed={toggle} className="bg-winid-1 h-screen">
-          <div className="logo text-center py-3">
-            <Link to={ROUTES.HOME}>
-              <Icon type="slack" className="text-4xl text-white" />
-            </Link>
-          </div>
-          <ul>
-            {userToken && (
-              <li className="px-3 py-6 flex justify-center items-center">
-                <Link to={ROUTES.PLAYER + "/" + (player && player.username)}>
-                  <Icon type="user" className="text-lg text-white" />
-                </Link>
-              </li>
-            )}
-            {!userToken && (
-              <li className="px-3 py-6 flex justify-center items-center">
-                <Link to={ROUTES.LOGIN}>
-                  <Icon type="login" className="text-lg text-white" />
-                </Link>
-              </li>
-            )}
+        <Sider trigger={null} collapsible collapsed={toggle} className="bg-winid-1 h-screen max-h-screen">
+          <ul className="flex flex-col justify-start h-full">
+            <li className="logo text-center py-3">
+              <Link to={ROUTES.HOME} className="flex justify-center items-center">
+                <div className="bg-winid-4 rounded-lg w-2/3 py-2 animated infinite pulse">
+                  <img src="/icons/logo.svg" alt="" className="h-8 mx-auto" />
+                </div>
+              </Link>
+            </li>
             <li className="px-3 py-6 flex justify-center items-center">
               <Link to={ROUTES.GAMES}>
                 <Icon type="team" className="text-lg text-white" />
@@ -124,6 +112,20 @@ function App(props) {
                 onClick={() => setToggle(!toggle)}
               />
             </li>
+            {userToken && (
+              <li className="p-3 mt-auto flex justify-center items-center">
+                <Link to={ROUTES.PLAYER + "/" + (player && player.username)}>
+                  <img src={player && player.photoUrl} alt="" className="w-8 rounded-full" />
+                </Link>
+              </li>
+            )}
+            {!userToken && (
+              <li className="p-3 mt-auto flex justify-center items-center">
+                <Link to={ROUTES.LOGIN}>
+                  <Icon type="login" className="text-lg text-white" />
+                </Link>
+              </li>
+            )}
           </ul>
 
           {/* <Menu mode="inline" defaultSelectedKeys={["1"]} className="bg-winid-1 text-white border-none ">
