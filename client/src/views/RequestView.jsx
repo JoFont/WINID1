@@ -30,7 +30,7 @@ const RequestView = props => {
           allMessages.push({ ...doc.data(), id: doc.id });
         });
         setMessages(allMessages);
-        if (allMessages.length > 0) {
+        if (allMessages && allMessages.length > 0) {
           const element = document.getElementById("chat");
           element.scrollTop = element.scrollHeight + element.clientHeight;
 

@@ -33,7 +33,7 @@ const Bubble = props => {
           </div>
         </div>
       )) || (
-        <div className="mx-auto w-1/3 mb-6">
+        <div className="bubble mx-auto w-1/3 mb-6">
           <div className="bg-gray-300 py-2 px-4 rounded-full text-xs flex items-center justify-start">
             <Icon type="info-circle" className="mr-2" />
             <div className="w-full leading-none text-xs">
