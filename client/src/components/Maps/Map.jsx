@@ -45,8 +45,9 @@ const Map = props => {
       style: "mapbox://styles/jofont/ck48k2a7l0hci1co0xskrj9xl",
       center: [mapState.lng, mapState.lat],
       zoom: mapState.zoom,
-      interactive: props.isInteractive || true
+      interactive: props.isInteractive
     });
+    console.log(props)
 
     if (props.type === "locateUser") {
       geoTracker = new mapbox.GeolocateControl({
