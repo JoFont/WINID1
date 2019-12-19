@@ -44,7 +44,8 @@ const Map = props => {
       container: mapContainer,
       style: "mapbox://styles/jofont/ck48k2a7l0hci1co0xskrj9xl",
       center: [mapState.lng, mapState.lat],
-      zoom: mapState.zoom
+      zoom: mapState.zoom,
+      interactive: props.interactive
     });
 
     if (props.type === "locateUser") {
@@ -80,7 +81,8 @@ const Map = props => {
           unit: "metric",
           controls: {
             instructions: false
-          }
+          },
+          interactive: false
         });
 
         map.addControl(directionsPlugin, "top-left");
