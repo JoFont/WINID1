@@ -56,9 +56,8 @@ const RequestView = props => {
   };
 
   const handleAccept = async plusOne => {
-    console.log(plusOne);
-    // const response = await acceptPlusOne(fire, userToken, request._id, e.target.value, player);
-    // setRequest(response.data);
+    const response = await acceptPlusOne(fire, userToken, request._id, plusOne, player);
+    setRequest(response.data);
   };
 
   useEffect(() => {
