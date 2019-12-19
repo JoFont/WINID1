@@ -25,6 +25,7 @@ const addRequestMarker = (arr, map) => {
 
 const Map = props => {
   mapbox.accessToken = MapboxAccessToken;
+  const [playerCoordinates] = useGlobal("playerCoordinates");
 
   const [mapState] = useState({
     lat: props.lat,
@@ -79,6 +80,8 @@ const Map = props => {
         });
 
         map.addControl(directionsPlugin, "top-left");
+        console.log(playerCoordinates);
+        directionsPlugin.setOrigin(playerCoordinates)
         directionsPlugin.setDestination([props.lng, props.lat])
       }
 
@@ -89,6 +92,10 @@ const Map = props => {
       map.remove();
     };
   }, [mapContainer, props]);
+
+  useEffect(() => {
+
+  }, [input])
 
 
 
