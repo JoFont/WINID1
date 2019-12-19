@@ -208,12 +208,12 @@ const RequestView = props => {
       <div className="flex items-center justify-center min-h-screen relative">
         <div className={`bg-white shadow rounded w-1/3 min-h-1/2 z-10 animated p-6`}>
           {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
-            <div className="flex items-center justify-center mb-4">
-              <div className="leading-none font-semibold -mt-16 p-2 rounded-full bg-white shadow text-white bg-white relative">
-                <img src={`/images/${request.game.sport.icon}`} className="w-50"/>
+            <div className="flex items-center justify-center mb-6">
+              <div className="leading-none font-semibold -mt-20 p-2 rounded-full bg-white shadow text-white bg-white relative border">
+                <img src={`/icons/sport-icons/${request.game.sport.icon}.svg`} className="w-24" />
                 <div
                   className="leading-none font-semibold -mt-6 -ml-6 rounded-full bg-white p-2 shadow text-white bg-winid-1 absolute"
-                  style={{ right: -1 + "em", bottom: -0.5 + "em" }}
+                  style={{ right: -0.25 + "em", bottom: -0.25 + "em" }}
                 >
                   <span className="text-2xl">{request.game.price.value / 100}</span>
                   <small className="text-gray-300 text-xs">€</small>
