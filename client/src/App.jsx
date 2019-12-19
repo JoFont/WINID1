@@ -10,7 +10,7 @@ import { notification, Layout, Icon } from "antd";
 
 const { Sider, Content } = Layout;
 
-function App() {
+function App(props) {
   const [fire] = useGlobal("fire");
   const [userToken, setUserToken] = useGlobal("userToken");
   const [player, setPlayer] = useGlobal("player");
@@ -51,6 +51,8 @@ function App() {
       } else {
         // resets the token to null when the user is not signed in
         if (userToken) setUserToken(null);
+        setPlayer(null);
+        props.history.push("/");
       }
     });
   }, []);
