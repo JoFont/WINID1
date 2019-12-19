@@ -19,7 +19,7 @@ const Map = props => {
   let map;
 
   // Isto em principio funciona
-  props.addLocationMarker = coords => {
+  const addLocationMarker = coords => {
     const marker = new mapbox.Marker({ draggable: true }).setLngLat(coords).addTo(map);
 
     function onDragEnd() {
@@ -56,16 +56,11 @@ const Map = props => {
 
     if(props.controls) {
       map.addControl(new mapbox.NavigationControl());
-      map.addControl(new MapboxGeocoder({
-        accessToken: mapbox.accessToken,
-        mapboxgl: mapbox,
-        countries: "pt",
-        types: "region, district, place, locality, neighborhood, address, poi"
-      }));
     }
     
     map.on("load", async () => {
       const games = await getAllGames();
+      addLocationMarker([mapState.lng, mapState.lat]);
       if(games.data.length > 0) {
         addGameMarker(games.data, map);
       }
