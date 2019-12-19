@@ -1,5 +1,5 @@
-import React, { useEffect, useGlobal, useState } from "reactn";
-import { BrowserRouter as Router, Switch, Link } from "react-router-dom";
+import React, { Fragment, useEffect, useGlobal, useState } from "reactn";
+import { Switch, Link } from "react-router-dom";
 import { findOrCreate as findOrCreatePlayer } from "./services/api/player";
 import MainViews from "./views/views.switch";
 
@@ -60,7 +60,7 @@ function App(props) {
   };
 
   return (
-    <Router>
+    <Fragment>
       <Layout>
         <Sider trigger={null} collapsible collapsed={toggle} className="bg-winid-1 h-screen">
           <div className="logo text-center py-3">
@@ -135,7 +135,7 @@ function App(props) {
           </Content>
         </Layout>
       </Layout>
-    </Router>
+    </Fragment>
   );
 }
 
