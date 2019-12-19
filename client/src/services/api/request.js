@@ -104,3 +104,17 @@ export const createAndUpdateStatus = async (token, id, data) => {
     throw error;
   }
 };
+
+export const searchBySport = async (query) => {
+  try {
+    const res = await api.get(`/search`, {
+      params: {
+        query
+      }
+    });
+
+    return res;
+  } catch (error) {
+    throw error;
+  }
+}
