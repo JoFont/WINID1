@@ -205,6 +205,18 @@ const RequestView = props => {
       </div>
     )) || (
       <div className="flex items-center justify-center min-h-screen relative">
+        {directions && (
+          <div
+            className="absolute z-10 py-1 px-3 bg-white rounded-full border font-semibold cursor-pointer"
+            style={{ top: 10 + "em", left: 0.8 + "em" }}
+            onClick={() => {
+              setAnimation("fadeIn");
+              setDirections(false);
+            }}
+          >
+            Return
+          </div>
+        )}
         <div className={`bg-white shadow rounded w-1/3 min-h-1/2 z-10 p-6 animated ${animation}`}>
           {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
             <div className="flex items-center justify-center mb-6">
@@ -251,7 +263,7 @@ const RequestView = props => {
           {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-4" />) || (
             <div className="flex flex-col justify-center items-stretch text-center shadow rounded-lg mt-4 py-2">
               {console.log("REQUEST", request)}
-              <span className="text-gray-400 font-light text-sm leading-none">on the</span>
+              <span className="text-gray-400 font-light text-sm leading-none">on</span>
               <span className="text-2xl font-semibold">
                 {formatRelative(new Date(request.game.schedule), Date.now())}
               </span>
@@ -267,13 +279,13 @@ const RequestView = props => {
             Get Directions
           </button>
           <div className="text-center mt-2">
-            <div className="leading-none text-winid-1 font-semibold py-3">Wanna to play?</div>
+            <div className="leading-none text-winid-1 font-semibold py-3">Wanna play?</div>
             <div className="flex items-center">
-              <button class="w-1/2 bg-transparent hover:bg-winid-1 text-winid-1 font-semibold hover:text-white py-1 px-4 border border-winid-1 hover:border-transparent rounded">
+              <button className="w-1/2 bg-transparent hover:bg-winid-1 text-winid-1 font-semibold hover:text-white py-1 px-4 border border-winid-1 hover:border-transparent rounded">
                 Login
               </button>
               <span className="px-3 text-gray-400">or</span>
-              <button class="w-1/2 bg-transparent hover:bg-winid-1 text-winid-1 font-semibold hover:text-white py-1 px-4 border border-winid-1 hover:border-transparent rounded">
+              <button className="w-1/2 bg-transparent hover:bg-winid-1 text-winid-1 font-semibold hover:text-white py-1 px-4 border border-winid-1 hover:border-transparent rounded">
                 Register
               </button>
             </div>
