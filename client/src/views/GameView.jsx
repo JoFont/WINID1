@@ -79,6 +79,12 @@ const GameView = props => {
     setShowForm2(form2);
   };
 
+  const checkAdmin = () => {
+    return game.admins.reduce((validate, admin) => {
+      return player._id === admin._id ? !validate : validate;
+    }, false);
+  };
+
   useEffect(() => {
     if (userToken) {
       buildGame();
@@ -108,10 +114,7 @@ const GameView = props => {
                   directions
                 </button>
               </div>
-              
-              
-              
-              
+
               <div className={`bg-white w-full p-6 animated ${animation}`}>
                 {(!game && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
                   <div className="flex items-center justify-center mb-6">
@@ -154,9 +157,7 @@ const GameView = props => {
                   </div>
                 )}
               </div>
-              
-              
-              
+
               {game && game.starters.length > 0 && (
                 <div className="w-full mb-2 px-6">
                   <div className="uppercase text-gray-400 font-semibold text-xs flex items-center mb-1">
@@ -224,36 +225,36 @@ const GameView = props => {
                   <span>Players</span>
                   <Icon type="down" className="ml-1" />
                 </div>
-
-                <div className={`flex justify-between items-stretch`}>
-                  <div
-                    className={`w-full flex justify-between items-stretch bg-gray-100 py-2 rounded border px-2 animated ${showForm}`}
-                  >
-                    <SearchUser
-                      handlePlayerSelect={addPlayerToPlayersHandler}
-                      compareArray={game ? game.players.map(player => player._id) : []}
-                      className="rounded-lg shadow border-none"
-                    ></SearchUser>
-                    <div className="leading-none text-xs text-gray-400 mx-2 flex items-center">
-                      <span>or</span>
+                {game && checkAdmin() && (
+                  <div className={`flex justify-between items-stretch`}>
+                    <div
+                      className={`w-full flex justify-between items-stretch bg-gray-100 py-2 rounded border px-2 animated ${showForm}`}
+                    >
+                      <SearchUser
+                        handlePlayerSelect={addPlayerToPlayersHandler}
+                        compareArray={game ? game.players.map(player => player._id) : []}
+                        className="rounded-lg shadow border-none"
+                      ></SearchUser>
+                      <div className="leading-none text-xs text-gray-400 mx-2 flex items-center">
+                        <span>or</span>
+                      </div>
+                      <Tooltip placement="top" title="Ask for players!">
+                        <button
+                          className="bg-winid-1 px-4 rounded shadow"
+                          onClick={() => {
+                            setShowForm("fadeOut hidden");
+                            setShowForm2("fadeIn");
+                          }}
+                        >
+                          <img src="/icons/logo.svg" className="h-6" />
+                        </button>
+                      </Tooltip>
                     </div>
-                    <Tooltip placement="top" title="Ask for players!">
-                      <button
-                        className="bg-winid-1 px-4 rounded shadow"
-                        onClick={() => {
-                          setShowForm("fadeOut hidden");
-                          setShowForm2("fadeIn");
-                        }}
-                      >
-                        <img src="/icons/logo.svg" className="h-6" />
-                      </button>
-                    </Tooltip>
+                    <div className={`w-full animated ${showForm2}`}>
+                      <CreateRequestForm game={game} handleForms={handleForms}></CreateRequestForm>
+                    </div>
                   </div>
-                  <div className={`w-full animated ${showForm2}`}>
-                    <CreateRequestForm game={game} handleForms={handleForms}></CreateRequestForm>
-                  </div>
-                </div>
-
+                )}
                 <div className="bg-white rounded shadow mt-3">
                   {game &&
                     game.players &&
@@ -289,14 +290,16 @@ const GameView = props => {
                   </Fragment>
                 )}
               </div>
-              <div className="bg-white rounded p-6">
-                <button
-                  className="bg-gray-100 border rounded text-gray-600 px-2 py-1"
-                  onClick={() => handleDeleteGame()}
-                >
-                  Delete Game
-                </button>
-              </div>
+              {game && checkAdmin() && (
+                <div className="bg-white rounded p-6">
+                  <button
+                    className="bg-gray-100 border rounded text-gray-600 px-2 py-1"
+                    onClick={() => handleDeleteGame()}
+                  >
+                    Delete Game
+                  </button>
+                </div>
+              )}
             </div>
             <div className="w-2/3 relative h-screen max-h-screen flex flex-col justify-stretch items-stretch">
               {(game &&
