@@ -51,6 +51,9 @@ const schema = new mongoose.Schema({
       }
     ],
   },
+  locationPhotoUrl: {
+    type: String
+  },
   type: {
     type: String,
     enum: ["Public", "Private"],
