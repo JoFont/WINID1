@@ -54,8 +54,8 @@ function App(props) {
         // resets the token to null when the user is not signed in
         if (userToken) {
           setUserToken(null);
-          setPlayer(null);
         }
+        setPlayer(null);
       }
     });
   }, []);
