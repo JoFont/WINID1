@@ -65,7 +65,7 @@ export const acceptPlusOne = async (firebase, token, id, plusOne, admin) => {
     if(res.data.spotWasFound) {
       await sendChatStatus(firebase, res.data.populatedRequest.chatRef, {
         type: "player-accept-plusOne",
-        text: `${admin.displayName} accepted ${plusOne.displayName} for this game.`,
+        text: `${admin.displayName} confirmed ${plusOne.displayName} for this game.`,
         render: true
       });
     }
