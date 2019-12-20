@@ -49,7 +49,7 @@ export const joinPlusOnes = async (firebase, token, id, player) => {
     const res = await api.post(`/${id}/addPlusOne`, { playerId: player._id });
     await sendChatStatus(firebase, res.data.chatRef, {
       type: "player-join-plusOnes",
-      text: `${player.displayName} accepted this request.`
+      text: `${player.displayName} is ready to play and waiting confirmation.`
     });
     return res;
   } catch (error) {
