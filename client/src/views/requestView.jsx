@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useGlobal, Fragment } from "reactn";
-import { Input, Icon, Empty, Skeleton, Spin } from "antd";
+import { Input, Icon, Empty, Skeleton } from "antd";
+import Spinner from "../components/Spinner";
 import { Link } from "react-router-dom";
 import { formatRelative } from "date-fns";
 import { getById as getRequestById, joinPlusOnes, acceptPlusOne } from "../services/api/request";
@@ -91,11 +92,7 @@ const RequestView = props => {
 
   return (
     (player === undefined && (
-      <div className="h-full w-full flex items-center justify-center">
-        <div className="bg-winid-1 shadow rounded-lg w-20 h-20 py-2 animated infinite flash flex items-center">
-          <img src="/icons/logo.svg" alt="" className="h-10 mx-auto" />
-        </div>
-      </div>
+      <Spinner/>
     )) ||
     (player !== null && (
       <div className="flex flex-wrap items-stretch min-h-screen">
