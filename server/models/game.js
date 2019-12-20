@@ -115,6 +115,7 @@ const schema = new mongoose.Schema(
 
 schema.statics.createAndPush = async function(data, users) {
   const Game = this;
+  console.log(data)
   try {
     const newGame = await Game.create({
       startersNum: data.starters_number,
@@ -124,7 +125,8 @@ schema.statics.createAndPush = async function(data, users) {
       },
       location: data.location._id,
       schedule: Date.parse(data.date + "T" + data.time),
-      chatRef: data.chatRef
+      chatRef: data.chatRef,
+      sport: data.sport
     });
     newGame.admins.push(users);
     newGame.players.push(users);
