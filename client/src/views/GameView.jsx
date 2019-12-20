@@ -108,6 +108,10 @@ const GameView = props => {
                   directions
                 </button>
               </div>
+              
+              
+              
+              
               <div className={`bg-white w-full p-6 animated ${animation}`}>
                 {(!game && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
                   <div className="flex items-center justify-center mb-6">
@@ -150,6 +154,9 @@ const GameView = props => {
                   </div>
                 )}
               </div>
+              
+              
+              
               {game && game.starters.length > 0 && (
                 <div className="w-full mb-2 px-6">
                   <div className="uppercase text-gray-400 font-semibold text-xs flex items-center mb-1">
