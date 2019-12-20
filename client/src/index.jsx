@@ -31,7 +31,7 @@ firebase.initializeApp(firebaseConfig);
 
 setGlobal({
   fire: firebase,
-  player: null,
+  player: undefined,
   userToken: null,
   playerMessagingToken: null
 });
@@ -40,7 +40,8 @@ ReactDOM.render(
   <Router>
     <App />
   </Router>,
-document.getElementById("root"));
+  document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
