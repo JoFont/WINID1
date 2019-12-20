@@ -37,7 +37,7 @@ const GamesView = () => {
         <div className="w-3/4 flex flex-wrap">
           {gameList.map(game => {
             return (
-              <div key={game._id} className="w-1/4 px-4 mb-6">
+              <div key={game._id} className="w-1/3 px-4 mb-6">
                 <div className="bg-white shadow rounded relative">
                   <Link to={"/game/" + game._id}>
                     <Icon
