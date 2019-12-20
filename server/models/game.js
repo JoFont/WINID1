@@ -124,7 +124,8 @@ schema.statics.createAndPush = async function(data, users) {
       },
       location: data.location._id,
       schedule: Date.parse(data.date + "T" + data.time),
-      chatRef: data.chatRef
+      chatRef: data.chatRef,
+      sport: data.sport
     });
     newGame.admins.push(users);
     newGame.players.push(users);

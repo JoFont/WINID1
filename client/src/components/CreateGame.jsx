@@ -67,6 +67,7 @@ const CreateGameForm = props => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    console.log(gameForm);
     const values = {
       ...gameForm,
       date: gameForm.date.format("YYYY-MM-DD"),
