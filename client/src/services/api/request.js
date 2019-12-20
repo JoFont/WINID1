@@ -49,7 +49,7 @@ export const joinPlusOnes = async (firebase, token, id, player) => {
     const res = await api.post(`/${id}/addPlusOne`, { playerId: player._id });
     await sendChatStatus(firebase, res.data.chatRef, {
       type: "player-join-plusOnes",
-      text: `${player.displayName} accepted this request.`
+      text: `${player.displayName} is ready to play and waiting confirmation.`
     });
     return res;
   } catch (error) {
@@ -65,7 +65,7 @@ export const acceptPlusOne = async (firebase, token, id, plusOne, admin) => {
     if(res.data.spotWasFound) {
       await sendChatStatus(firebase, res.data.populatedRequest.chatRef, {
         type: "player-accept-plusOne",
-        text: `${admin.displayName} accepted ${plusOne.displayName} for this game.`,
+        text: `${admin.displayName} confirmed ${plusOne.displayName} for this game.`,
         render: true
       });
     }
