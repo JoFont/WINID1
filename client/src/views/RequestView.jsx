@@ -90,7 +90,13 @@ const RequestView = props => {
   }, [userToken]);
 
   return (
-    (player === undefined && <Spin />) ||
+    (player === undefined && (
+      <div className="h-full w-full flex items-center justify-center">
+        <div className="bg-winid-1 shadow rounded-lg w-20 h-20 py-2 animated infinite flash flex items-center">
+          <img src="/icons/logo.svg" alt="" className="h-10 mx-auto" />
+        </div>
+      </div>
+    )) ||
     (player !== null && (
       <div className="flex flex-wrap items-stretch min-h-screen">
         {/* Inicio do ASIDE */}
