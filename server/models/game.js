@@ -115,6 +115,7 @@ const schema = new mongoose.Schema(
 
 schema.statics.createAndPush = async function(data, users) {
   const Game = this;
+  console.log(data)
   try {
     const newGame = await Game.create({
       startersNum: data.starters_number,
