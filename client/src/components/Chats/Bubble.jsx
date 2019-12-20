@@ -40,7 +40,7 @@ const Bubble = props => {
           >
             <div
               className={`w-full leading-tight text-base mt-3 ${
-                checkIfEmoji(message.text) ? "text-6xl text-center" : ""
+                checkIfEmoji(message.text) ? "text-6xl text-center text-black" : ""
               }`}
             >
               {message.text}

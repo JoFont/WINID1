@@ -99,7 +99,7 @@ const RequestView = props => {
           <div
             className="h-32 bg-gray-300 relative"
             style={{
-              background: `url(${request && request.game.location.locationPhotoUrl || ""})`
+              background: `url(${(request && request.game.location.locationPhotoUrl) || ""})`
             }}
           >
             <button
@@ -182,13 +182,22 @@ const RequestView = props => {
                     return (
                       <div
                         key={acceptedPlusOne._id}
-                        className={`flex items-center justify-start pl-2 pr-4 py-2 rounded ${
+                        className={`flex items-center justify-start pl-2 py-2 rounded ${
                           index % 2 !== 0 ? "bg-gray-100" : "bg-white"
+                        } ${
+                          acceptedPlusOne._id === player._id ? "bg-green-400 text-white font-semibold pr-2" : "pr-4"
                         }`}
                       >
                         <img src={acceptedPlusOne.photoUrl} className="rounded-full w-6 mr-3" alt="" />
                         <Link to={"/player/" + acceptedPlusOne.username}>{acceptedPlusOne.displayName}</Link>
-                        <Icon type="check-circle" className="text-green-500 text-lg ml-auto" />
+                        {(acceptedPlusOne._id === player._id && (
+                          <Link
+                            to={"/game/" + request.game._id}
+                            className="text-white py-1 px-2 text-xs border border-white ml-auto rounded"
+                          >
+                            See Game
+                          </Link>
+                        )) || <Icon type="check-circle" className="text-green-500 text-lg ml-auto" />}
                       </div>
                     );
                   })}
