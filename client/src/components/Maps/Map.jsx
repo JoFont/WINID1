@@ -18,6 +18,7 @@ const Map = props => {
     directions: props.showDirections
   });
 
+
   const [markers, setMarkers] = useState([]);
 
   let mapContainer;
