@@ -78,6 +78,12 @@ const RequestView = props => {
     }, false);
   };
 
+  const checkAdmin = () => {
+    return request.admins.reduce((validate, admin) => {
+      return player._id === admin._id ? !validate : validate;
+    }, false);
+  };
+
   useEffect(() => {
     // sem if, porque isto é publico
     buildRequest();
@@ -89,7 +95,24 @@ const RequestView = props => {
       <div className="flex flex-wrap items-stretch min-h-screen">
         {/* Inicio do ASIDE */}
         <div className="w-1/3 border-r min-h-screen bg-white">
-          <div className={`bg-white shadow rounded w-full z-10 p-6 animated ${animation}`}>
+          <div
+            className="h-32 bg-gray-300 relative"
+            style={{
+              background:
+                "url(https://api.mapbox.com/styles/v1/jofont/ck48k2a7l0hci1co0xskrj9xl/static/-9.1306,38.719,15,0,60/300x300?access_token=pk.eyJ1Ijoiam9mb250IiwiYSI6ImNrNDBiOWtxaTAwNzUzbW44NmpiajZ5cXEifQ.pyznAM2ns-_4WLz-DuZEAg)"
+            }}
+          >
+            <button
+              className="w-auto mr-1 mb-1 absolute text-xs right-0 bottom-0 bg-winid-1 hover:bg-blue-600 text-white font-thin py-1 px-2 border-b-2 border-winid-4 hover:border-blue-700 rounded"
+              onClick={() => {
+                setAnimation("fadeOut");
+                setDirections(true);
+              }}
+            >
+              directions
+            </button>
+          </div>
+          <div className={`bg-white w-full p-6 animated ${animation}`}>
             {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
               <div className="flex items-center justify-center mb-6">
                 <div className="leading-none font-semibold -mt-20 p-2 rounded-full bg-white shadow text-white bg-white relative border">
@@ -143,75 +166,29 @@ const RequestView = props => {
                 </span>
               </div>
             )}
-            <button
-              className="w-full mt-4 bg-winid-1 hover:bg-blue-600 text-white font-bold py-2 px-4 border-b-4 border-winid-4 hover:border-blue-700 rounded"
-              onClick={() => {
-                setAnimation("fadeOut");
-                setDirections(true);
-              }}
-            >
-              Get Directions
-            </button>
-            <div className="text-center mt-2">
-              <div className="leading-none text-winid-1 font-semibold py-3">Wanna play?</div>
-              <div className="flex items-center">
-                <button className="w-1/2 bg-transparent hover:bg-winid-1 text-winid-1 font-semibold hover:text-white py-1 px-4 border border-winid-1 hover:border-transparent rounded">
-                  Login
-                </button>
-                <span className="px-3 text-gray-400">or</span>
-                <button className="w-1/2 bg-transparent hover:bg-winid-1 text-winid-1 font-semibold hover:text-white py-1 px-4 border border-winid-1 hover:border-transparent rounded">
-                  Register
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-full p-4">
-            <div className="bg-white rounded shadow">
-              {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
-                <div className="flex justify-between items-stretch text-center">
-                  <div className="w-1/3 flex flex-col">
-                    <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">we need</span>
-                    {(!request.acceptedPlusOnes && <Skeleton active paragraph={false} />) || (
-                      <div className="text-2xl w-full leading-none py-1">
-                        <span className="leading-none">{request.need - request.acceptedPlusOnes.length}</span>
-                        <small className="text-gray-400 text-xs">/{request.need}</small>
-                      </div>
-                    )}
-                  </div>
-                  <div className="w-1/3 flex flex-col border-l border-r">
-                    <span className="uppercase text-xs text-gray-500 bg-gray-200 border-b">accepted</span>
-                    <div className="text-2xl w-full leading-none py-1">
-                      <span className="leading-none">
-                        {request.acceptedPlusOnes ? request.acceptedPlusOnes.length : 0}
-                      </span>
-                      {/* <small className="text-gray-400 text-xs">/{request.game.subs.number * 2}</small> */}
-                    </div>
-                  </div>
-                  <div className="w-1/3 flex flex-col">
-                    <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tr border-b">interested</span>
-                    <div className="text-2xl w-full leading-none py-1">
-                      <span className="leading-none">{request.plusOnes ? request.plusOnes.length : 0}</span>
-                      {/* <small className="text-gray-400 text-xs">/{game.subs.number}</small> */}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
 
           {request && request.acceptedPlusOnes.length > 0 && (
-            <div className="w-full p-4 mb-4">
-              <div className="uppercase text-gray-400 font-bold text-sm">Accepted</div>
+            <div className="w-full mb-2 px-6">
+              <div className="uppercase text-gray-400 font-semibold text-xs flex items-center mb-1">
+                <span>Confirmed</span>
+                <Icon type="down" className="ml-1" />
+              </div>
 
-              <div className="bg-white rounded shadow p-4">
+              <div className="bg-white rounded shadow">
                 {request &&
                   request.acceptedPlusOnes &&
-                  request.acceptedPlusOnes.map(acceptedPlusOne => {
+                  request.acceptedPlusOnes.map((acceptedPlusOne, index) => {
                     return (
-                      <div key={acceptedPlusOne._id} className="flex items-center justify-between">
+                      <div
+                        key={acceptedPlusOne._id}
+                        className={`flex items-center justify-start pl-2 pr-4 py-2 rounded ${
+                          index % 2 !== 0 ? "bg-gray-100" : "bg-white"
+                        }`}
+                      >
+                        <img src={acceptedPlusOne.photoUrl} className="rounded-full w-6 mr-3" alt="" />
                         <Link to={"/player/" + acceptedPlusOne.username}>{acceptedPlusOne.displayName}</Link>
-                        <Icon type="check-circle" className="text-green-500 text-lg" />
+                        <Icon type="check-circle" className="text-green-500 text-lg ml-auto" />
                       </div>
                     );
                   })}
@@ -224,22 +201,29 @@ const RequestView = props => {
             request.admins.reduce((validate, admin) => {
               return player._id === admin._id ? !validate : validate;
             }, false) && (
-              <div className="w-full p-4 mb-4">
-                <div className="uppercase text-gray-400 font-bold text-sm">Interested</div>
-                <div className="bg-white rounded shadow p-4">
+              <div className="w-full p-6 mb-4">
+                <div className="uppercase text-gray-400 font-semibold text-xs flex items-center mb-1">
+                  <span>Waiting Confirmation</span>
+                  <Icon type="down" className="ml-1" />
+                </div>
+                <div className="bg-white rounded shadow">
                   {request &&
                     request.plusOnes &&
-                    request.plusOnes.map(plusOne => {
+                    request.plusOnes.map((plusOne, index) => {
                       if (!checkAccepted(plusOne)) {
                         return (
-                          <div key={plusOne._id} className="flex items-center justify-between">
+                          <div
+                            key={plusOne._id}
+                            className={`flex items-center justify-start pl-2 pr-4 py-2 rounded ${
+                              index % 2 !== 0 ? "bg-gray-100" : "bg-white"
+                            }`}
+                          >
+                            <img src={plusOne.photoUrl} className="rounded-full w-6 mr-3" alt="" />
                             <Link to={"/player/" + plusOne.username}>{plusOne.displayName}</Link>
-                            <button
-                              className="bg-transparent hover:bg-green-500 text-gray-300 hover:text-white py-1 px-2 border border-gray-300 hover:border-transparent rounded flex items-center"
-                              onClick={() => handleAccept(plusOne)}
-                            >
-                              <Icon type="check-circle" className="text-lg" />
-                            </button>
+                            <Icon
+                              type="plus-circle"
+                              className="text-gray-400 cursor-pointer hover:text-green-500 text-lg ml-auto"
+                            />
                           </div>
                         );
                       }
@@ -247,11 +231,16 @@ const RequestView = props => {
                 </div>
               </div>
             )}
-          <div className="">
-            <button className="bg-blue-500 text-white rounded w-full" onClick={handleJoin}>
-              Join!
-            </button>
-          </div>
+          {request && !checkAdmin() && checkAccepted(player) && (
+            <div className="p-6">
+              <button
+                className="w-full mt-4 bg-winid-1 hover:bg-blue-600 text-white font-bold py-2 px-4 border-b-4 border-winid-4 hover:border-blue-700 rounded"
+                onClick={handleJoin}
+              >
+                Join!
+              </button>
+            </div>
+          )}
         </div>
         <div className="w-2/3 relative h-screen max-h-screen flex flex-col justify-stretch items-stretch">
           {(request &&
