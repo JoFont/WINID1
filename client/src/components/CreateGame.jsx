@@ -138,7 +138,6 @@ const CreateGameForm = props => {
           <span className="text-xs text-indigo-700 text-center block">Starters</span>
           <InputNumber
             defaultValue={1}
-            value={sportStarters}
             min={2}
             className="w-full"
             onChange={val => handleInputsChange({ starters_number: val })}
@@ -148,7 +147,6 @@ const CreateGameForm = props => {
           <span className="text-xs text-indigo-700 text-center block">Subs</span>
           <InputNumber
             defaultValue={0}
-            value={sportSubs}
             min={0}
             className="w-full"
             name="subs"
