@@ -16,12 +16,17 @@ const Bubble = props => {
   return (
     <Fragment>
       {(!message.isNotification && (
-        <div className={message.playerId === player._id ? "bubble ml-auto w-2/5 mb-6" : "bubble w-2/5 mb-6"}>
+        <div
+          className={
+            message.playerId === player._id ? "bubble ml-auto w-1/2 lg:w-2/5 mb-6" : "bubble w-1/2 lg:w-2/5 mb-6"
+          }
+        >
           <div className="flex justify-between items-center mb-1">
             <div className="-mb-6 flex items-center">
               <img src={message.photoUrl} alt="" className="rounded-full w-10 ml-2 shadow z-10" />
               <span className="text-gray-700 font-bold uppercase text-s leading-none bg-white rounded pl-3 pr-2 py-1 shadow -ml-2 z-0">
-                {message.displayName}
+                {message.displayName.split(" ")[0]}{" "}
+                {message.displayName.split(" ")[message.displayName.split(" ").length - 1].split("")[0]}.
               </span>
             </div>
             <span className="text-gray-400 leading-none text-xs">

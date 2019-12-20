@@ -99,8 +99,7 @@ const RequestView = props => {
           <div
             className="h-32 bg-gray-300 relative"
             style={{
-              background:
-                "url(https://api.mapbox.com/styles/v1/jofont/ck48k2a7l0hci1co0xskrj9xl/static/-9.1306,38.719,15,0,60/300x300?access_token=pk.eyJ1Ijoiam9mb250IiwiYSI6ImNrNDBiOWtxaTAwNzUzbW44NmpiajZ5cXEifQ.pyznAM2ns-_4WLz-DuZEAg)"
+              background: `url(${request && request.game.location.locationPhotoUrl || ""})`
             }}
           >
             <button
@@ -116,7 +115,7 @@ const RequestView = props => {
           <div className={`bg-white w-full p-6 animated ${animation}`}>
             {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
               <div className="flex items-center justify-center mb-6">
-                <div className="leading-none font-semibold -mt-20 p-2 rounded-full bg-white shadow text-white bg-white relative border">
+                <div className="leading-none font-semibold -mt-20 p-2 rounded-full text-white bg-transparent relative">
                   <img src={`/icons/sport-icons/${request.game.sport.icon}.svg`} className="w-24" />
                   <div
                     className="leading-none font-semibold -mt-6 -ml-6 rounded-full bg-white p-2 shadow text-white bg-winid-1 absolute"
@@ -287,7 +286,7 @@ const RequestView = props => {
         <div className={`bg-white shadow rounded w-1/3 min-h-1/2 z-10 p-6 animated ${animation}`}>
           {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
             <div className="flex items-center justify-center mb-6">
-              <div className="leading-none font-semibold -mt-20 p-2 rounded-full bg-white shadow text-white bg-white relative border">
+              <div className="leading-none font-semibold -mt-20 p-2 rounded-full text-white bg-transparent relative">
                 <img src={`/icons/sport-icons/${request.game.sport.icon}.svg`} className="w-24" />
                 <div
                   className="leading-none font-semibold -mt-6 -ml-6 rounded-full bg-white p-2 shadow text-white bg-winid-1 absolute"

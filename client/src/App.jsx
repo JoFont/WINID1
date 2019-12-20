@@ -6,7 +6,7 @@ import MainViews from "./views/views.switch";
 import * as ROUTES from "./constants/trimmed.routes";
 
 import { requestNotificationPerm } from "./services/notifications";
-import { notification, Layout, Icon } from "antd";
+import { notification, Layout, Icon, Tooltip } from "antd";
 
 const { Sider, Content } = Layout;
 
@@ -94,35 +94,52 @@ function App(props) {
                 </div>
               </Link>
             </li>
-            <li className="px-3 py-6 flex justify-center items-center">
-              <Link to={ROUTES.GAMES}>
-                <Icon type="team" className="text-lg text-white" />
-              </Link>
-            </li>
-            <li className="px-3 py-6 flex justify-center items-center">
-              <Icon type="environment" className="text-lg text-white" />
-            </li>
-            <li className="px-3 py-6 flex justify-center items-center">
-              <Icon type="message" className="text-lg text-white" />
-            </li>
-            <li className="px-3 py-6 flex justify-center items-center">
+            <Tooltip placement="right" title="Games">
+              <li className="px-3 py-6 flex justify-center items-center leading-none cursor-pointer hover:bg-winid-4">
+                <Link to={ROUTES.GAMES}>
+                  <Icon type="team" className="text-lg text-white" />
+                </Link>
+              </li>
+            </Tooltip>
+            <Tooltip placement="right" title="Winids!">
+              <li className="px-3 py-6 flex justify-center items-center cursor-pointer hover:bg-winid-4">
+                <Icon type="environment" className="text-lg text-white" />
+              </li>
+            </Tooltip>
+            <Tooltip placement="right" title="Messages">
+              <li className="px-3 py-6 flex justify-center items-center cursor-pointer hover:bg-winid-4">
+                <Icon type="message" className="text-lg text-white" />
+              </li>
+            </Tooltip>
+            {/* <li className="px-3 py-6 flex justify-center items-center cursor-pointer hover:bg-winid-4">
               <Icon
                 className="trigger text-lg text-white"
                 type={toggle ? "menu-unfold" : "menu-fold"}
                 onClick={() => setToggle(!toggle)}
               />
-            </li>
+            </li> */}
             {userToken && (
-              <li className="p-3 mt-auto flex justify-center items-center">
-                <Link to={ROUTES.PLAYER + "/" + (player && player.username)}>
-                  <img src={player && player.photoUrl} alt="" className="w-8 rounded-full" />
-                </Link>
-              </li>
+              <Fragment>
+                <li className="p-3 mt-auto flex justify-center items-center">
+                  <Link to={ROUTES.PLAYER + "/" + (player && player.username)}>
+                    <Tooltip placement="top" title={player && player.username}>
+                      <img src={player && player.photoUrl} alt="" className="w-10 rounded-full" />
+                    </Tooltip>
+                  </Link>
+                </li>
+                <li className="mt-1 flex justify-center items-center border-blue-700 border-t-2 cursor-pointer hover:bg-winid-1">
+                  <Link to={ROUTES.PLAYER + "/" + (player && player.username)} className="w-full text-center">
+                    <Icon type="ellipsis" className="text-white text-center text-lg" />
+                  </Link>
+                </li>
+              </Fragment>
             )}
             {!userToken && (
-              <li className="p-3 mt-auto flex justify-center items-center">
-                <Link to={ROUTES.LOGIN}>
-                  <Icon type="login" className="text-lg text-white" />
+              <li className="mt-auto flex justify-center items-center p-3 cursor-pointer hover:bg-winid-1">
+                <Link to={ROUTES.LOGIN} className="w-full text-center">
+                  <Tooltip placement="top" title="Login">
+                    <Icon type="login" className="text-white text-center text-lg" />
+                  </Tooltip>
                 </Link>
               </li>
             )}

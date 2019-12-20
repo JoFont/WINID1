@@ -43,7 +43,8 @@ const schema = new mongoose.Schema(
       }
     ],
     sport: {
-      type: mongoose.Types.ObjectId
+      type: mongoose.Types.ObjectId,
+      ref: "Sport"
     },
     teams: [
       {
@@ -144,6 +145,9 @@ schema.statics.addPlayerToPlayers = async function(id, player) {
     }
     const populatedGame = await Game.findById(id)
       .populate("players")
+      .populate("starters")
+      .populate("subs")
+      .populate("queue")
       .populate("admins")
       .populate("location")
       .exec();
