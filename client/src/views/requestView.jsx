@@ -239,9 +239,9 @@ const RequestView = props => {
               </div>
             )}
           {request && !checkAdmin() && !checkAccepted(player) && (
-            <div className="p-6">
+            <div className="px-6">
               <button
-                className="w-full mt-4 bg-winid-1 hover:bg-blue-600 text-white font-bold py-2 px-4 border-b-4 border-winid-4 hover:border-blue-700 rounded"
+                className="w-full mt-0 bg-winid-1 hover:bg-blue-600 text-white font-bold py-2 px-4 border-b-4 border-winid-4 hover:border-blue-700 rounded-lg"
                 onClick={handleJoin}
               >
                 I'm ready to play!
