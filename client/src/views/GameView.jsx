@@ -21,6 +21,8 @@ const GameView = props => {
   const [inputMessage, setInputMessage] = useState("");
   const [animation, setAnimation] = useState("");
   const [directions, setDirections] = useState(false);
+  const [showForm, setShowForm] = useState("");
+  const [showForm2, setShowForm2] = useState("hidden");
 
   const buildGame = async () => {
     const fetchedGame = await getGameById(userToken, props.match.params.id);
@@ -72,6 +74,11 @@ const GameView = props => {
     if (response.data.deleted) props.history.push("/games");
   };
 
+  const handleForms = (form1, form2) => {
+    setShowForm(form1);
+    setShowForm2(form2);
+  };
+
   useEffect(() => {
     if (userToken) {
       buildGame();
@@ -84,7 +91,7 @@ const GameView = props => {
         (player !== null && (
           <div className="flex flex-wrap items-stretch min-h-screen">
             {/* Inicio do ASIDE */}
-            <div className="w-1/3 border-r min-h-screen bg-white">
+            <div className="w-1/3 border-r min-h-screen bg-white max-h-screen overflow-y-scroll">
               <div
                 className="h-32 bg-gray-300 relative"
                 style={{
@@ -210,21 +217,36 @@ const GameView = props => {
                   <span>Players</span>
                   <Icon type="down" className="ml-1" />
                 </div>
-                <div className="flex justify-between items-stretch">
-                  <SearchUser
-                    handlePlayerSelect={addPlayerToPlayersHandler}
-                    compareArray={game ? game.players.map(player => player._id) : []}
-                    className="rounded-lg shadow border-none"
-                  ></SearchUser>
-                  <div className="leading-none text-xs text-gray-400 mx-2 flex items-center">
-                    <span>or</span>
+
+                <div className={`flex justify-between items-stretch`}>
+                  <div
+                    className={`w-full flex justify-between items-stretch bg-gray-100 py-2 rounded border px-2 animated ${showForm}`}
+                  >
+                    <SearchUser
+                      handlePlayerSelect={addPlayerToPlayersHandler}
+                      compareArray={game ? game.players.map(player => player._id) : []}
+                      className="rounded-lg shadow border-none"
+                    ></SearchUser>
+                    <div className="leading-none text-xs text-gray-400 mx-2 flex items-center">
+                      <span>or</span>
+                    </div>
+                    <Tooltip placement="top" title="Ask for players!">
+                      <button
+                        className="bg-winid-1 px-4 rounded shadow"
+                        onClick={() => {
+                          setShowForm("fadeOut hidden");
+                          setShowForm2("fadeIn");
+                        }}
+                      >
+                        <img src="/icons/logo.svg" className="h-6" />
+                      </button>
+                    </Tooltip>
                   </div>
-                  <Tooltip placement="top" title="Ask for players!">
-                    <button className="bg-winid-1 px-4 rounded shadow">
-                      <img src="/icons/logo.svg" className="h-6" />
-                    </button>
-                  </Tooltip>
+                  <div className={`w-full animated ${showForm2}`}>
+                    <CreateRequestForm game={game} handleForms={handleForms}></CreateRequestForm>
+                  </div>
                 </div>
+
                 <div className="bg-white rounded shadow mt-3">
                   {game &&
                     game.players &&
@@ -248,6 +270,25 @@ const GameView = props => {
                       );
                     })}
                 </div>
+              </div>
+              <div className="bg-white rounded shadow p-4 hidden">
+                {game && game.score && (
+                  <Fragment>
+                    <div className="text-xl text-black flex justify-center items-center">
+                      <span className="text-4xl">{game.score[0]}</span>
+                      <span className="mx-2">:</span>
+                      <span className="text-4xl">{game.score[1]}</span>
+                    </div>
+                  </Fragment>
+                )}
+              </div>
+              <div className="bg-white rounded p-6">
+                <button
+                  className="bg-gray-100 border rounded text-gray-600 px-2 py-1"
+                  onClick={() => handleDeleteGame()}
+                >
+                  Delete Game
+                </button>
               </div>
             </div>
             <div className="w-2/3 relative h-screen max-h-screen flex flex-col justify-stretch items-stretch">
@@ -377,34 +418,6 @@ const GameView = props => {
             )}
           </div>
         )}
-      <div className="flex flex-wrap items-stretch min-h-screen">
-        <div className="w-1/3 border-r min-h-screen bg-white">
-          <div className="w-full bg-gray-white p-4 mb-4">
-            <div className="bg-white rounded shadow p-4">
-              {/* <Score {...props} game={game}></Score> */}
-              {game && game.score && (
-                <Fragment>
-                  <div className="text-xl text-black flex justify-center items-center">
-                    <span className="text-4xl">{game.score[0]}</span>
-                    <span className="mx-2">:</span>
-                    <span className="text-4xl">{game.score[1]}</span>
-                  </div>
-                </Fragment>
-              )}
-            </div>
-          </div>
-          <div className="w-full bg-gray-white px-4 mb-4">
-            <div className="bg-white rounded shadow p-4">
-              <CreateRequestForm game={game}></CreateRequestForm>
-            </div>
-          </div>
-          <div className="w-full bg-gray-white px-4 mb-4">
-            <div className="bg-white rounded shadow p-4">
-              <button onClick={() => handleDeleteGame()}>Delete Game</button>
-            </div>
-          </div>
-        </div>
-      </div>
     </Fragment>
   );
 };

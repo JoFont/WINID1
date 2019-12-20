@@ -113,7 +113,12 @@ router.get("/", async (req, res, next) => {
     const games = await Game.find()
       .populate("location")
       .populate("players")
+      .populate("starters")
+      .populate("subs")
+      .populate("queue")
+      .populate("sport")
       .populate("admins")
+      .populate("requestRef")
       .exec();
     res.status(200).json(games);
   } catch (error) {

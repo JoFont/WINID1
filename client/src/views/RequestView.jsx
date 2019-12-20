@@ -95,7 +95,7 @@ const RequestView = props => {
     (player !== null && (
       <div className="flex flex-wrap items-stretch min-h-screen">
         {/* Inicio do ASIDE */}
-        <div className="w-1/3 border-r min-h-screen bg-white">
+        <div className="w-1/3 border-r min-h-screen bg-white  max-h-screen overflow-y-scroll">
           <div
             className="h-32 bg-gray-300 relative"
             style={{

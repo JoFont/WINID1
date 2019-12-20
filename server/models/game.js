@@ -144,12 +144,14 @@ schema.statics.addPlayerToPlayers = async function(id, player) {
       await game.save();
     }
     const populatedGame = await Game.findById(id)
+      .populate("location")
       .populate("players")
       .populate("starters")
       .populate("subs")
       .populate("queue")
+      .populate("sport")
       .populate("admins")
-      .populate("location")
+      .populate("requestRef")
       .exec();
     return populatedGame;
   } catch (error) {
@@ -170,36 +172,42 @@ schema.statics.findSpotForPlayer = async function(id, player) {
       game.starters.push(player);
       await game.save();
       const populatedGame = await Game.findById(id)
+        .populate("location")
         .populate("players")
         .populate("starters")
         .populate("subs")
         .populate("queue")
+        .populate("sport")
         .populate("admins")
-        .populate("location")
+        .populate("requestRef")
         .exec();
       return populatedGame;
     } else if (!game.subs.includes(player)) {
       game.subs.push(player);
       await game.save();
       const populatedGame = await Game.findById(id)
+        .populate("location")
         .populate("players")
         .populate("starters")
         .populate("subs")
         .populate("queue")
+        .populate("sport")
         .populate("admins")
-        .populate("location")
+        .populate("requestRef")
         .exec();
       return populatedGame;
     } else if (!game.queue.includes(player)) {
       game.queue.push(player);
       await game.save();
       const populatedGame = await Game.findById(id)
+        .populate("location")
         .populate("players")
         .populate("starters")
         .populate("subs")
         .populate("queue")
+        .populate("sport")
         .populate("admins")
-        .populate("location")
+        .populate("requestRef")
         .exec();
       return populatedGame;
     }
