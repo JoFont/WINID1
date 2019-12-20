@@ -36,7 +36,7 @@ const CreateGameForm = props => {
     setSportIcon(`${valSplited[1].toLowerCase()}`);
     setGameForm({
       ...gameForm,
-      ...valSplited[0]
+      sport: valSplited[0]
     });
   };
 
