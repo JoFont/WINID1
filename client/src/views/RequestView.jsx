@@ -91,9 +91,7 @@ const RequestView = props => {
   }, [userToken]);
 
   return (
-    (player === undefined && (
-      <Spinner/>
-    )) ||
+    (player === undefined && <Spinner />) ||
     (player !== null && (
       <div className="flex flex-wrap items-stretch min-h-screen">
         {/* Inicio do ASIDE */}

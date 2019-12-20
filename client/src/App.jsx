@@ -85,11 +85,11 @@ function App(props) {
   return (
     <Fragment>
       <Layout>
-        <Sider trigger={null} collapsible collapsed={toggle} className="bg-winid-1 h-screen max-h-screen">
+        <Sider trigger={null} collapsible collapsed={toggle} className="winid-gradient-180 h-screen max-h-screen">
           <ul className="flex flex-col justify-start h-full">
             <li className="logo text-center py-3">
               <Link to={ROUTES.HOME} className="flex justify-center items-center">
-                <div className="bg-winid-4 rounded-lg w-2/3 py-2 animated infinite pulse">
+                <div className="winid-gradient-logo rounded-lg w-2/3 py-2 animated infinite pulse">
                   <img src="/icons/logo.svg" alt="" className="h-8 mx-auto" />
                 </div>
               </Link>
