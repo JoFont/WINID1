@@ -46,7 +46,7 @@ function App(props) {
         setUserToken(firebaseUser._lat);
         try {
           const playerFetch = await findOrCreatePlayer(firebaseUser._lat, firebaseUser);
-          if (playerFetch && player === null) setPlayer(playerFetch.data);
+          if (playerFetch && player === undefined) setPlayer(playerFetch.data);
         } catch (error) {
           throw error;
         }

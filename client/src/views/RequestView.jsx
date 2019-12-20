@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useGlobal, Fragment } from "reactn";
-import { Input, Icon, Empty, Skeleton } from "antd";
+import { Input, Icon, Empty, Skeleton, Spin } from "antd";
 import { Link } from "react-router-dom";
 import { formatRelative } from "date-fns";
 import { getById as getRequestById, joinPlusOnes, acceptPlusOne } from "../services/api/request";
@@ -84,9 +84,88 @@ const RequestView = props => {
   }, [userToken]);
 
   return (
-    (player && (
+    (player === undefined && <Spin />) ||
+    (player !== null && (
       <div className="flex flex-wrap items-stretch min-h-screen">
+        {/* Inicio do ASIDE */}
         <div className="w-1/3 border-r min-h-screen bg-white">
+          <div className={`bg-white shadow rounded w-full z-10 p-6 animated ${animation}`}>
+            {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
+              <div className="flex items-center justify-center mb-6">
+                <div className="leading-none font-semibold -mt-20 p-2 rounded-full bg-white shadow text-white bg-white relative border">
+                  <img src={`/icons/sport-icons/${request.game.sport.icon}.svg`} className="w-24" />
+                  <div
+                    className="leading-none font-semibold -mt-6 -ml-6 rounded-full bg-white p-2 shadow text-white bg-winid-1 absolute"
+                    style={{ right: -0.25 + "em", bottom: -0.25 + "em" }}
+                  >
+                    <span className="text-2xl">{request.game.price.value / 100}</span>
+                    <small className="text-gray-300 text-xs">€</small>
+                    {/* TODO: {request.game.price.currency} => CONVERT CURRENCY IN THE FUTURE*/}
+                  </div>
+                </div>
+              </div>
+            )}
+            {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
+              <div className="flex justify-between items-stretch text-center shadow rounded-lg">
+                <div className="w-1/3 flex flex-col">
+                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tl border-b">we need</span>
+                  {(!request.acceptedPlusOnes && <Skeleton active paragraph={false} />) || (
+                    <div className="text-2xl w-full leading-none py-1">
+                      <span className="leading-none">{request.need - request.acceptedPlusOnes.length}</span>
+                      <small className="text-gray-400 text-xs">/{request.need}</small>
+                    </div>
+                  )}
+                </div>
+                <div className="w-1/3 flex flex-col border-l border-r">
+                  <span className="uppercase text-xs text-gray-500 bg-gray-200 border-b">accepted</span>
+                  <div className="text-2xl w-full leading-none py-1">
+                    <span className="leading-none">
+                      {request.acceptedPlusOnes ? request.acceptedPlusOnes.length : 0}
+                    </span>
+                    {/* <small className="text-gray-400 text-xs">/{request.game.subs.number * 2}</small> */}
+                  </div>
+                </div>
+                <div className="w-1/3 flex flex-col">
+                  <span className="uppercase text-xs text-gray-500 bg-gray-200 rounded-tr border-b">interested</span>
+                  <div className="text-2xl w-full leading-none py-1">
+                    <span className="leading-none">{request.plusOnes ? request.plusOnes.length : 0}</span>
+                    {/* <small className="text-gray-400 text-xs">/{game.subs.number}</small> */}
+                  </div>
+                </div>
+              </div>
+            )}
+            {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-4" />) || (
+              <div className="flex flex-col justify-center items-stretch text-center shadow rounded-lg mt-4 py-2">
+                {console.log("REQUEST", request)}
+                <span className="text-gray-400 font-light text-sm leading-none">on</span>
+                <span className="text-2xl font-semibold">
+                  {formatRelative(new Date(request.game.schedule), Date.now())}
+                </span>
+              </div>
+            )}
+            <button
+              className="w-full mt-4 bg-winid-1 hover:bg-blue-600 text-white font-bold py-2 px-4 border-b-4 border-winid-4 hover:border-blue-700 rounded"
+              onClick={() => {
+                setAnimation("fadeOut");
+                setDirections(true);
+              }}
+            >
+              Get Directions
+            </button>
+            <div className="text-center mt-2">
+              <div className="leading-none text-winid-1 font-semibold py-3">Wanna play?</div>
+              <div className="flex items-center">
+                <button className="w-1/2 bg-transparent hover:bg-winid-1 text-winid-1 font-semibold hover:text-white py-1 px-4 border border-winid-1 hover:border-transparent rounded">
+                  Login
+                </button>
+                <span className="px-3 text-gray-400">or</span>
+                <button className="w-1/2 bg-transparent hover:bg-winid-1 text-winid-1 font-semibold hover:text-white py-1 px-4 border border-winid-1 hover:border-transparent rounded">
+                  Register
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div className="w-full p-4">
             <div className="bg-white rounded shadow">
               {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
