@@ -214,9 +214,7 @@ const RequestView = props => {
                         return (
                           <div
                             key={plusOne._id}
-                            className={`flex items-center justify-start pl-2 pr-4 py-2 rounded ${
-                              index % 2 !== 0 ? "bg-gray-100" : "bg-white"
-                            }`}
+                            className={`flex items-center justify-start pl-2 pr-4 py-2 rounded even:bg-gray-100`}
                           >
                             <img src={plusOne.photoUrl} className="rounded-full w-6 mr-3" alt="" />
                             <Link to={"/player/" + plusOne.username}>{plusOne.displayName}</Link>
@@ -237,7 +235,7 @@ const RequestView = props => {
                 className="w-full mt-4 bg-winid-1 hover:bg-blue-600 text-white font-bold py-2 px-4 border-b-4 border-winid-4 hover:border-blue-700 rounded"
                 onClick={handleJoin}
               >
-                Join!
+                I'm ready to play!
               </button>
             </div>
           )}
