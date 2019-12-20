@@ -34,8 +34,8 @@ const CreateGameForm = props => {
   const handleSportChange = async val => {
     const valSplited = val.split(",");
     setSportIcon(`${valSplited[1].toLowerCase()}`);
-    setSportStarters(parseInt(valSplited[2]));
-    setSportSubs(parseInt(valSplited[3]));
+    // setSportStarters(parseInt(valSplited[2]));
+    // setSportSubs(parseInt(valSplited[3]));
     setGameForm({
       ...gameForm,
       sport: valSplited[0]
