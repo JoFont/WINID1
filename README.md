@@ -1,5 +1,5 @@
 <p>
-  <a href="https://ironhack-project-2.herokuapp.com/">
+  <a href="https://winid1.com">
 	<img src="https://raw.githubusercontent.com/JoFont/winid1/master/README/banner.jpg" alt="IronHack Project 3: By Diogo Marques & Filipe catarino">
   </a>
   <a href="https://travis-ci.org/JoFont/ironhack-project-2">
