@@ -2,7 +2,7 @@
   <a href="https://winid1.com">
 	<img src="https://raw.githubusercontent.com/JoFont/winid1/master/README/banner.jpg" alt="IronHack Project 3: By Diogo Marques & Filipe catarino">
   </a>
-  <a href="https://travis-ci.org/JoFont/ironhack-project-2">
+  <a href="https://travis-ci.com/JoFont/WINID1">
     <img src="https://travis-ci.org/JoFont/UKA.svg?branch=master"
          alt="build status">
   </a>
