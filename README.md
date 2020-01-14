@@ -3,7 +3,7 @@
 	<img src="https://raw.githubusercontent.com/JoFont/winid1/master/README/banner.jpg" alt="IronHack Project 3: By Diogo Marques & Filipe catarino">
   </a>
   <a href="https://travis-ci.com/JoFont/WINID1">
-    <img src="https://travis-ci.org/JoFont/UKA.svg?branch=master"
+    <img src="https://api.travis-ci.com/JoFont/WINID1.svg?branch=master"
          alt="build status">
   </a>
   <a href="https://codeclimate.com/github/JoFont/UKA/maintainability">

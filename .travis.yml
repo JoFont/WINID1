@@ -6,4 +6,4 @@ node_js:
 #   global:
 #     - BUILD_TIMEOUT=10000
 install:
-  - npm install
+  - cd client && npm install
