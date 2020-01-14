@@ -6,8 +6,8 @@
     <img src="https://api.travis-ci.com/JoFont/WINID1.svg?branch=master"
          alt="build status">
   </a>
-  <a href="https://codeclimate.com/github/JoFont/UKA/maintainability">
-    <img src="https://api.codeclimate.com/v1/badges/5d5294f2b14031118bf7/maintainability" />
+  <a href="https://codeclimate.com/github/JoFont/WINID1/maintainability">
+    <img src="https://api.codeclimate.com/v1/badges/d574519b5f61e6e826b7/maintainability" />
   </a>
 </p>
 
