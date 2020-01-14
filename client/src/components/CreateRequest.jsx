@@ -38,26 +38,29 @@ const CreateRequestForm = props => {
   };
 
   return (
-    <div>
-      <InputGroup size="large">
-        <Row gutter={8}>
-          <Col span={6}>
-            <InputNumber
-              min={1}
-              max={maxRequestNumber}
-              className="w-full"
-              size="large"
-              value={requestNumber}
-              onChange={val => handleInputsChange(val)}
-            />
-          </Col>
-          <Col span={18}>
-            <Button type="primary" className="font-winid1 uppercase w-full" size="large" onClick={handleSubmitRequest}>
-              Ask for players!
-            </Button>
-          </Col>
-        </Row>
-      </InputGroup>
+    <div className="flex justify-end items-center bg-gray-100 py-2 rounded border px-2">
+      <InputNumber
+        min={1}
+        max={maxRequestNumber}
+        className="w-12"
+        value={requestNumber}
+        onChange={val => handleInputsChange(val)}
+      />
+      <span className="mx-2 flex-1">players needed</span>
+      <Button
+        className="bg-winid-1 px-4 rounded shadow border-none text-white hover:bg-indigo-600"
+        onClick={handleSubmitRequest}
+      >
+        Go!
+      </Button>
+      <Button
+        className="bg-transparent px-2 ml-1 rounded border text-gray-500"
+        onClick={e => {
+          props.handleForms("fadeIn", "fadeOut hidden");
+        }}
+      >
+        Cancel
+      </Button>
     </div>
   );
 };

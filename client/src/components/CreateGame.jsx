@@ -1,7 +1,8 @@
-import React, { useState, useGlobal } from "reactn";
+import React, { useState, useGlobal, useEffect } from "reactn";
 import moment from "moment";
 import Geocode from "react-geocode";
 import { createOne as createOneGame } from "../services/api/game";
+import { getAll as getAllSports } from "../services/api/sport";
 import { Select, InputNumber, DatePicker, TimePicker, Button } from "antd";
 import { createGroupChat } from "../services/chat";
 import { GEOCODE_API } from "../constants/access-tokens";
@@ -16,6 +17,30 @@ const CreateGameForm = props => {
   const [player] = useGlobal("player");
   const [gameForm, setGameForm] = useState({});
   const [fire] = useGlobal("fire");
+  const [sports, setSports] = useState([]);
+  const [sportIcon, setSportIcon] = useState("football");
+  const [sportStarters, setSportStarters] = useState(1);
+  const [sportSubs, setSportSubs] = useState(0);
+
+  const buildSports = async () => {
+    const response = await getAllSports();
+    setSports(response.data);
+  };
+
+  useEffect(() => {
+    buildSports();
+  }, []);
+
+  const handleSportChange = async val => {
+    const valSplited = val.split(",");
+    setSportIcon(`${valSplited[1].toLowerCase()}`);
+    // setSportStarters(parseInt(valSplited[2]));
+    // setSportSubs(parseInt(valSplited[3]));
+    setGameForm({
+      ...gameForm,
+      sport: valSplited[0]
+    });
+  };
 
   const handleLocationChange = async input => {
     if (!input) {
@@ -42,6 +67,7 @@ const CreateGameForm = props => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    console.log(gameForm);
     const values = {
       ...gameForm,
       date: gameForm.date.format("YYYY-MM-DD"),
@@ -59,19 +85,32 @@ const CreateGameForm = props => {
 
   return (
     <div>
-      <div className="flex items-center justify-between border rounded-lg mb-2 p-2">
-        <div>
-          <span className="text-xs text-gray-600">Starters</span>
-          <InputNumber min={2} className="w-full" onChange={val => handleInputsChange({ starters_number: val })} />
+      <div className="flex items-center justify-center bg-gray-100 py-4 rounded pb-6 border mb-2">
+        <div className="leading-none font-semibold rounded-full bg-transparent text-white relative">
+          <img src={`/icons/sport-icons/${sportIcon}.svg`} className="w-24" />
+          <div
+            className="leading-none font-semibold -mt-6 -ml-6 rounded-full bg-white p-2 shadow text-white bg-winid-1 absolute"
+            style={{ right: -0.25 + "em", bottom: -0.25 + "em" }}
+          >
+            {/* <span className="text-2xl">{game.price.value / 100}</span> */}
+            <small className="text-gray-300 text-xs">€</small>
+            {/* TODO: {request.game.price.currency} => CONVERT CURRENCY IN THE FUTURE*/}
+          </div>
         </div>
-        <InputNumber
-          min={0}
-          className="w-full"
-          name="subs"
-          onChange={val => handleInputsChange({ subs_number: val })}
-        />
-        <InputNumber min={0} className="w-full" onChange={val => handleInputsChange({ price: val })} />
       </div>
+      <Select defaultValue="Select Sport" onChange={val => handleSportChange(val)} className="z-10 w-full mb-2">
+        {sports &&
+          sports.map(sport => {
+            return (
+              <Option
+                key={sport._id}
+                value={`${sport._id},${sport.name},${sport.defaults.starters},${sport.defaults.subs}`}
+              >
+                {sport.name}
+              </Option>
+            );
+          })}
+      </Select>
       <Select
         showSearch
         defaultActiveFirstOption={false}
@@ -79,21 +118,60 @@ const CreateGameForm = props => {
         filterOption={false}
         onSearch={handleLocationChange}
         notFoundContent={"Search for address..."}
-        className="w-full"
+        className="w-full mb-2"
         placeholder="Insert location..."
         onChange={val => handleInputsChange({ location: val })}
       >
         {locationOptions}
       </Select>
-      <DatePicker
-        format="DD-MM-YYYY"
-        className="w-full"
-        onChange={val => handleInputsChange({ date: val })}
-        disabledDate={disabledDate}
-      />
-      <TimePicker format="HH:mm" className="w-full" onChange={val => handleInputsChange({ time: val })} />
-      <Button type="primary" className="font-winid1 uppercase w-full" size="large" onClick={handleSubmit}>
-        Create!
+      <div className="flex">
+        <DatePicker
+          format="DD-MM-YYYY"
+          className="w-1/2 mb-2 mr-2"
+          onChange={val => handleInputsChange({ date: val })}
+          disabledDate={disabledDate}
+        />
+        <TimePicker format="HH:mm" className="w-1/2 mb-2" onChange={val => handleInputsChange({ time: val })} />
+      </div>
+
+      <div className="flex items-center justify-between mb-2 px-2 pb-2 pt-1 bg-gray-100 border rounded">
+        <div className="w-1/3">
+          <span className="text-xs text-indigo-700 text-center block">Starters</span>
+          <InputNumber
+            defaultValue={1}
+            min={2}
+            className="w-full"
+            onChange={val => handleInputsChange({ starters_number: val })}
+          />
+        </div>
+        <div className="w-1/3 mx-2">
+          <span className="text-xs text-indigo-700 text-center block">Subs</span>
+          <InputNumber
+            defaultValue={0}
+            min={0}
+            className="w-full"
+            name="subs"
+            onChange={val => handleInputsChange({ subs_number: val })}
+          />
+        </div>
+        <div className="w-1/3">
+          <span className="text-xs text-indigo-700 text-center block">Price</span>
+          <InputNumber
+            min={0}
+            defaultValue={0}
+            className="w-full"
+            formatter={value => `${value}€`}
+            parser={value => value.replace("€", "")}
+            onChange={val => handleInputsChange({ price: val })}
+          />
+        </div>
+      </div>
+      <Button
+        type="primary"
+        className="w-full hover:bg-transparent bg-winid-1 text-white hover:text-winid-1 font-semibold hover:text-winid-1 py-1 px-4 border hover:border-winid-1 border-transparent rounded"
+        onClick={handleSubmit}
+      >
+        Game on!
       </Button>
     </div>
   );

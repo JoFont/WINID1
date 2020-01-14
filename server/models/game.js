@@ -43,7 +43,8 @@ const schema = new mongoose.Schema(
       }
     ],
     sport: {
-      type: mongoose.Types.ObjectId
+      type: mongoose.Types.ObjectId,
+      ref: "Sport"
     },
     teams: [
       {
@@ -114,6 +115,7 @@ const schema = new mongoose.Schema(
 
 schema.statics.createAndPush = async function(data, users) {
   const Game = this;
+  console.log(data)
   try {
     const newGame = await Game.create({
       startersNum: data.starters_number,
@@ -123,7 +125,8 @@ schema.statics.createAndPush = async function(data, users) {
       },
       location: data.location._id,
       schedule: Date.parse(data.date + "T" + data.time),
-      chatRef: data.chatRef
+      chatRef: data.chatRef,
+      sport: data.sport
     });
     newGame.admins.push(users);
     newGame.players.push(users);
@@ -143,9 +146,14 @@ schema.statics.addPlayerToPlayers = async function(id, player) {
       await game.save();
     }
     const populatedGame = await Game.findById(id)
-      .populate("players")
-      .populate("admins")
       .populate("location")
+      .populate("players")
+      .populate("starters")
+      .populate("subs")
+      .populate("queue")
+      .populate("sport")
+      .populate("admins")
+      .populate("requestRef")
       .exec();
     return populatedGame;
   } catch (error) {
@@ -166,36 +174,42 @@ schema.statics.findSpotForPlayer = async function(id, player) {
       game.starters.push(player);
       await game.save();
       const populatedGame = await Game.findById(id)
+        .populate("location")
         .populate("players")
         .populate("starters")
         .populate("subs")
         .populate("queue")
+        .populate("sport")
         .populate("admins")
-        .populate("location")
+        .populate("requestRef")
         .exec();
       return populatedGame;
     } else if (!game.subs.includes(player)) {
       game.subs.push(player);
       await game.save();
       const populatedGame = await Game.findById(id)
+        .populate("location")
         .populate("players")
         .populate("starters")
         .populate("subs")
         .populate("queue")
+        .populate("sport")
         .populate("admins")
-        .populate("location")
+        .populate("requestRef")
         .exec();
       return populatedGame;
     } else if (!game.queue.includes(player)) {
       game.queue.push(player);
       await game.save();
       const populatedGame = await Game.findById(id)
+        .populate("location")
         .populate("players")
         .populate("starters")
         .populate("subs")
         .populate("queue")
+        .populate("sport")
         .populate("admins")
-        .populate("location")
+        .populate("requestRef")
         .exec();
       return populatedGame;
     }

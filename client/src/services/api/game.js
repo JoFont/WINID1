@@ -40,7 +40,7 @@ export const createOne = async (firebase, token, player, data) => {
       info: {
         name: location.formatted_address,      },
       location: gameCoordinates,
-      locationPhotoUrl: `https://api.mapbox.com/styles/v1/jofont/ck48k2a7l0hci1co0xskrj9xl/static/${gameCoordinates[0]},${gameCoordinates[1]},15,0,60/300x300?access_token=pk.eyJ1Ijoiam9mb250IiwiYSI6ImNrNDBiOWtxaTAwNzUzbW44NmpiajZ5cXEifQ.pyznAM2ns-_4WLz-DuZEAg`
+      locationPhotoUrl: `https://api.mapbox.com/styles/v1/jofont/ck48k2a7l0hci1co0xskrj9xl/static/${gameCoordinates.coordinates[0]},${gameCoordinates.coordinates[1]},15,0,60/300x300?access_token=pk.eyJ1Ijoiam9mb250IiwiYSI6ImNrNDBiOWtxaTAwNzUzbW44NmpiajZ5cXEifQ.pyznAM2ns-_4WLz-DuZEAg`
     });
 
     data.location = newLocation.data;

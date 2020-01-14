@@ -1,6 +1,7 @@
 import React, { useState, useGlobal } from "reactn";
 import { searchByUsername, searchByDisplayName } from "../services/api/player";
 import { Select, Icon } from "antd";
+import { Fragment } from "react";
 
 const { Option } = Select;
 
@@ -43,7 +44,7 @@ const SearchUser = props => {
   ));
 
   return (
-    <div>
+    <Fragment>
       <Select
         showSearch
         defaultActiveFirstOption={false}
@@ -51,13 +52,13 @@ const SearchUser = props => {
         filterOption={false}
         onSearch={handleSearchChange}
         notFoundContent={"No player..."}
-        className="w-full"
-        placeholder="Insert player or username..."
+        className="w-full border-none shadow"
+        placeholder="search player or username..."
         onChange={val => props.handlePlayerSelect(val)}
       >
         {playerOptions}
       </Select>
-    </div>
+    </Fragment>
   );
 };
 

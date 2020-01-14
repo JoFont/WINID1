@@ -7,3 +7,33 @@
 * {
   scroll-behavior: smooth;
 }
+
+.winid-gradient-25 {
+  background: rgb(65, 96, 247);
+  background: linear-gradient(25deg, rgba(65, 96, 247, 1) 10%, rgba(62, 60, 244, 1) 90%);
+}
+
+.winid-gradient-90 {
+  background: rgb(65, 96, 247);
+  background: linear-gradient(90deg, rgba(65, 96, 247, 1) 10%, rgba(62, 60, 244, 1) 90%);
+}
+
+.winid-gradient-125 {
+  background: rgb(65, 96, 247);
+  background: linear-gradient(125deg, rgba(65, 96, 247, 1) 10%, rgba(62, 60, 244, 1) 90%);
+}
+
+.winid-gradient-107 {
+  background: rgb(65, 96, 247);
+  background: linear-gradient(107deg, rgba(65, 96, 247, 1) 10%, rgba(62, 60, 244, 1) 90%);
+}
+
+.winid-gradient-180 {
+  background: rgb(65, 96, 247);
+  background: linear-gradient(180deg, rgba(65, 96, 247, 1) 10%, rgba(62, 60, 244, 1) 90%);
+}
+
+.winid-gradient-logo {
+  background: rgb(253, 29, 29);
+  background: linear-gradient(125deg, rgba(253, 29, 29, 1) 20%, rgba(252, 176, 69, 1) 100%);
+}

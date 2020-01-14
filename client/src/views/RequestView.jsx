@@ -91,18 +91,15 @@ const RequestView = props => {
   }, [userToken]);
 
   return (
-    (player === undefined && (
-      <Spinner/>
-    )) ||
+    (player === undefined && <Spinner />) ||
     (player !== null && (
       <div className="flex flex-wrap items-stretch min-h-screen">
         {/* Inicio do ASIDE */}
-        <div className="w-1/3 border-r min-h-screen bg-white">
+        <div className="w-1/3 border-r min-h-screen bg-white  max-h-screen overflow-y-scroll">
           <div
             className="h-32 bg-gray-300 relative"
             style={{
-              background:
-                "url(https://api.mapbox.com/styles/v1/jofont/ck48k2a7l0hci1co0xskrj9xl/static/-9.1306,38.719,15,0,60/300x300?access_token=pk.eyJ1Ijoiam9mb250IiwiYSI6ImNrNDBiOWtxaTAwNzUzbW44NmpiajZ5cXEifQ.pyznAM2ns-_4WLz-DuZEAg)"
+              background: `url(${(request && request.game.location.locationPhotoUrl) || ""})`
             }}
           >
             <button
@@ -118,7 +115,7 @@ const RequestView = props => {
           <div className={`bg-white w-full p-6 animated ${animation}`}>
             {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
               <div className="flex items-center justify-center mb-6">
-                <div className="leading-none font-semibold -mt-20 p-2 rounded-full bg-white shadow text-white bg-white relative border">
+                <div className="leading-none font-semibold -mt-20 p-2 rounded-full text-white bg-transparent relative">
                   <img src={`/icons/sport-icons/${request.game.sport.icon}.svg`} className="w-24" />
                   <div
                     className="leading-none font-semibold -mt-6 -ml-6 rounded-full bg-white p-2 shadow text-white bg-winid-1 absolute"
@@ -185,13 +182,22 @@ const RequestView = props => {
                     return (
                       <div
                         key={acceptedPlusOne._id}
-                        className={`flex items-center justify-start pl-2 pr-4 py-2 rounded ${
+                        className={`flex items-center justify-start pl-2 py-2 rounded ${
                           index % 2 !== 0 ? "bg-gray-100" : "bg-white"
+                        } ${
+                          acceptedPlusOne._id === player._id ? "bg-green-400 text-white font-semibold pr-2" : "pr-4"
                         }`}
                       >
                         <img src={acceptedPlusOne.photoUrl} className="rounded-full w-6 mr-3" alt="" />
                         <Link to={"/player/" + acceptedPlusOne.username}>{acceptedPlusOne.displayName}</Link>
-                        <Icon type="check-circle" className="text-green-500 text-lg ml-auto" />
+                        {(acceptedPlusOne._id === player._id && (
+                          <Link
+                            to={"/game/" + request.game._id}
+                            className="text-white py-1 px-2 text-xs border border-white ml-auto rounded"
+                          >
+                            See Game
+                          </Link>
+                        )) || <Icon type="check-circle" className="text-green-500 text-lg ml-auto" />}
                       </div>
                     );
                   })}
@@ -232,10 +238,10 @@ const RequestView = props => {
                 </div>
               </div>
             )}
-          {request && !checkAdmin() && checkAccepted(player) && (
-            <div className="p-6">
+          {request && !checkAdmin() && !checkAccepted(player) && (
+            <div className="px-6">
               <button
-                className="w-full mt-4 bg-winid-1 hover:bg-blue-600 text-white font-bold py-2 px-4 border-b-4 border-winid-4 hover:border-blue-700 rounded"
+                className="w-full mt-0 bg-winid-1 hover:bg-blue-600 text-white font-bold py-2 px-4 border-b-4 border-winid-4 hover:border-blue-700 rounded-lg"
                 onClick={handleJoin}
               >
                 I'm ready to play!
@@ -289,7 +295,7 @@ const RequestView = props => {
         <div className={`bg-white shadow rounded w-1/3 min-h-1/2 z-10 p-6 animated ${animation}`}>
           {(!request && <Skeleton active paragraph={false} className="px-4 pb-4 shadow mt-0" />) || (
             <div className="flex items-center justify-center mb-6">
-              <div className="leading-none font-semibold -mt-20 p-2 rounded-full bg-white shadow text-white bg-white relative border">
+              <div className="leading-none font-semibold -mt-20 p-2 rounded-full text-white bg-transparent relative">
                 <img src={`/icons/sport-icons/${request.game.sport.icon}.svg`} className="w-24" />
                 <div
                   className="leading-none font-semibold -mt-6 -ml-6 rounded-full bg-white p-2 shadow text-white bg-winid-1 absolute"
