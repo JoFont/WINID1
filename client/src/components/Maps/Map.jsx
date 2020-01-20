@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useGlobal } from "reactn";
 import mapbox from "mapbox-gl/dist/mapbox-gl.js";
-import { getAll as getAllRequests } from "../../services/api/request";
 import { MapboxAccessToken } from "../../constants/access-tokens";
 import Directions from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import "mapbox-gl/dist/mapbox-gl.css";
