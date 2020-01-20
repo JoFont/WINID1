@@ -21,7 +21,6 @@ function App(props) {
   // Use effect for Firebase Magic
   useEffect(() => {
     // Initialization for cloud messaging
-    //TODO: This can be done in any component, it's here for demonstration purposes
     requestNotificationPerm(fire).then(retrievedToken => {
       setMessageToken(retrievedToken);
       console.log(retrievedToken);

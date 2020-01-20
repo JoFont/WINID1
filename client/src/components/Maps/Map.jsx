@@ -10,15 +10,6 @@ import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
 const Map = props => {
   mapbox.accessToken = MapboxAccessToken;
   const [playerCoordinates] = useGlobal("playerCoordinates");
-
-  const [mapState] = useState({
-    lat: props.lat,
-    lng: props.lng,
-    zoom: props.zoom,
-    directions: props.showDirections
-  });
-
-
   const [markers, setMarkers] = useState([]);
 
   let mapContainer;
@@ -32,8 +23,8 @@ const Map = props => {
     map = new mapbox.Map({
       container: mapContainer,
       style: "mapbox://styles/jofont/ck48k2a7l0hci1co0xskrj9xl",
-      center: [mapState.lng, mapState.lat],
-      zoom: mapState.zoom,
+      center: [props.lng, props.lat],
+      zoom: props.zoom,
       interactive: props.isInteractive,
       pitch: 60,
     });
@@ -143,7 +134,6 @@ const Map = props => {
           <a class="requestPopup btn bg-blue-500 p-3 text-white" href="/request/${request._id}" data-request="${request._id}">GAMES!</a>
         </div>
       `;
-      // DEUS => onclick="(function(){alert('ALBERTO');return false;})();return false;"
   
       const popup = new mapbox.Popup({ offset: 25 }).setHTML(html);
       const marker = new mapbox.Marker()
