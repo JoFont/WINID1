@@ -26,7 +26,6 @@ const Map = props => {
   let geoTracker;
   let rotateAnimFrame;
   
-
   
   // Isto faz refrescar duas vezes por causa do useGlobal como dependencia
   useEffect(() => {
