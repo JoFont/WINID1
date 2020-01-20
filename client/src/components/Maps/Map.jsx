@@ -83,7 +83,6 @@ const Map = props => {
         });
 
         map.addControl(directionsPlugin, "top-left");
-        console.log(playerCoordinates);
         directionsPlugin.setOrigin(playerCoordinates)
         directionsPlugin.setDestination([props.lng, props.lat])
       }

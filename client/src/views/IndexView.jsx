@@ -32,13 +32,7 @@ const IndexView = props => {
 
   return (
     <div className="relative">
-      <Select
-        defaultValue="All Sports"
-        size="large"
-        onChange={val => handleSportChange(val)}
-        className="absolute z-10 w-1/4"
-        style={{ top: 1 + "em", left: 1 + "em" }}
-      >
+      <Select defaultValue="All Sports" size="large" onChange={val => handleSportChange(val)} className="absolute z-10 w-1/4" style={{ top: 1 + "em", left: 1 + "em" }}>
         {sports &&
           sports.map(sport => {
             return (
@@ -48,17 +42,7 @@ const IndexView = props => {
             );
           })}
       </Select>
-      <Map
-        zoom={8}
-        type="locateUser"
-        lat={38.736946}
-        lng={-9.142685}
-        controls
-        isInteractive
-        showMarkers
-        rotate
-        markersArray={requests}
-      ></Map>
+      <Map zoom={8} type="locateUser" lat={38.736946} lng={-9.142685} controls isInteractive showMarkers markersArray={requests}></Map>
     </div>
   );
 };
