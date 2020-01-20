@@ -1,6 +1,7 @@
-import React, { useGlobal, useEffect, Fragment } from "reactn";
-import { Form, Icon, Input, Button, Checkbox } from "antd";
+import React, { useGlobal, Fragment } from "reactn";
+import { Form, Icon, Input, Button } from "antd";
 import { createBrowserHistory } from "history";
+import { Redirect } from "react-router-dom";
 
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 const history = createBrowserHistory();
@@ -16,14 +17,16 @@ const LogIn = props => {
       if (!err) {
         try {
           await fire.auth().signInWithEmailAndPassword(values.email, values.password);
-          console.log(history.location);
-          history.push("/", { some: "state" });
         } catch (error) {
           throw error;
         }
       }
     });
   };
+
+  if (player) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Fragment>
@@ -36,13 +39,7 @@ const LogIn = props => {
         <Form.Item className="mb-2">
           {getFieldDecorator("password", {
             rules: [{ required: true, message: "Please input your Password!" }]
-          })(
-            <Input
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-              type="password"
-              placeholder="Password"
-            />
-          )}
+          })(<Input prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />} type="password" placeholder="Password" />)}
         </Form.Item>
         <Form.Item className="w-full mb-0">
           <Button

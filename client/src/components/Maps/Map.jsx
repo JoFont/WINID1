@@ -99,7 +99,7 @@ const Map = props => {
     return () => {
       map.remove();
     };
-  }, [mapContainer, props]);
+  }, [props]);
 
   const addRequestMarkers = (arr, map) => {
     const markerArr = [];

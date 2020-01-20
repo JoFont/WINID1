@@ -10,7 +10,7 @@ import { notification, Layout, Icon, Tooltip } from "antd";
 
 const { Sider, Content } = Layout;
 
-function App(props) {
+function App (props) {
   const [fire] = useGlobal("fire");
   const [userToken, setUserToken] = useGlobal("userToken");
   const [player, setPlayer] = useGlobal("player");
@@ -41,7 +41,6 @@ function App(props) {
     // Authentication Event Listener
     fire.auth().onAuthStateChanged(async firebaseUser => {
       if (firebaseUser) {
-        console.log("FIREBASE USER: ", firebaseUser._lat);
         setUserToken(firebaseUser._lat);
         try {
           const playerFetch = await findOrCreatePlayer(firebaseUser._lat, firebaseUser);
@@ -117,7 +116,7 @@ function App(props) {
                 onClick={() => setToggle(!toggle)}
               />
             </li> */}
-            {userToken && (
+            {player && (
               <Fragment>
                 <li className="p-3 mt-auto flex justify-center items-center">
                   <Link to={ROUTES.PLAYER + "/" + (player && player.username)}>
@@ -132,8 +131,7 @@ function App(props) {
                   </Link>
                 </li>
               </Fragment>
-            )}
-            {!userToken && (
+            ) || (
               <li className="mt-auto flex justify-center items-center p-3 cursor-pointer hover:bg-winid-1">
                 <Link to={ROUTES.LOGIN} className="w-full text-center">
                   <Tooltip placement="top" title="Login">

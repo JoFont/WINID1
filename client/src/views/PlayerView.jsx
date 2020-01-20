@@ -1,5 +1,6 @@
 import React, { useGlobal } from "reactn";
 import { Row, Col } from "antd";
+import { Redirect } from "react-router-dom";
 
 const PlayerView = () => {
   const [player] = useGlobal("player");
@@ -8,6 +9,10 @@ const PlayerView = () => {
   const handleSignOut = () => {
     fire.auth().signOut();
   };
+
+  if (!player) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="h-screen">
@@ -26,4 +31,4 @@ const PlayerView = () => {
   );
 };
 
-export default PlayerView; 
+export default PlayerView;
