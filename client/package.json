@@ -6,7 +6,7 @@
     "@mapbox/mapbox-gl-directions": "^4.0.2",
     "@mapbox/mapbox-gl-geocoder": "^4.5.0",
     "@microlink/react": "^4.4.8",
-    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/jest-dom": "^5.1.0",
     "@testing-library/react": "^9.3.3",
     "@testing-library/user-event": "^7.1.2",
     "antd": "^3.26.7",
