@@ -2,10 +2,10 @@ version: 1
 update_configs:
   - package_manager: "javascript"
     directory: "client"
-    update_schedule: "weekly"
+    update_schedule: "monthly"
   - package_manager: "javascript"
     directory: "client/functions"
-    update_schedule: "weekly"
+    update_schedule: "monthly"
   - package_manager: "javascript"
     directory: "server"
-    update_schedule: "weekly"
+    update_schedule: "monthly"
