@@ -16,7 +16,7 @@
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
-    "firebase-admin": "^8.9.1",
+    "firebase-admin": "^8.12.1",
     "http-errors": "^1.7.3",
     "mongoose": "^5.8.7",
     "morgan": "^1.9.1",
