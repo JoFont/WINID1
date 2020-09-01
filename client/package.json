@@ -10,7 +10,7 @@
     "@testing-library/react": "^9.3.3",
     "@testing-library/user-event": "^7.1.2",
     "antd": "^3.26.7",
-    "axios": "^0.19.1",
+    "axios": "^0.20.0",
     "date-fns": "^2.9.0",
     "firebase": "^7.6.2",
     "mapbox-gl": "^1.6.1",
